@@ -621,6 +621,7 @@
       activeActivity = "";
       busy = false;
       activityPanel.hidden = true;
+      activityPanel.classList.remove("sima-sleep-notice-v9");
       activityPanel.innerHTML = "";
       playTarget.hidden = true;
       playTarget.onclick = null;
@@ -779,7 +780,8 @@
         showActionProp("bed", "bed");
         nook.classList.add("sima-sleeping-v8");
         setSpeech("Тс-с. Сима свернулась клубочком.");
-        activityPanel.innerHTML = '<p>тихий час</p><h3>Сима уснула</h3><div><span class="sima-activity-instruction-v8">Можно немного посидеть рядом, а потом тихо разбудить.</span><button type="button" data-wake-sima>разбудить Симу</button></div>';
+        activityPanel.classList.add("sima-sleep-notice-v9");
+        activityPanel.innerHTML = '<p>тихий час</p><h3>Сима уснула</h3><button type="button" data-wake-sima>разбудить Симу</button>';
         later(() => award("sleep", { rest: 32, care: 5 }, "Сима прекрасно выспалась и снова готова командовать."), 1800);
         qs("[data-wake-sima]", activityPanel).addEventListener("click", () => { clearActivity(); setSpeech("Сима проснулась, потянулась и осмотрела владения."); });
       });
