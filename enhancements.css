@@ -278,8 +278,8 @@ input:focus-visible {
 .laptop-unit-v5 {
   position: absolute;
   z-index: 20;
-  left: 66%;
-  top: 35.5%;
+  left: 66.55%;
+  top: 36.15%;
   width: 11.7%;
   aspect-ratio: 1100 / 730;
   pointer-events: none;
@@ -490,6 +490,7 @@ input:focus-visible {
 }
 
 .anya-object-v3 {
+  --outfit-scale: 1;
   left: 50.35%;
   bottom: .1%;
   width: 17.2%;
@@ -502,10 +503,14 @@ input:focus-visible {
   object-fit: contain;
   object-position: center bottom;
   filter: drop-shadow(0 14px 10px rgba(0,0,0,.45));
+  transform: scale(var(--outfit-scale));
+  transform-origin: center bottom;
   transition: opacity .14s ease, transform .18s ease;
 }
 
-.anya-object-v3 img.changing { opacity: 0; transform: translateY(1.5%); }
+.anya-object-v3[data-outfit="novinki"] { --outfit-scale: 1.02; }
+.anya-object-v3[data-outfit="botanical"] { --outfit-scale: 1.02; }
+.anya-object-v3 img.changing { opacity: 0; transform: translateY(1.5%) scale(var(--outfit-scale)); }
 .anya-object-v3:hover,
 .anya-object-v3.selected { transform: translateY(-.7%); filter: drop-shadow(0 0 12px rgba(216,196,235,.25)); }
 
@@ -531,8 +536,8 @@ input:focus-visible {
 }
 
 .laptop-anya-v3 {
-  z-index: 18;
-  left: 72.5%;
+  z-index: 22;
+  left: 71.7%;
   top: 28.8%;
   width: 20.8%;
   height: 54.5%;
@@ -634,7 +639,7 @@ input:focus-visible {
 }
 
 .target-tv { left: 39.6%; top: 35.2%; width: 14.2%; height: 24.2%; }
-.target-laptop { left: 65.7%; top: 34.8%; width: 12.5%; height: 17.2%; }
+.target-laptop { left: 66.25%; top: 35.45%; width: 12.5%; height: 17.2%; }
 .target-radio { left: 61.4%; top: 41.4%; width: 6.3%; height: 11.4%; }
 .target-books { left: 20.7%; top: 11.4%; width: 13.7%; height: 61.2%; }
 .target-wardrobe { left: 82.8%; top: 18.2%; width: 15.1%; height: 55.8%; }
@@ -990,6 +995,7 @@ input:focus-visible {
 .past-gate-card-v5 h2 {
   max-width: 590px;
   margin: 0 auto 18px;
+  color: #303340;
   font: 500 clamp(34px, 5vw, 62px)/1.04 "Playfair Display", Georgia, serif;
   letter-spacing: -.045em;
 }
@@ -1387,7 +1393,7 @@ input:focus-visible {
   .room-object-panel button { min-height: 40px; padding: 8px 12px; }
   .anya-object-v3 { left: 50.2%; width: 17.7%; }
   .sima-v3 { width: 11.4%; }
-  .laptop-anya-v3 { left: 72.35%; width: 21.2%; }
+  .laptop-anya-v3 { left: 71.55%; width: 21.2%; }
 }
 
 @media (max-width: 640px) {
