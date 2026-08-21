@@ -2,10 +2,10 @@
   "use strict";
 
   const outfits = {
-    base: { label: "база", src: "./room/anya-base-v2.webp", laptopSrc: "./room/anya-laptop-base-v4.webp", alt: "Аня в чёрной водолазке, чёрных брюках и бордовом кардигане" },
-    novinki: { label: "в новинки", src: "./room/anya-novinki-v2.webp", laptopSrc: "./room/anya-laptop-novinki-v4.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
-    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v2.webp", laptopSrc: "./room/anya-laptop-botanical-v4.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
-    ambulance: { label: "на смену", src: "./room/anya-ambulance-v2.webp", laptopSrc: "./room/anya-laptop-ambulance-v4.webp", alt: "Аня в бордовой форме скорой помощи" },
+    base: { label: "база", src: "./room/anya-base-v5.webp", laptopSrc: "./room/anya-laptop-base-v5.webp", alt: "Аня в чёрной водолазке, свободных чёрных брюках и застёгнутом бордовом кардигане" },
+    novinki: { label: "в новинки", src: "./room/anya-novinki-v2.webp", laptopSrc: "./room/anya-laptop-novinki-v5.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
+    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v2.webp", laptopSrc: "./room/anya-laptop-botanical-v5.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
+    ambulance: { label: "на смену", src: "./room/anya-ambulance-v5.webp", laptopSrc: "./room/anya-laptop-ambulance-v5.webp", alt: "Аня в бордовой форме скорой помощи с головой, повёрнутой в сторону" },
   };
 
   const films = {
@@ -50,14 +50,15 @@
       if (tries < 160) window.setTimeout(() => waitForApp(tries + 1), 50);
       return;
     }
-    if (document.documentElement.dataset.anyaEnhancements === "v4") return;
-    document.documentElement.dataset.anyaEnhancements = "v4";
+    if (document.documentElement.dataset.anyaEnhancements === "v5") return;
+    document.documentElement.dataset.anyaEnhancements = "v5";
     cleanOpeningScreen();
     enhanceRoom(room);
     enhanceGames(games);
     enhanceDictionary(dictionary);
     lockArchive(archive);
     cleanThenAndNow();
+    lockPastSection();
     replaceLetterWithFinale(letter);
   }
 
@@ -121,23 +122,22 @@
       </div>
       <div class="roomViewport room-viewport-v3 contentWidth">
         <div class="roomStage room-stage-v3" id="roomStageV3">
-          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v3.webp" alt="Комната Ани, показанная прямо спереди">
+          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v5.webp" alt="Комната Ани, показанная прямо спереди">
           <div class="roomHud room-hud-v3" aria-live="polite"><span class="roomDot"></span><p id="roomStatus">Нажимай прямо на предметы в комнате.</p></div>
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
-          <div class="chair-cover-v4" aria-hidden="true"></div>
-          <div class="laptop-unit-v4" aria-hidden="true">
-            <div class="laptop-lid-v4"><div class="laptop-screen-v3"><img id="laptopImage" src="${laptopGames.minecraft.src}" alt="Заставка Minecraft"></div></div>
-            <div class="laptop-deck-v4"><i></i></div>
+          <div class="laptop-unit-v5" aria-hidden="true">
+            <img class="laptop-shell-v5" src="./room/laptop-shell-v5.webp" alt="">
+            <div class="laptop-screen-v5"><img id="laptopImage" src="${laptopGames.minecraft.src}" alt="Заставка Minecraft"></div>
           </div>
           <button type="button" class="room-object poster-object-v3" data-room-object="poster" aria-label="Рассмотреть плакат Лололошки и JDH"><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH"><span>плакат</span></button>
           <div id="addedBookSpines" class="added-book-spines-v3" aria-label="Книги на полке"></div>
-          <div class="energy-can-v4" aria-label="Банка Red Monster с цветами"><span>RED</span><b>MONSTER</b></div>
           <div class="radio-readout-v3" id="radioRoomTitle">Key</div>
           <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
           <button type="button" id="anyaSleeping" class="sleeping-anya-v3" data-room-object="anya" aria-label="Разбудить Аню" hidden><img src="./room/anya-sleep-v2.webp" alt="Аня спит под одеялом"><span>разбудить</span></button>
-          <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке за ноутбуком"><span>Аня за ноутбуком</span></button>
-          <button type="button" id="simaSpriteV3" class="sima-v3 walking" data-room-object="sima" aria-label="Погладить Симу"><img src="./room/sima-walk-v2.webp" alt="Сима гуляет по комнате"><span class="sima-label">Сима</span><span class="sima-hearts-v3" aria-hidden="true">♡ ♡ ♡</span></button>
+          <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке у ноутбука, повернувшись к столу спиной к комнате"><span>Аня за ноутбуком</span></button>
+          <button type="button" id="simaSpriteV3" class="sima-v3 walking" data-room-object="sima" aria-label="Погладить Симу"><span class="sima-visual-v5"><img src="./room/sima-walk-v2.webp" alt="Сима гуляет по комнате"></span><span class="sima-label">Сима</span><span class="sima-hearts-v3" aria-hidden="true">♡ ♡ ♡</span></button>
+          <button type="button" class="room-target target-bed" data-room-object="bed" aria-label="Отправить Аню спать"><span>кровать</span></button>
           <button type="button" class="room-target target-tv" data-room-object="tv" aria-label="Управлять телевизором"><span>телевизор</span></button>
           <button type="button" class="room-target target-laptop" data-room-object="laptop" aria-label="Выбрать игру на ноутбуке"><span>ноутбук</span></button>
           <button type="button" class="room-target target-radio" data-room-object="radio" aria-label="Управлять радио"><span>радио</span></button>
@@ -146,6 +146,7 @@
           <button type="button" class="room-target target-lamp" data-room-object="lamp" aria-label="Выключить свет"><span>свет</span></button>
           <aside id="roomPanel" class="room-object-panel" aria-live="polite" hidden></aside>
           <audio id="roomAudio" preload="metadata"></audio>
+          <audio id="simaPurr" src="./audio/sima-purr-v5.mp3" preload="auto"></audio>
         </div>
       </div>
       <div id="booksModal" class="room-modal room-modal-v3" role="dialog" aria-modal="true" aria-labelledby="booksTitle" hidden>
@@ -169,6 +170,7 @@
     const sima = qs("#simaSpriteV3", section);
     const simaImage = qs("img", sima);
     const audio = qs("#roomAudio", section);
+    const simaPurr = qs("#simaPurr", section);
     let activity = "standing";
     let currentOutfit = "base";
     let trackIndex = 0;
@@ -222,7 +224,7 @@
       if (next === "laptop") {
         const outfit = outfits[currentOutfit];
         anyaLaptopImage.src = outfit.laptopSrc;
-        anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке за ноутбуком`;
+        anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке у ноутбука спиной к комнате`;
       }
       anyaStanding.hidden = next !== "standing";
       anyaSleeping.hidden = next !== "sleeping";
@@ -236,6 +238,11 @@
       showPanel("anya", "Что будет делать Аня?", `<button type="button" data-anya-action="sleeping">отправить спать</button><button type="button" data-anya-action="laptop">посидеть за ноутбуком</button>${activity !== "standing" ? '<button type="button" data-anya-action="standing">вернуться в комнату</button>' : ""}`);
       qsa("[data-anya-action]", panel).forEach((button) => button.addEventListener("click", () => { setActivity(button.dataset.anyaAction); closePanel(); }));
     }
+    function openBedPanel() {
+      showPanel("bed", "Кровать", `<button type="button" data-bed-sleep>отправить Аню спать</button>${activity === "sleeping" ? '<button type="button" data-bed-wake>разбудить Аню</button>' : ""}`);
+      qs("[data-bed-sleep]", panel).addEventListener("click", () => { setActivity("sleeping"); closePanel(); });
+      qs("[data-bed-wake]", panel)?.addEventListener("click", () => { setActivity("standing"); closePanel(); });
+    }
     function openWardrobePanel() {
       showPanel("wardrobe", "Гардероб", Object.entries(outfits).map(([key, outfit]) => `<button type="button" data-outfit="${key}" class="${key === currentOutfit ? "active" : ""}">${escapeHtml(outfit.label)}</button>`).join(""));
       qsa("[data-outfit]", panel).forEach((button) => button.addEventListener("click", () => {
@@ -246,7 +253,7 @@
           anyaImage.src = outfit.src;
           anyaImage.alt = outfit.alt;
           anyaLaptopImage.src = outfit.laptopSrc;
-          anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке за ноутбуком`;
+          anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке у ноутбука спиной к комнате`;
           anyaImage.classList.remove("changing");
         }, 140);
         setActivity("standing"); say(`Выбран образ «${outfit.label}».`); closePanel();
@@ -289,6 +296,7 @@
       }));
     }
     function petSima() {
+      simaPurr.pause(); simaPurr.currentTime = 0; simaPurr.volume = .68; simaPurr.play().catch(() => {});
       window.clearTimeout(simaTimeout); sima.classList.remove("walking"); sima.classList.add("petted"); simaImage.src = "./room/sima-pet-v2.webp"; simaImage.alt = "Довольная Сима после поглаживания"; say("Сима поглажена и очень довольна.");
       simaTimeout = window.setTimeout(() => { sima.classList.remove("petted"); sima.classList.add("walking"); simaImage.src = "./room/sima-walk-v2.webp"; simaImage.alt = "Сима гуляет по комнате"; }, 4200);
     }
@@ -301,11 +309,8 @@
     setupModal(qs("#posterModal", section));
     qsa("[data-room-object]", stage).forEach((button) => button.addEventListener("click", (event) => {
       event.stopPropagation(); const kind = button.dataset.roomObject; activePanelAnchor = button;
-      if (kind === "anya") openAnyaPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima();
+      if (kind === "anya") openAnyaPanel(); else if (kind === "bed") openBedPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima();
     }));
-    sima.addEventListener("animationiteration", (event) => {
-      if (event.animationName === "simaWalk" && sima.classList.contains("walking")) sima.classList.toggle("facing-left");
-    });
     stage.addEventListener("click", (event) => { if (event.target === stage || event.target.classList.contains("room-backdrop-v3")) closePanel(); });
     audio.addEventListener("ended", () => { loadTrack(trackIndex + 1, true); if (!panel.hidden && panel.classList.contains("panel-radio")) openRadioPanel(); });
     loadTrack(0, false); say("Нажимай прямо на предметы в комнате.");
@@ -319,7 +324,7 @@
     function render() {
       list.innerHTML = allBooks().map((book, index) => { const isDefault = index < defaultBooks.length; return `<li><span>${escapeHtml(book)}</span>${isDefault ? '<small>уже на полке</small>' : `<button type="button" data-remove-book="${index - defaultBooks.length}" aria-label="Убрать книгу ${escapeHtml(book)}">×</button>`}</li>`; }).join("");
       const colors = ["#6e405c", "#47547d", "#7a6245", "#58466f", "#3f6668", "#824d4d", "#525d85", "#765a70"];
-      spines.innerHTML = allBooks().slice(0, 8).map((book, index) => `<span style="--book-index:${index};--book-color:${colors[index % colors.length]}" title="${escapeHtml(book)}"><b>${escapeHtml(book)}</b></span>`).join("");
+      spines.innerHTML = allBooks().slice(0, 10).map((book, index) => `<span style="--book-index:${index};--book-color:${colors[index % colors.length]}" title="${escapeHtml(book)}"><i></i><b>${escapeHtml(book)}</b></span>`).join("");
       qsa("[data-remove-book]", list).forEach((button) => button.addEventListener("click", () => { customBooks.splice(Number(button.dataset.removeBook), 1); save(); render(); }));
     }
     function open() { modal.hidden = false; document.body.classList.add("room-modal-open"); window.setTimeout(() => input.focus(), 30); }
@@ -347,6 +352,42 @@
   }
 
   function cleanThenAndNow() { const section = qs(".thenNowSection"); if (!section) return; qs(".thenNowCopy .sectionKicker", section)?.remove(); qsa(".thenNowMedia figcaption", section).forEach((caption) => caption.remove()); }
+
+  function lockPastSection() {
+    const section = qs(".thenNowSection");
+    if (!section || section.dataset.pastGate === "v5") return;
+    section.dataset.pastGate = "v5";
+    section.classList.add("past-gated-v5");
+
+    const content = document.createElement("div");
+    content.className = "past-content-v5 contentWidth";
+    while (section.firstChild) content.append(section.firstChild);
+    content.hidden = true;
+
+    const gate = document.createElement("div");
+    gate.className = "past-gate-v5 contentWidth";
+    gate.innerHTML = `<div class="past-gate-card-v5"><span class="archive-lock-icon" aria-hidden="true">⌁</span><h2>Доступны материалы из далекого прошлого.</h2><p>Введи овощ, который добавляют в мультифруктовый сок в лучшей столовой мира.</p><form><label for="pastPassword">Пароль</label><div><input id="pastPassword" type="text" lang="ru" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="Введите ответ"><button type="submit">открыть</button></div></form><small id="pastPasswordMessage" aria-live="polite"></small></div>`;
+    section.append(gate, content);
+
+    const form = qs("form", gate);
+    const input = qs("input", gate);
+    const message = qs("#pastPasswordMessage", gate);
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const answer = input.value.trim().toLocaleLowerCase("ru").normalize("NFC");
+      if (answer === "огурец") {
+        gate.classList.add("unlocked");
+        content.hidden = false;
+        message.textContent = "Верно. Материалы открыты.";
+        window.setTimeout(() => { gate.hidden = true; content.scrollIntoView({ behavior: "smooth", block: "start" }); }, 420);
+      } else {
+        gate.classList.remove("wrong"); void gate.offsetWidth; gate.classList.add("wrong");
+        message.textContent = "Не тот овощ. Попробуй ещё раз.";
+        input.select();
+      }
+    });
+  }
+
   function replaceLetterWithFinale(section) { section.className = "finaleSection"; section.id = "letter"; section.innerHTML = `<button type="button" id="finalSurprise" class="celebrateButton final-surprise-button">последний сюрприз. <span>✦</span></button>`; qs("#finalSurprise", section).addEventListener("click", launchCelebration); }
 
   function launchCelebration() {
