@@ -2,10 +2,10 @@
   "use strict";
 
   const outfits = {
-    base: { label: "база", src: "./room/anya-base-v2.webp", alt: "Аня в чёрной водолазке, чёрных брюках и бордовом кардигане" },
-    novinki: { label: "в новинки", src: "./room/anya-novinki-v2.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
-    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v2.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
-    ambulance: { label: "на смену", src: "./room/anya-ambulance-v2.webp", alt: "Аня в бордовой форме скорой помощи" },
+    base: { label: "база", src: "./room/anya-base-v2.webp", laptopSrc: "./room/anya-laptop-base-v4.webp", alt: "Аня в чёрной водолазке, чёрных брюках и бордовом кардигане" },
+    novinki: { label: "в новинки", src: "./room/anya-novinki-v2.webp", laptopSrc: "./room/anya-laptop-novinki-v4.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
+    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v2.webp", laptopSrc: "./room/anya-laptop-botanical-v4.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
+    ambulance: { label: "на смену", src: "./room/anya-ambulance-v2.webp", laptopSrc: "./room/anya-laptop-ambulance-v4.webp", alt: "Аня в бордовой форме скорой помощи" },
   };
 
   const films = {
@@ -50,8 +50,8 @@
       if (tries < 160) window.setTimeout(() => waitForApp(tries + 1), 50);
       return;
     }
-    if (document.documentElement.dataset.anyaEnhancements === "v3") return;
-    document.documentElement.dataset.anyaEnhancements = "v3";
+    if (document.documentElement.dataset.anyaEnhancements === "v4") return;
+    document.documentElement.dataset.anyaEnhancements = "v4";
     cleanOpeningScreen();
     enhanceRoom(room);
     enhanceGames(games);
@@ -125,21 +125,24 @@
           <div class="roomHud room-hud-v3" aria-live="polite"><span class="roomDot"></span><p id="roomStatus">Нажимай прямо на предметы в комнате.</p></div>
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
-          <div class="laptop-screen-v3" aria-hidden="true"><img id="laptopImage" src="${laptopGames.minecraft.src}" alt="Заставка Minecraft"></div>
+          <div class="chair-cover-v4" aria-hidden="true"></div>
+          <div class="laptop-unit-v4" aria-hidden="true">
+            <div class="laptop-lid-v4"><div class="laptop-screen-v3"><img id="laptopImage" src="${laptopGames.minecraft.src}" alt="Заставка Minecraft"></div></div>
+            <div class="laptop-deck-v4"><i></i></div>
+          </div>
           <button type="button" class="room-object poster-object-v3" data-room-object="poster" aria-label="Рассмотреть плакат Лололошки и JDH"><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH"><span>плакат</span></button>
           <div id="addedBookSpines" class="added-book-spines-v3" aria-label="Книги на полке"></div>
-          <div id="flowerBouquet" class="flower-bouquet-v3 lavender" aria-hidden="true">${Array.from({ length: 6 }, (_, index) => `<i style="--flower:${index}"></i>`).join("")}</div>
+          <div class="energy-can-v4" aria-label="Банка Red Monster с цветами"><span>RED</span><b>MONSTER</b></div>
           <div class="radio-readout-v3" id="radioRoomTitle">Key</div>
           <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
           <button type="button" id="anyaSleeping" class="sleeping-anya-v3" data-room-object="anya" aria-label="Разбудить Аню" hidden><img src="./room/anya-sleep-v2.webp" alt="Аня спит под одеялом"><span>разбудить</span></button>
-          <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img src="./room/anya-laptop-v3.webp" alt="Аня сидит за ноутбуком"><span>Аня за ноутбуком</span></button>
+          <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке за ноутбуком"><span>Аня за ноутбуком</span></button>
           <button type="button" id="simaSpriteV3" class="sima-v3 walking" data-room-object="sima" aria-label="Погладить Симу"><img src="./room/sima-walk-v2.webp" alt="Сима гуляет по комнате"><span class="sima-label">Сима</span><span class="sima-hearts-v3" aria-hidden="true">♡ ♡ ♡</span></button>
           <button type="button" class="room-target target-tv" data-room-object="tv" aria-label="Управлять телевизором"><span>телевизор</span></button>
           <button type="button" class="room-target target-laptop" data-room-object="laptop" aria-label="Выбрать игру на ноутбуке"><span>ноутбук</span></button>
           <button type="button" class="room-target target-radio" data-room-object="radio" aria-label="Управлять радио"><span>радио</span></button>
           <button type="button" class="room-target target-books" data-room-object="books" aria-label="Открыть книжный шкаф"><span>книжный шкаф</span></button>
           <button type="button" class="room-target target-wardrobe" data-room-object="wardrobe" aria-label="Переодеть Аню"><span>гардероб</span></button>
-          <button type="button" class="room-target target-flower" data-room-object="flower" aria-label="Поменять цветы"><span>цветы</span></button>
           <button type="button" class="room-target target-lamp" data-room-object="lamp" aria-label="Выключить свет"><span>свет</span></button>
           <aside id="roomPanel" class="room-object-panel" aria-live="polite" hidden></aside>
           <audio id="roomAudio" preload="metadata"></audio>
@@ -162,6 +165,7 @@
     const anyaSleeping = qs("#anyaSleeping", section);
     const anyaLaptop = qs("#anyaLaptop", section);
     const anyaImage = qs("#anyaCharacter", section);
+    const anyaLaptopImage = qs("#anyaLaptopImage", section);
     const sima = qs("#simaSpriteV3", section);
     const simaImage = qs("img", sima);
     const audio = qs("#roomAudio", section);
@@ -170,12 +174,40 @@
     let trackIndex = 0;
     let simaTimeout = 0;
     let lightsOn = true;
+    let activePanelAnchor = null;
 
     function say(message) { status.textContent = message; }
     function closePanel() {
       panel.hidden = true;
       panel.innerHTML = "";
+      panel.removeAttribute("style");
+      activePanelAnchor = null;
       qsa("[data-room-object]", stage).forEach((item) => item.classList.remove("selected"));
+    }
+    function positionPanel(anchor) {
+      if (!anchor || panel.hidden) return;
+      panel.style.left = "50%";
+      panel.style.top = "0";
+      panel.style.bottom = "auto";
+      const stageBox = stage.getBoundingClientRect();
+      const anchorBox = anchor.getBoundingClientRect();
+      const panelBox = panel.getBoundingClientRect();
+      const gap = 12;
+      const edge = 12;
+      const anchorLeft = anchorBox.left - stageBox.left;
+      const anchorTop = anchorBox.top - stageBox.top;
+      let left = anchorLeft + anchorBox.width / 2;
+      let top = anchorTop + anchorBox.height + gap;
+      if (top + panelBox.height > stageBox.height - edge) top = anchorTop - panelBox.height - gap;
+      left = Math.max(panelBox.width / 2 + edge, Math.min(stageBox.width - panelBox.width / 2 - edge, left));
+      top = Math.max(edge, Math.min(stageBox.height - panelBox.height - edge, top));
+      panel.style.left = `${left}px`;
+      panel.style.top = `${top}px`;
+      panel.style.setProperty("--panel-arrow-x", `${Math.max(20, Math.min(panelBox.width - 20, anchorLeft + anchorBox.width / 2 - (left - panelBox.width / 2)))}px`);
+      panel.dataset.placement = top < anchorTop ? "above" : "below";
+      if (window.matchMedia("(max-width: 640px)").matches) {
+        window.setTimeout(() => panel.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }), 20);
+      }
     }
     function showPanel(kind, title, content) {
       panel.className = `room-object-panel panel-${kind}`;
@@ -183,15 +215,21 @@
       panel.hidden = false;
       qs(".room-panel-close", panel).addEventListener("click", closePanel);
       qsa("[data-room-object]", stage).forEach((item) => item.classList.toggle("selected", item.dataset.roomObject === kind));
+      window.requestAnimationFrame(() => positionPanel(activePanelAnchor));
     }
     function setActivity(next) {
       activity = next;
+      if (next === "laptop") {
+        const outfit = outfits[currentOutfit];
+        anyaLaptopImage.src = outfit.laptopSrc;
+        anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке за ноутбуком`;
+      }
       anyaStanding.hidden = next !== "standing";
       anyaSleeping.hidden = next !== "sleeping";
       anyaLaptop.hidden = next !== "laptop";
       stage.classList.toggle("anya-at-laptop", next === "laptop");
       if (next === "sleeping") say("Аня легла точно на кровать и уже спит.");
-      else if (next === "laptop") say("Аня села на стул и устроилась за ноутбуком.");
+      else if (next === "laptop") say("Аня села на табуретку и устроилась за ноутбуком.");
       else say("Аня снова в комнате.");
     }
     function openAnyaPanel() {
@@ -204,7 +242,13 @@
         currentOutfit = button.dataset.outfit;
         const outfit = outfits[currentOutfit];
         anyaImage.classList.add("changing");
-        window.setTimeout(() => { anyaImage.src = outfit.src; anyaImage.alt = outfit.alt; anyaImage.classList.remove("changing"); }, 140);
+        window.setTimeout(() => {
+          anyaImage.src = outfit.src;
+          anyaImage.alt = outfit.alt;
+          anyaLaptopImage.src = outfit.laptopSrc;
+          anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке за ноутбуком`;
+          anyaImage.classList.remove("changing");
+        }, 140);
         setActivity("standing"); say(`Выбран образ «${outfit.label}».`); closePanel();
       }));
     }
@@ -244,10 +288,6 @@
         else toggleRadio();
       }));
     }
-    function openFlowerPanel() {
-      showPanel("flower", "Поменять цветы", `<button type="button" data-flowers="lavender">лаванда</button><button type="button" data-flowers="cream">светлые цветы</button><button type="button" data-flowers="rose">розовые цветы</button>`);
-      qsa("[data-flowers]", panel).forEach((button) => button.addEventListener("click", () => { qs("#flowerBouquet", section).className = `flower-bouquet-v3 ${button.dataset.flowers}`; say("Цветы в банке поменялись."); closePanel(); }));
-    }
     function petSima() {
       window.clearTimeout(simaTimeout); sima.classList.remove("walking"); sima.classList.add("petted"); simaImage.src = "./room/sima-pet-v2.webp"; simaImage.alt = "Довольная Сима после поглаживания"; say("Сима поглажена и очень довольна.");
       simaTimeout = window.setTimeout(() => { sima.classList.remove("petted"); sima.classList.add("walking"); simaImage.src = "./room/sima-walk-v2.webp"; simaImage.alt = "Сима гуляет по комнате"; }, 4200);
@@ -260,9 +300,12 @@
     const booksController = setupBooks(section, say);
     setupModal(qs("#posterModal", section));
     qsa("[data-room-object]", stage).forEach((button) => button.addEventListener("click", (event) => {
-      event.stopPropagation(); const kind = button.dataset.roomObject;
-      if (kind === "anya") openAnyaPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "flower") openFlowerPanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima();
+      event.stopPropagation(); const kind = button.dataset.roomObject; activePanelAnchor = button;
+      if (kind === "anya") openAnyaPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima();
     }));
+    sima.addEventListener("animationiteration", (event) => {
+      if (event.animationName === "simaWalk" && sima.classList.contains("walking")) sima.classList.toggle("facing-left");
+    });
     stage.addEventListener("click", (event) => { if (event.target === stage || event.target.classList.contains("room-backdrop-v3")) closePanel(); });
     audio.addEventListener("ended", () => { loadTrack(trackIndex + 1, true); if (!panel.hidden && panel.classList.contains("panel-radio")) openRadioPanel(); });
     loadTrack(0, false); say("Нажимай прямо на предметы в комнате.");
@@ -309,7 +352,8 @@
   function launchCelebration() {
     qs(".site-celebration")?.remove(); const overlay = document.createElement("div"); overlay.className = "site-celebration"; overlay.setAttribute("aria-hidden", "true"); const fireworks = document.createElement("div"); fireworks.className = "site-fireworks";
     const positions = [[12,22,0],[31,16,.35],[51,27,.8],[72,15,.2],[88,29,1.1],[19,52,1.35],[43,46,1.65],[65,55,1.2],[83,48,1.85]];
-    positions.forEach(([x,y,delay], burstIndex) => { const burst = document.createElement("span"); burst.className = "firework-burst"; burst.style.setProperty("--x", `${x}%`); burst.style.setProperty("--y", `${y}%`); burst.style.setProperty("--delay", `${delay}s`); burst.style.setProperty("--hue", `${(burstIndex * 43 + 265) % 360}`); for (let index = 0; index < 18; index += 1) { const particle = document.createElement("i"); particle.style.setProperty("--angle", `${index * 20}deg`); particle.style.setProperty("--distance", `${72 + (index % 4) * 18}px`); burst.append(particle); } fireworks.append(burst); });
+    const mobileCelebration = window.matchMedia("(max-width: 640px)").matches; const particleCount = mobileCelebration ? 12 : 18;
+    positions.forEach(([x,y,delay], burstIndex) => { const burst = document.createElement("span"); burst.className = "firework-burst"; burst.style.setProperty("--x", `${x}%`); burst.style.setProperty("--y", `${y}%`); burst.style.setProperty("--delay", `${delay}s`); burst.style.setProperty("--hue", `${(burstIndex * 43 + 265) % 360}`); for (let index = 0; index < particleCount; index += 1) { const particle = document.createElement("i"); particle.style.setProperty("--angle", `${index * (360 / particleCount)}deg`); particle.style.setProperty("--distance", `${(mobileCelebration ? 48 : 72) + (index % 4) * (mobileCelebration ? 11 : 18)}px`); burst.append(particle); } fireworks.append(burst); });
     overlay.innerHTML = `<div class="age-balloons"><span class="balloon-two">2</span><span class="balloon-one">1</span></div>`; overlay.prepend(fireworks); document.body.append(overlay); window.setTimeout(() => overlay.remove(), 8200);
   }
 
@@ -331,7 +375,7 @@
     const formatTime = (seconds) => { const value = Math.max(0, Math.ceil(seconds)); return `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`; };
     function updateHud() { timer.textContent = formatTime(timeLeft); scoreLine.textContent = `${score} бутылок · ${"♥".repeat(lives)}${"♡".repeat(4 - lives)}`; }
     function setCooler(value) { coolerX = Math.max(9, Math.min(91, value)); cooler.style.left = `${coolerX}%`; }
-    function spawn(elapsed) { const random = Math.random(); const type = random < .6 ? "bottle" : random < .74 ? "ice" : "mentos"; const element = document.createElement("div"); element.className = `zeroDrop ${type}`; element.innerHTML = type === "bottle" ? '<img src="./games/cocacola-zero-v2.webp" alt="">' : type === "ice" ? '<span aria-hidden="true">❄</span>' : '<img src="./games/mentos-v2.webp" alt="">'; drops.append(element); items.push({ type, x: 7 + Math.random() * 86, y: -10, speed: 19 + Math.random() * 11 + elapsed * .12, spin: -28 + Math.random() * 56, element }); }
+    function spawn(elapsed) { const random = Math.random(); const type = random < .6 ? "bottle" : random < .74 ? "ice" : "mentos"; const element = document.createElement("div"); element.className = `zeroDrop ${type}`; element.innerHTML = type === "bottle" ? '<img src="./games/cocacola-zero-v2.webp" alt="">' : type === "ice" ? '<span aria-hidden="true">❄</span>' : '<img src="./games/mentos-v3.webp" alt="">'; drops.append(element); items.push({ type, x: 7 + Math.random() * 86, y: -10, speed: 19 + Math.random() * 11 + elapsed * .12, spin: -28 + Math.random() * 56, element }); }
     function finish() { running = false; window.cancelAnimationFrame(raf); items.forEach((item) => item.element.remove()); items = []; result.hidden = false; result.innerHTML = `<strong>${lives <= 0 ? "Mentos победил" : "Минута пройдена"}</strong><p>Собрано бутылок: ${score}. ${score >= 18 ? "Запас официально внушительный." : "Можно попробовать собрать ещё больше."}</p><button type="button">сыграть ещё раз</button>`; qs("button", result).addEventListener("click", begin); }
     function frame(now) { if (!running) return; const dt = Math.min(.04, (now - lastAt) / 1000 || 0); lastAt = now; const elapsed = (now - startAt) / 1000; timeLeft = 60 + bonusTime - elapsed; const spawnDelay = Math.max(330, 570 - elapsed * 3.2); if (now - lastSpawn > spawnDelay) { lastSpawn = now; spawn(elapsed); } const next = []; items.forEach((item) => { item.y += item.speed * dt; item.element.style.left = `${item.x}%`; item.element.style.top = `${item.y}%`; item.element.style.transform = `translate(-50%, -50%) rotate(${item.spin + item.y * .65}deg)`; const caught = item.y >= 77 && item.y <= 92 && Math.abs(item.x - coolerX) < 11.5; if (caught) { if (item.type === "bottle") { score += 1; message.textContent = "Zero в запасе!"; } else if (item.type === "ice") { bonusTime = Math.min(12, bonusTime + 3); message.textContent = "+3 секунды прохлады."; } else { lives -= 1; message.textContent = "Mentos! Минус жизнь."; arena.classList.remove("coke-hit"); void arena.offsetWidth; arena.classList.add("coke-hit"); } item.element.remove(); } else if (item.y > 110) item.element.remove(); else next.push(item); }); items = next; updateHud(); if (timeLeft <= 0 || lives <= 0) finish(); else raf = window.requestAnimationFrame(frame); }
     function begin() { items.forEach((item) => item.element.remove()); items = []; score = 0; lives = 4; bonusTime = 0; timeLeft = 60; startAt = performance.now(); lastAt = startAt; lastSpawn = startAt - 300; startPanel.hidden = true; result.hidden = true; message.textContent = "Лови Zero и избегай Mentos."; running = true; updateHud(); raf = window.requestAnimationFrame(frame); }
@@ -345,13 +389,16 @@
     const laneCenters = [45.5, 59, 72.5];
     root.innerHTML = `<div class="gamePage ambulanceGamePage ambulance-v3"><button type="button" class="gameClose">← к играм</button><div class="gameTopbar"><span>Ночная смена</span><b id="ambulanceScore">0 вызовов · ♥♥♥♥</b><b id="ambulanceSpeed">скорость ×1.0</b></div><div class="ambulanceArena ambulance-arena-v3"><div class="road-scroll" aria-hidden="true"></div><div id="roadEvents" class="road-events"></div><img id="ambulanceCar" class="ambulance-car-v3" src="./games/ambulance-anya.webp" alt="Скорая помощь с Аней за рулём"><div id="ambulanceStart" class="gameStartPanel ambulanceStart"><p>Перестраивайся между тремя полосами, доезжай до домиков-вызовов и объезжай конусы. Смена продолжается, пока не закончатся жизни, а дорога постепенно ускоряется.</p><button type="button">начать смену</button></div><div id="ambulanceResult" class="gameResult ambulanceResult" hidden></div><div class="laneControls"><button type="button" data-lane-move="up">↑ выше</button><p id="ambulanceMessage">Аня готова выезжать.</p><button type="button" data-lane-move="down">↓ ниже</button></div></div></div>`;
     const arena = qs(".ambulance-arena-v3", root); const road = qs(".road-scroll", root); const eventLayer = qs("#roadEvents", root); const car = qs("#ambulanceCar", root); const scoreLine = qs("#ambulanceScore", root); const speedLine = qs("#ambulanceSpeed", root); const message = qs("#ambulanceMessage", root); const startPanel = qs("#ambulanceStart", root); const result = qs("#ambulanceResult", root);
-    let running = false, raf = 0, lane = 1, calls = 0, lives = 4, items = [], startAt = 0, lastAt = 0, lastSpawn = 0;
+    const mobileMode = window.matchMedia("(max-width: 700px)").matches || window.matchMedia("(pointer: coarse)").matches;
+    const mobileTravelBoost = mobileMode ? 1.5 : 1;
+    if (mobileMode) road.style.animation = "none";
+    let running = false, raf = 0, lane = 1, calls = 0, lives = 4, items = [], startAt = 0, lastAt = 0, lastSpawn = 0, roadOffset = 0;
     function updateHud(elapsed = 0) { const speedMultiplier = 1 + Math.min(elapsed, 240) / 82; scoreLine.textContent = `${calls} вызовов · ${"♥".repeat(lives)}${"♡".repeat(4 - lives)}`; speedLine.textContent = `скорость ×${speedMultiplier.toFixed(1)}`; car.style.top = `${laneCenters[lane]}%`; road.style.setProperty("--road-speed", `${Math.max(.7, 2.35 / speedMultiplier)}s`); }
     function setLane(value) { lane = Math.max(0, Math.min(2, value)); updateHud(running ? (performance.now() - startAt) / 1000 : 0); }
     function spawn() { const type = Math.random() < .6 ? "call" : "cone"; const element = document.createElement("span"); element.className = `road-event-v3 ${type}`; element.innerHTML = type === "call" ? '<img src="./games/call-house-v2.webp" alt="">' : '<img src="./games/traffic-cone-v2.webp" alt="">'; eventLayer.append(element); const eventLane = Math.floor(Math.random() * 3); element.style.top = `${laneCenters[eventLane]}%`; items.push({ type, lane: eventLane, x: 108, baseSpeed: 15 + Math.random() * 4, element }); }
     function finish() { running = false; window.cancelAnimationFrame(raf); road.classList.remove("moving"); items.forEach((item) => item.element.remove()); items = []; result.hidden = false; result.innerHTML = `<strong>Смена закончена</strong><p>Аня доехала до ${calls} ${pluralizeCalls(calls)}.</p><button type="button">ещё одна смена</button>`; qs("button", result).addEventListener("click", begin); }
-    function frame(now) { if (!running) return; const dt = Math.min(.04, (now - lastAt) / 1000 || 0); lastAt = now; const elapsed = (now - startAt) / 1000; const difficulty = Math.min(elapsed, 240) * .085; const spawnDelay = Math.max(430, 1120 - elapsed * 5.2); if (now - lastSpawn > spawnDelay) { lastSpawn = now; spawn(); } const next = []; items.forEach((item) => { item.x -= (item.baseSpeed + difficulty) * dt; item.element.style.left = `${item.x}%`; const collision = item.x <= 31 && item.x >= 16 && item.lane === lane; if (collision) { if (item.type === "call") { calls += 1; message.textContent = "Вызов принят. Едем дальше!"; } else { lives -= 1; message.textContent = "Конус! Минус жизнь."; arena.classList.remove("ambulance-hit"); void arena.offsetWidth; arena.classList.add("ambulance-hit"); } item.element.remove(); } else if (item.x < -12) item.element.remove(); else next.push(item); }); items = next; updateHud(elapsed); if (lives <= 0) finish(); else raf = window.requestAnimationFrame(frame); }
-    function begin() { items.forEach((item) => item.element.remove()); items = []; lane = 1; calls = 0; lives = 4; startAt = performance.now(); lastAt = startAt; lastSpawn = startAt - 520; startPanel.hidden = true; result.hidden = true; message.textContent = "Смена началась. Следи за дорогой."; road.classList.add("moving"); running = true; updateHud(0); raf = window.requestAnimationFrame(frame); }
+    function frame(now) { if (!running) return; const dt = Math.min(.04, (now - lastAt) / 1000 || 0); lastAt = now; const elapsed = (now - startAt) / 1000; const difficulty = Math.min(elapsed, 240) * .085; const speedMultiplier = 1 + Math.min(elapsed, 240) / 82; const spawnDelay = Math.max(430, 1120 - elapsed * 5.2); if (mobileMode) { roadOffset -= arena.clientWidth * speedMultiplier * .62 * dt; road.style.backgroundPosition = `${roadOffset}px center`; } if (now - lastSpawn > spawnDelay) { lastSpawn = now; spawn(); } const next = []; items.forEach((item) => { item.x -= (item.baseSpeed + difficulty) * dt * mobileTravelBoost; item.element.style.left = `${item.x}%`; const collision = item.x <= 31 && item.x >= 16 && item.lane === lane; if (collision) { if (item.type === "call") { calls += 1; message.textContent = "Вызов принят. Едем дальше!"; } else { lives -= 1; message.textContent = "Конус! Минус жизнь."; arena.classList.remove("ambulance-hit"); void arena.offsetWidth; arena.classList.add("ambulance-hit"); } item.element.remove(); } else if (item.x < -12) item.element.remove(); else next.push(item); }); items = next; updateHud(elapsed); if (lives <= 0) finish(); else raf = window.requestAnimationFrame(frame); }
+    function begin() { items.forEach((item) => item.element.remove()); items = []; lane = 1; calls = 0; lives = 4; roadOffset = 0; road.style.backgroundPosition = "0 center"; startAt = performance.now(); lastAt = startAt; lastSpawn = startAt - 520; startPanel.hidden = true; result.hidden = true; message.textContent = "Смена началась. Следи за дорогой."; road.classList.add("moving"); running = true; updateHud(0); raf = window.requestAnimationFrame(frame); }
     function keyHandler(event) { if (event.key === "ArrowUp" || event.key === "ArrowLeft") setLane(lane - 1); if (event.key === "ArrowDown" || event.key === "ArrowRight") setLane(lane + 1); }
     arena.addEventListener("pointerdown", (event) => { if (!running || event.target.closest("button")) return; const box = arena.getBoundingClientRect(); const y = ((event.clientY - box.top) / box.height) * 100; const closestLane = laneCenters.reduce((best, center, index) => Math.abs(center - y) < Math.abs(laneCenters[best] - y) ? index : best, 0); setLane(closestLane); });
     qsa("[data-lane-move]", root).forEach((button) => button.addEventListener("click", () => setLane(lane + (button.dataset.laneMove === "up" ? -1 : 1)))); window.addEventListener("keydown", keyHandler); qs(".gameClose", root).addEventListener("click", closeGame); qs("#ambulanceStart button", root).addEventListener("click", begin); updateHud(0);
