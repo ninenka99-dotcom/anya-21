@@ -1772,6 +1772,30 @@ input:focus-visible {
 }
 .sima-activity-instruction-v8 { flex: 1 0 100%; margin-bottom: 5px; color: #c2b6c1; font-size: 11px; line-height: 1.55; }
 
+.sima-activity-v8.sima-sleep-notice-v9 {
+  top: 72px;
+  bottom: auto;
+  left: 20px;
+  width: min(270px, calc(100% - 40px));
+  padding: 15px;
+  border-radius: 17px;
+  transform: none;
+  animation: simaSleepNoticeIn .28s ease both;
+}
+
+@keyframes simaSleepNoticeIn {
+  from { opacity: 0; transform: translateY(-10px) scale(.98); }
+}
+
+.sima-sleep-notice-v9 > p { margin: 0 0 4px; }
+.sima-sleep-notice-v9 h3 { margin: 0 0 11px; font-size: 24px; }
+.sima-sleep-notice-v9 button:not(.sima-activity-close-v8) {
+  width: 100%;
+  min-height: 43px;
+  padding: 8px 12px;
+  font-size: 10px;
+}
+
 .sima-action-prop-v8 { position: absolute; z-index: 30; pointer-events: none; }
 .sima-action-prop-v8 img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 9px rgba(0,0,0,.46)); }
 .sima-action-prop-v8.prop-bowl { left: 52%; bottom: 15%; width: 10%; height: 15%; }
@@ -2042,6 +2066,7 @@ input:focus-visible {
   .sima-action-dock-v8 { grid-template-columns: repeat(3, 1fr); width: min(700px, calc(100% - 20px)); }
   .sima-action-dock-v8 button { min-height: 53px; }
   .sima-activity-v8 { bottom: 145px; }
+  .sima-activity-v8.sima-sleep-notice-v9 { top: 66px; bottom: auto; left: 14px; }
 }
 
 @media (max-width: 640px) {
@@ -2128,6 +2153,19 @@ input:focus-visible {
   .sima-activity-v8 button:not(.sima-activity-close-v8) { flex-basis: 95px; min-height: 58px; padding: 7px; font-size: 8px; }
   .sima-activity-v8 button img { width: 42px; height: 38px; }
   .sima-activity-instruction-v8 { font-size: 9px; }
+  .sima-activity-v8.sima-sleep-notice-v9 {
+    top: 50px;
+    bottom: auto;
+    left: 8px;
+    width: 154px;
+    max-height: none;
+    overflow: visible;
+    padding: 10px;
+    border-radius: 13px;
+  }
+  .sima-sleep-notice-v9 > p { display: none; }
+  .sima-sleep-notice-v9 h3 { margin: 0 0 7px; font-size: 18px; }
+  .sima-sleep-notice-v9 button:not(.sima-activity-close-v8) { min-height: 36px; padding: 6px 8px; font-size: 8px; }
   .sima-action-prop-v8.prop-bowl { left: 54%; bottom: 26%; width: 18%; height: 12%; }
   .sima-action-prop-v8.prop-box { bottom: 23%; width: 43%; height: 29%; }
   .sima-action-prop-v8.prop-bed { bottom: 23%; width: 49%; height: 29%; }
