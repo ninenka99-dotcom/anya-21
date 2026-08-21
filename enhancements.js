@@ -122,7 +122,7 @@
       </div>
       <div class="roomViewport room-viewport-v3 contentWidth">
         <div class="roomStage room-stage-v3" id="roomStageV3">
-          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v12.webp" alt="Комната Ани, показанная прямо спереди">
+          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v13.webp" alt="Комната Ани, показанная прямо спереди">
           <div class="roomHud room-hud-v3" aria-live="polite"><span class="roomDot"></span><p id="roomStatus">Нажимай прямо на предметы в комнате.</p></div>
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
