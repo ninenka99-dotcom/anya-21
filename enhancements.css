@@ -229,6 +229,8 @@ input:focus-visible {
 .lights-off .sleeping-anya-v3,
 .lights-off .laptop-anya-v3,
 .lights-off .sima-v3,
+.lights-off .sima-bowl-v8,
+.lights-off .sima-feeding-v8,
 .lights-off .added-book-spines-v3,
 .lights-off .laptop-unit-v5 { filter: brightness(.55) saturate(.75); }
 
@@ -346,6 +348,8 @@ input:focus-visible {
 .sleeping-anya-v3 > span,
 .laptop-anya-v3 > span,
 .sima-label,
+.sima-bowl-v8 > span,
+.sima-feeding-v8 > span,
 .room-target > span {
   position: absolute;
   left: 50%;
@@ -378,6 +382,10 @@ input:focus-visible {
 .laptop-anya-v3:focus-visible > span,
 .sima-v3:hover .sima-label,
 .sima-v3:focus-visible .sima-label,
+.sima-bowl-v8:hover > span,
+.sima-bowl-v8:focus-visible > span,
+.sima-feeding-v8:hover > span,
+.sima-feeding-v8:focus-visible > span,
 .room-target:hover > span,
 .room-target:focus-visible > span {
   opacity: 1;
@@ -617,6 +625,87 @@ input:focus-visible {
   0% { opacity: 0; transform: translate(-50%, 8px) scale(.8); }
   35% { opacity: 1; }
   100% { opacity: 0; transform: translate(-50%, -22px) scale(1.15); }
+}
+
+.sima-bowl-v8,
+.sima-feeding-v8 {
+  position: absolute;
+  z-index: 24;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  filter: drop-shadow(0 8px 7px rgba(0,0,0,.4));
+}
+
+.sima-bowl-v8 {
+  right: 18.4%;
+  bottom: 1.5%;
+  width: 5.6%;
+  height: 8.6%;
+  transition: transform .2s ease, filter .2s ease;
+}
+
+.sima-bowl-v8 img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sima-bowl-v8:hover,
+.sima-bowl-v8.selected {
+  transform: translateY(-4%) scale(1.04);
+  filter: drop-shadow(0 8px 8px rgba(0,0,0,.42)) drop-shadow(0 0 12px rgba(223,181,227,.28));
+}
+
+.sima-feeding-v8 {
+  right: 12.4%;
+  bottom: .7%;
+  width: 18.5%;
+  height: 25%;
+  animation: simaArrivesToBowl .75s cubic-bezier(.2,.75,.28,1) both;
+}
+
+.sima-feeding-cat-v8 {
+  position: absolute;
+  z-index: 1;
+  right: 7%;
+  bottom: 3%;
+  width: 88%;
+  height: 96%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.sima-feeding-bowl-v8 {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  width: 37%;
+  height: 35%;
+  object-fit: contain;
+}
+
+.sima-feeding-v8 i {
+  position: absolute;
+  z-index: 5;
+  top: 14%;
+  right: 1%;
+  color: #f2d8e7;
+  font: italic clamp(5px, .55vw, 9px)/1 Playfair Display, Georgia, serif;
+  text-shadow: 0 0 9px rgba(222,165,201,.85);
+  animation: simaEatingMrr 1.8s ease-in-out infinite;
+}
+
+@keyframes simaArrivesToBowl {
+  from { opacity: 0; transform: translateX(-28%) scale(.92); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes simaEatingMrr {
+  0%,100% { opacity: .3; transform: translateY(5px); }
+  45% { opacity: 1; transform: translateY(-3px); }
 }
 
 .room-target {
@@ -1254,6 +1343,556 @@ input:focus-visible {
   font-size: clamp(9px, 1.1vw, 13px);
 }
 
+/* Sima's large cozy game */
+.simaLauncherV8 {
+  grid-column: 1 / -1;
+  min-height: 440px;
+  color: #f4edf4;
+  background: #211b28;
+  border-color: rgba(208,180,215,.24);
+  box-shadow: inset 0 0 80px rgba(19,12,23,.5);
+}
+
+.simaLauncherV8:hover {
+  box-shadow: 0 26px 62px rgba(44,27,49,.28), inset 0 0 80px rgba(19,12,23,.3);
+}
+
+.simaLauncherV8 > span:first-child { z-index: 6; color: #d8c3d8; }
+
+.sima-launcher-art-v8 {
+  position: absolute !important;
+  z-index: 0;
+  inset: 0 0 0 27% !important;
+  overflow: hidden;
+}
+
+.sima-launcher-art-v8::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #211b28 0%, rgba(33,27,40,.72) 14%, transparent 52%), linear-gradient(0deg, rgba(18,12,23,.28), transparent 55%);
+}
+
+.sima-launcher-bg-v8 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.84) brightness(.82);
+}
+
+.sima-launcher-cat-v8 {
+  position: absolute;
+  z-index: 2;
+  right: 16%;
+  bottom: -9%;
+  width: 31%;
+  height: 87%;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 14px rgba(0,0,0,.48));
+  transition: transform .35s ease;
+}
+
+.sima-launcher-bowl-v8 {
+  position: absolute;
+  z-index: 3;
+  right: 5%;
+  bottom: 5%;
+  width: 13%;
+  height: 28%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 10px rgba(0,0,0,.4));
+}
+
+.simaLauncherV8:hover .sima-launcher-cat-v8 { transform: translateY(-2%) scale(1.018); }
+.simaLauncherV8 > div { z-index: 7; max-width: 42%; }
+.simaLauncherV8 > i { z-index: 7; }
+
+.sima-game-page-v8 {
+  grid-template-rows: 72px minmax(0, 1fr) !important;
+  height: 100dvh;
+  min-height: 680px !important;
+  overflow: hidden;
+  color: #f3edf3;
+  background: #17121b;
+}
+
+.sima-topbar-v8 {
+  z-index: 95;
+  grid-template-columns: minmax(180px, .65fr) minmax(460px, 1.8fr) minmax(100px, .4fr);
+  height: 72px;
+  padding: 0 24px 0 164px;
+  gap: clamp(18px, 3vw, 50px);
+  background: linear-gradient(90deg, #1a151f, #241b2a 55%, #1a151f);
+  border-bottom-color: rgba(255,255,255,.13);
+}
+
+.sima-game-title-v8 span {
+  display: block;
+  color: #f0e6f0;
+  letter-spacing: .02em;
+  text-transform: none;
+  font: 500 clamp(18px, 1.7vw, 26px)/1 Playfair Display, Georgia, serif;
+}
+
+.sima-game-title-v8 small {
+  display: block;
+  margin-top: 4px;
+  color: #aa9ead;
+  font-size: 7px;
+  letter-spacing: .16em;
+}
+
+.sima-needs-v8 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 1.5vw, 20px);
+}
+
+.sima-needs-v8 > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4px 7px;
+}
+
+.sima-needs-v8 span { color: #b9aeba; font-size: 7px; letter-spacing: .12em; }
+.sima-needs-v8 em { color: #d9cfda; font-size: 7px; font-style: normal; }
+
+.sima-needs-v8 i {
+  grid-column: 1 / -1;
+  height: 5px;
+  overflow: hidden;
+  background: rgba(255,255,255,.1);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.35);
+}
+
+.sima-needs-v8 i b {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #947ca0, #e3c2d2);
+  border-radius: inherit;
+  box-shadow: 0 0 8px rgba(220,174,207,.42);
+  transition: width .5s cubic-bezier(.2,.7,.25,1);
+}
+
+.sima-collection-button-v8 {
+  display: grid;
+  place-items: center;
+  min-height: 42px;
+  padding: 7px 13px;
+  color: #dcd1dd;
+  cursor: pointer;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 12px;
+}
+
+.sima-collection-button-v8 span { font-size: 7px; letter-spacing: .13em; }
+.sima-collection-button-v8 b { margin-top: 3px; color: #f1dbe8; font-size: 11px; }
+
+.sima-nook-v8 {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  user-select: none;
+  background: #201822;
+}
+
+.sima-nook-background-v8 {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.9) brightness(.9);
+  transition: filter .7s ease;
+}
+
+.sima-nook-v8::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(10,6,14,.03), transparent 55%, rgba(10,6,14,.25));
+}
+
+.sima-ambient-v8 { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+
+.sima-ambient-v8 i {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  opacity: .25;
+  background: #efd59e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #e6b971;
+  animation: simaDustFloat 7s ease-in-out infinite alternate;
+}
+
+.sima-ambient-v8 i:nth-child(1) { left: 13%; top: 25%; }
+.sima-ambient-v8 i:nth-child(2) { left: 29%; top: 48%; animation-delay: -2s; }
+.sima-ambient-v8 i:nth-child(3) { left: 45%; top: 19%; animation-delay: -4s; }
+.sima-ambient-v8 i:nth-child(4) { left: 62%; top: 37%; animation-delay: -1s; }
+.sima-ambient-v8 i:nth-child(5) { left: 79%; top: 24%; animation-delay: -5s; }
+.sima-ambient-v8 i:nth-child(6) { left: 88%; top: 54%; animation-delay: -3s; }
+
+@keyframes simaDustFloat { to { opacity: .75; transform: translate(12px, -18px) scale(1.5); } }
+
+.sima-scene-prop-v8,
+.sima-window-hotspot-v8 {
+  position: absolute;
+  z-index: 18;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  transition: transform .22s ease, filter .22s ease;
+}
+
+.sima-scene-prop-v8 img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 8px rgba(0,0,0,.45)); }
+
+.sima-scene-prop-v8 span,
+.sima-window-hotspot-v8 span {
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  padding: 5px 9px;
+  color: #f3e9f1;
+  white-space: nowrap;
+  opacity: 0;
+  background: rgba(25,17,29,.82);
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 999px;
+  transform: translate(-50%, 8px);
+  transition: opacity .18s ease, transform .18s ease;
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.sima-scene-prop-v8:hover,
+.sima-scene-prop-v8:focus-visible,
+.sima-window-hotspot-v8:hover,
+.sima-window-hotspot-v8:focus-visible { transform: translateY(-4px) scale(1.035); filter: drop-shadow(0 0 14px rgba(222,183,218,.32)); }
+.sima-scene-prop-v8:hover span,
+.sima-scene-prop-v8:focus-visible span,
+.sima-window-hotspot-v8:hover span,
+.sima-window-hotspot-v8:focus-visible span { opacity: 1; transform: translate(-50%, 0); }
+.sima-scene-prop-v8.completed::after,
+.sima-window-hotspot-v8.completed::after {
+  content: "✦";
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  color: #442f4b;
+  background: #ead2e0;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(230,190,216,.55);
+}
+
+.sima-scene-box-v8 { left: 4.5%; bottom: 14%; width: 14%; height: 25%; }
+.sima-scene-brush-v8 { left: 22%; bottom: 18%; width: 8%; height: 16%; transform: rotate(-14deg); }
+.sima-scene-bowl-v8 { left: 31%; bottom: 13%; width: 7%; height: 12%; }
+.sima-scene-yarn-v8 { right: 29%; bottom: 14%; width: 7%; height: 13%; }
+.sima-scene-bed-v8 { right: 5%; bottom: 13%; width: 17%; height: 26%; }
+.sima-window-hotspot-v8 { left: 38%; top: 6%; width: 28%; height: 47%; border-radius: 45%; }
+.sima-window-hotspot-v8 span { bottom: 10%; }
+
+.sima-game-cat-v8 {
+  position: absolute;
+  z-index: 32;
+  left: 50%;
+  bottom: 14%;
+  width: min(25vw, 360px);
+  height: 54%;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  transform: translateX(-50%);
+  transition: left .65s cubic-bezier(.2,.72,.25,1), bottom .65s cubic-bezier(.2,.72,.25,1), width .4s ease, transform .35s ease, filter .3s ease;
+  filter: drop-shadow(0 15px 12px rgba(0,0,0,.48));
+  touch-action: manipulation;
+}
+
+.sima-game-cat-v8 > img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+.sima-game-cat-v8:hover { filter: drop-shadow(0 15px 12px rgba(0,0,0,.48)) drop-shadow(0 0 18px rgba(224,193,222,.2)); }
+.sima-game-cat-v8.cared-for { animation: simaCareBounce .65s ease; }
+.sima-game-cat-v8.brushable { cursor: grab; touch-action: none; }
+.sima-game-cat-v8.brushable:active { cursor: grabbing; }
+
+@keyframes simaCareBounce {
+  0%,100% { transform: translateX(-50%) scale(1); }
+  45% { transform: translateX(-50%) translateY(-3%) scale(1.025); }
+}
+
+.sima-game-hearts-v8 {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  color: #f1cfe1;
+  opacity: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.sima-game-cat-v8.cared-for .sima-game-hearts-v8 { animation: simaGameHearts 1.2s ease-out; }
+@keyframes simaGameHearts { 0% { opacity: 0; transform: translate(-50%, 15px) scale(.7); } 35% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -35px) scale(1.25); } }
+
+.sima-speech-v8 {
+  position: absolute;
+  z-index: 70;
+  top: 17px;
+  left: 50%;
+  width: min(560px, calc(100% - 34px));
+  min-height: 42px;
+  padding: 11px 18px;
+  color: #eee5ed;
+  text-align: center;
+  background: rgba(25,18,29,.72);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.2);
+  transform: translateX(-50%);
+  backdrop-filter: blur(12px);
+  font-size: clamp(10px, .9vw, 13px);
+}
+
+.sima-speech-v8.speaking { animation: simaSpeechIn .34s ease; }
+@keyframes simaSpeechIn { from { opacity: .2; transform: translate(-50%, 6px); } }
+
+.sima-action-dock-v8 {
+  position: absolute;
+  z-index: 85;
+  left: 50%;
+  bottom: 12px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(90px, 1fr));
+  gap: 7px;
+  width: min(1030px, calc(100% - 32px));
+  padding: 8px;
+  background: rgba(26,18,30,.82);
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 18px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.36);
+  transform: translateX(-50%);
+  backdrop-filter: blur(15px);
+}
+
+.sima-action-dock-v8 button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  min-height: 61px;
+  padding: 7px 8px;
+  color: #e9e0e8;
+  text-align: left;
+  cursor: pointer;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 12px;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.sima-action-dock-v8 button:hover,
+.sima-action-dock-v8 button:focus-visible { transform: translateY(-2px); background: rgba(231,209,227,.13); border-color: rgba(235,215,232,.3); }
+.sima-action-dock-v8 button.completed { background: linear-gradient(145deg, rgba(191,153,187,.2), rgba(255,255,255,.05)); border-color: rgba(230,196,221,.28); }
+.sima-action-dock-v8 button > img { grid-row: 1 / 3; width: 31px; height: 43px; object-fit: contain; filter: drop-shadow(0 4px 4px rgba(0,0,0,.3)); }
+.sima-action-dock-v8 button > span { font-size: 9px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+.sima-action-dock-v8 button > small { color: #aa9fab; font-size: 7px; line-height: 1.2; }
+.sima-action-dock-v8 button > i { position: absolute; top: 6px; right: 7px; color: #e7cddd; font-size: 9px; font-style: normal; }
+.sima-action-dock-v8 button.completed > i::after { content: "✦"; }
+
+.sima-activity-v8 {
+  position: absolute;
+  z-index: 105;
+  left: 50%;
+  bottom: 98px;
+  width: min(620px, calc(100% - 28px));
+  padding: clamp(18px, 2.5vw, 28px);
+  color: #eee6ed;
+  background: rgba(27,19,31,.92);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 22px;
+  box-shadow: 0 24px 70px rgba(0,0,0,.48);
+  transform: translateX(-50%);
+  backdrop-filter: blur(18px);
+  animation: simaPanelUp .28s ease both;
+}
+
+@keyframes simaPanelUp { from { opacity: 0; transform: translate(-50%, 15px) scale(.98); } }
+.sima-activity-v8 > p { margin: 0 35px 7px 0; color: #b9a7b8; font-size: 8px; letter-spacing: .18em; text-transform: uppercase; }
+.sima-activity-v8 h3 { margin: 0 0 16px; font: 500 clamp(22px, 2.5vw, 34px)/1.05 Playfair Display, Georgia, serif; }
+.sima-activity-v8 > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.sima-activity-v8 button:not(.sima-activity-close-v8) {
+  flex: 1 1 145px;
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  min-height: 70px;
+  padding: 10px 13px;
+  color: #e9e0e8;
+  cursor: pointer;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  font-size: 10px;
+  transition: background .18s ease, transform .18s ease;
+}
+.sima-activity-v8 button:not(.sima-activity-close-v8):hover { background: rgba(229,205,226,.15); transform: translateY(-2px); }
+.sima-activity-v8 button img { width: 55px; height: 48px; object-fit: contain; }
+.sima-activity-close-v8 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  color: #e8dfe7;
+  cursor: pointer;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
+  font-size: 19px;
+}
+.sima-activity-instruction-v8 { flex: 1 0 100%; margin-bottom: 5px; color: #c2b6c1; font-size: 11px; line-height: 1.55; }
+
+.sima-action-prop-v8 { position: absolute; z-index: 30; pointer-events: none; }
+.sima-action-prop-v8 img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 9px rgba(0,0,0,.46)); }
+.sima-action-prop-v8.prop-bowl { left: 52%; bottom: 15%; width: 10%; height: 15%; }
+.sima-action-prop-v8.prop-box { z-index: 27; left: 50%; bottom: 13%; width: 26%; height: 36%; transform: translateX(-50%); }
+.sima-action-prop-v8.prop-bed { z-index: 27; left: 50%; bottom: 14%; width: 31%; height: 38%; transform: translateX(-50%); }
+.sima-action-prop-v8.prop-brush { z-index: 60; left: 50%; top: 46%; width: 8%; height: 15%; transform: translate(-50%, -50%) rotate(-18deg); transition: left .08s linear, top .08s linear; }
+
+.sima-eating-v8 .sima-game-cat-v8 { left: 45%; bottom: 15%; width: min(30vw, 430px); }
+.sima-playing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(34vw, 500px); }
+.sima-brushing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(28vw, 410px); }
+.sima-boxing-v8 .sima-game-cat-v8 { z-index: 34; bottom: 16%; width: min(21vw, 310px); }
+.sima-windowing-v8 .sima-game-cat-v8 { left: 68%; bottom: 18%; width: min(19vw, 275px); }
+.sima-sleeping-v8 .sima-game-cat-v8 { z-index: 34; bottom: 16%; width: min(26vw, 390px); }
+.sima-sleeping-v8 .sima-nook-background-v8 { filter: saturate(.72) brightness(.54); }
+.sima-sleeping-v8::before { content: "z z z"; position: absolute; z-index: 48; left: 58%; top: 30%; color: #d9c5dc; font: italic 24px Playfair Display, Georgia, serif; letter-spacing: .2em; animation: simaZzz 2.2s ease-in-out infinite; }
+@keyframes simaZzz { 50% { opacity: .45; transform: translateY(-8px); } }
+
+.sima-play-target-v8 {
+  position: absolute;
+  z-index: 75;
+  width: clamp(58px, 8vw, 105px);
+  height: clamp(58px, 8vw, 105px);
+  padding: 5px;
+  cursor: pointer;
+  background: rgba(232,204,225,.08);
+  border: 1px solid rgba(246,224,240,.28);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left .34s cubic-bezier(.2,.7,.3,1), top .34s cubic-bezier(.2,.7,.3,1), transform .16s ease;
+  animation: simaToyPulse 1s ease-in-out infinite alternate;
+}
+.sima-play-target-v8:active { transform: translate(-50%, -50%) scale(.9); }
+.sima-play-target-v8 img { width: 100%; height: 100%; object-fit: contain; }
+@keyframes simaToyPulse { to { box-shadow: 0 0 25px rgba(225,186,214,.34); } }
+
+.sima-fireflies-v8 { position: absolute; inset: 0; z-index: 72; pointer-events: none; }
+.sima-firefly-v8 {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+  transform: translate(-50%, -50%);
+}
+.sima-firefly-v8::before { content: ""; position: absolute; inset: 13px; background: #ffe7a4; border-radius: 50%; box-shadow: 0 0 7px 3px #f8d77d, 0 0 18px 7px rgba(245,207,105,.5); animation: simaFirefly 1.5s ease-in-out var(--firefly-delay) infinite alternate; }
+.sima-firefly-v8.caught { pointer-events: none; animation: simaFireflyCaught .45s ease forwards; }
+@keyframes simaFirefly { to { opacity: .45; transform: translate(4px, -5px) scale(.75); } }
+@keyframes simaFireflyCaught { to { opacity: 0; transform: translate(-50%, -50%) scale(2.4); } }
+
+.sima-care-spark-v8 {
+  position: absolute;
+  z-index: 130;
+  color: #f2d0e3;
+  pointer-events: none;
+  text-shadow: 0 0 9px #d89ac1;
+  font-style: normal;
+  animation: simaCareSpark 1.15s ease-out forwards;
+}
+@keyframes simaCareSpark { to { opacity: 0; transform: translateY(-40px) scale(1.4) rotate(20deg); } }
+
+.sima-collection-v8,
+.sima-welcome-v8,
+.sima-complete-v8 {
+  position: absolute;
+  inset: 0;
+  z-index: 180;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(15,10,18,.76);
+  backdrop-filter: blur(13px);
+}
+.sima-collection-v8[hidden], .sima-welcome-v8[hidden], .sima-complete-v8[hidden] { display: none; }
+.sima-collection-v8 > div,
+.sima-welcome-v8 > div,
+.sima-complete-v8 > div {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: calc(100% - 12px);
+  overflow: auto;
+  padding: clamp(25px, 4vw, 44px);
+  color: #eee6ed;
+  text-align: center;
+  background: linear-gradient(145deg, rgba(51,37,56,.96), rgba(27,20,32,.97));
+  border: 1px solid rgba(255,255,255,.19);
+  border-radius: 25px;
+  box-shadow: 0 30px 90px rgba(0,0,0,.52);
+}
+.sima-collection-v8 > div > button:first-child { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; color: #eee2eb; cursor: pointer; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.15); border-radius: 50%; font-size: 20px; }
+.sima-collection-v8 p,
+.sima-welcome-v8 p,
+.sima-complete-v8 p { margin: 0 0 8px; color: #bcaabc; font-size: 8px; letter-spacing: .19em; text-transform: uppercase; }
+.sima-collection-v8 h3,
+.sima-welcome-v8 h2,
+.sima-complete-v8 h2 { margin: 0 0 22px; font: 500 clamp(32px, 5vw, 57px)/1 Playfair Display, Georgia, serif; }
+.sima-collection-v8 section { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.sima-collection-v8 article { display: grid; gap: 5px; min-height: 142px; padding: 12px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.11); border-radius: 15px; }
+.sima-collection-v8 article.locked { filter: grayscale(1); opacity: .36; }
+.sima-collection-v8 article.unlocked { background: linear-gradient(145deg, rgba(204,165,198,.18), rgba(255,255,255,.05)); border-color: rgba(232,205,226,.27); }
+.sima-collection-v8 article div { height: 74px; }
+.sima-collection-v8 article img { width: 100%; height: 100%; object-fit: contain; }
+.sima-collection-v8 article b { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.sima-collection-v8 article span, .sima-collection-v8 > div > small { color: #a99eaa; font-size: 7px; }
+.sima-collection-v8 > div > small { display: block; margin-top: 18px; }
+
+.sima-welcome-v8 { z-index: 175; }
+.sima-welcome-v8 > div { width: min(610px, 100%); }
+.sima-welcome-v8 img { width: 150px; height: 160px; margin: -12px auto 5px; object-fit: contain; filter: drop-shadow(0 12px 10px rgba(0,0,0,.38)); }
+.sima-welcome-v8 span { display: block; max-width: 470px; margin: 0 auto; color: #c7bbc6; font-size: 12px; line-height: 1.65; }
+.sima-welcome-v8 button,
+.sima-complete-v8 button { min-height: 45px; margin-top: 23px; padding: 0 22px; color: #2b202e; cursor: pointer; background: linear-gradient(135deg, #ead9e5, #c9b1cd); border: 0; border-radius: 999px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+
+.sima-complete-v8 { background: radial-gradient(circle, rgba(111,77,117,.42), rgba(14,9,17,.85)); }
+.sima-complete-v8 > div > span { display: block; margin-bottom: 10px; color: #efd8a8; font-size: 40px; animation: simaFinalStar 1.6s ease-in-out infinite alternate; }
+.sima-complete-v8 small { display: block; color: #cbbfca; font-size: 12px; }
+@keyframes simaFinalStar { to { transform: rotate(24deg) scale(1.15); text-shadow: 0 0 25px #d8a9cc; } }
+.sima-day-complete-v8 .sima-ambient-v8 i { opacity: 1; animation-duration: 2.4s; }
+
 /* Final surprise across the whole viewport */
 .finaleSection {
   display: grid;
@@ -1394,6 +2033,15 @@ input:focus-visible {
   .anya-object-v3 { left: 50.2%; width: 17.7%; }
   .sima-v3 { width: 11.4%; }
   .laptop-anya-v3 { left: 71.55%; width: 21.2%; }
+  .simaLauncherV8 { min-height: 390px; }
+  .simaLauncherV8 > div { max-width: 48%; }
+  .sima-launcher-art-v8 { inset: 0 0 0 20% !important; }
+  .sima-topbar-v8 { grid-template-columns: minmax(420px, 1fr) 90px; padding-left: 145px; gap: 14px; }
+  .sima-game-title-v8 { display: none; }
+  .sima-game-cat-v8 { width: min(34vw, 350px); }
+  .sima-action-dock-v8 { grid-template-columns: repeat(3, 1fr); width: min(700px, calc(100% - 20px)); }
+  .sima-action-dock-v8 button { min-height: 53px; }
+  .sima-activity-v8 { bottom: 145px; }
 }
 
 @media (max-width: 640px) {
@@ -1442,6 +2090,65 @@ input:focus-visible {
   .age-balloons span { width: clamp(72px, 27vw, 110px); height: clamp(105px, 39vw, 158px); font-size: clamp(58px, 23vw, 92px); }
   .firework-burst i { width: 4px; }
   .finaleSection { min-height: 250px; padding: 60px 18px; }
+  .simaLauncherV8 { min-height: 340px; padding: 20px; }
+  .simaLauncherV8 > div { bottom: 22px; left: 20px; max-width: 62%; }
+  .simaLauncherV8 > div b { font-size: 31px; }
+  .simaLauncherV8 > div p { font-size: 10px; line-height: 1.45; }
+  .sima-launcher-art-v8 { inset: 0 0 0 8% !important; }
+  .sima-launcher-art-v8::after { background: linear-gradient(90deg, #211b28 0%, rgba(33,27,40,.78) 19%, transparent 72%), linear-gradient(0deg, rgba(18,12,23,.45), transparent 70%); }
+  .sima-launcher-cat-v8 { right: 2%; bottom: -4%; width: 43%; height: 83%; }
+  .sima-launcher-bowl-v8 { right: 1%; bottom: 2%; width: 17%; height: 24%; }
+  .sima-game-page-v8 { grid-template-rows: 70px minmax(0, 1fr) !important; height: 100dvh; min-height: 100dvh !important; }
+  .sima-topbar-v8 { grid-template-columns: 1fr 70px !important; height: 70px !important; padding: 5px 6px 5px 106px !important; gap: 6px !important; }
+  .sima-needs-v8 { grid-template-columns: 1fr 1fr; gap: 4px 8px; }
+  .sima-needs-v8 > div { gap: 2px 5px; }
+  .sima-needs-v8 span, .sima-needs-v8 em { font-size: 6px; }
+  .sima-needs-v8 i { height: 4px; }
+  .sima-collection-button-v8 { min-height: 51px; padding: 5px; border-radius: 10px; }
+  .sima-collection-button-v8 span { font-size: 5px; }
+  .sima-collection-button-v8 b { font-size: 9px; }
+  .sima-nook-background-v8 { object-position: center; }
+  .sima-speech-v8 { top: 8px; min-height: 36px; padding: 8px 12px; font-size: 9px; }
+  .sima-game-cat-v8 { bottom: 23%; width: min(48vw, 250px); height: 43%; }
+  .sima-scene-box-v8 { left: -2%; bottom: 25%; width: 21%; height: 20%; }
+  .sima-scene-brush-v8 { left: 18%; bottom: 26%; width: 11%; height: 13%; }
+  .sima-scene-bowl-v8 { left: 27%; bottom: 24%; width: 12%; height: 10%; }
+  .sima-scene-yarn-v8 { right: 24%; bottom: 24%; width: 11%; height: 10%; }
+  .sima-scene-bed-v8 { right: -3%; bottom: 24%; width: 24%; height: 20%; }
+  .sima-window-hotspot-v8 { left: 25%; top: 4%; width: 52%; height: 43%; }
+  .sima-scene-prop-v8 span, .sima-window-hotspot-v8 span { display: none; }
+  .sima-scene-prop-v8.completed::after, .sima-window-hotspot-v8.completed::after { width: 18px; height: 18px; font-size: 8px; }
+  .sima-action-dock-v8 { bottom: 5px; grid-template-columns: repeat(3, 1fr); gap: 4px; width: calc(100% - 10px); padding: 5px; border-radius: 14px; }
+  .sima-action-dock-v8 button { grid-template-columns: 29px 1fr; min-height: 51px; padding: 4px 5px; border-radius: 9px; }
+  .sima-action-dock-v8 button > img { width: 27px; height: 36px; }
+  .sima-action-dock-v8 button > span { font-size: 7px; }
+  .sima-action-dock-v8 button > small { font-size: 5.5px; }
+  .sima-activity-v8 { bottom: 127px; width: calc(100% - 16px); max-height: calc(100% - 180px); overflow: auto; padding: 18px; border-radius: 17px; }
+  .sima-activity-v8 h3 { margin-bottom: 12px; font-size: 24px; }
+  .sima-activity-v8 button:not(.sima-activity-close-v8) { flex-basis: 95px; min-height: 58px; padding: 7px; font-size: 8px; }
+  .sima-activity-v8 button img { width: 42px; height: 38px; }
+  .sima-activity-instruction-v8 { font-size: 9px; }
+  .sima-action-prop-v8.prop-bowl { left: 54%; bottom: 26%; width: 18%; height: 12%; }
+  .sima-action-prop-v8.prop-box { bottom: 23%; width: 43%; height: 29%; }
+  .sima-action-prop-v8.prop-bed { bottom: 23%; width: 49%; height: 29%; }
+  .sima-action-prop-v8.prop-brush { width: 15%; height: 12%; }
+  .sima-eating-v8 .sima-game-cat-v8 { left: 42%; bottom: 25%; width: min(57vw, 285px); }
+  .sima-playing-v8 .sima-game-cat-v8 { bottom: 24%; width: min(60vw, 300px); }
+  .sima-brushing-v8 .sima-game-cat-v8 { bottom: 23%; width: min(52vw, 270px); }
+  .sima-boxing-v8 .sima-game-cat-v8 { bottom: 25%; width: min(40vw, 205px); }
+  .sima-windowing-v8 .sima-game-cat-v8 { left: 71%; bottom: 25%; width: min(36vw, 185px); }
+  .sima-sleeping-v8 .sima-game-cat-v8 { bottom: 25%; width: min(48vw, 245px); }
+  .sima-sleeping-v8::before { left: 64%; top: 26%; font-size: 16px; }
+  .sima-play-target-v8 { width: 62px; height: 62px; }
+  .sima-collection-v8, .sima-welcome-v8, .sima-complete-v8 { padding: 8px; }
+  .sima-collection-v8 > div, .sima-welcome-v8 > div, .sima-complete-v8 > div { max-height: calc(100% - 4px); padding: 25px 15px 19px; border-radius: 18px; }
+  .sima-collection-v8 h3, .sima-welcome-v8 h2, .sima-complete-v8 h2 { margin-bottom: 14px; font-size: 32px; }
+  .sima-collection-v8 section { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .sima-collection-v8 article { min-height: 104px; padding: 7px; }
+  .sima-collection-v8 article div { height: 53px; }
+  .sima-welcome-v8 img { width: 94px; height: 95px; margin-top: -8px; }
+  .sima-welcome-v8 span { font-size: 9px; line-height: 1.5; }
+  .sima-welcome-v8 button, .sima-complete-v8 button { min-height: 42px; margin-top: 15px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

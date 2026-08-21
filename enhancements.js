@@ -50,8 +50,8 @@
       if (tries < 160) window.setTimeout(() => waitForApp(tries + 1), 50);
       return;
     }
-    if (document.documentElement.dataset.anyaEnhancements === "v6") return;
-    document.documentElement.dataset.anyaEnhancements = "v6";
+    if (document.documentElement.dataset.anyaEnhancements === "v8") return;
+    document.documentElement.dataset.anyaEnhancements = "v8";
     cleanOpeningScreen();
     enhanceRoom(room);
     enhanceGames(games);
@@ -137,6 +137,8 @@
           <button type="button" id="anyaSleeping" class="sleeping-anya-v3" data-room-object="anya" aria-label="Разбудить Аню" hidden><img src="./room/anya-sleep-v2.webp" alt="Аня спит под одеялом"><span>разбудить</span></button>
           <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке у ноутбука, повернувшись к столу спиной к комнате"><span>Аня за ноутбуком</span></button>
           <button type="button" id="simaSpriteV3" class="sima-v3 walking" data-room-object="sima" aria-label="Погладить Симу"><span class="sima-visual-v5"><img src="./room/sima-walk-v2.webp" alt="Сима гуляет по комнате"></span><span class="sima-label">Сима</span><span class="sima-hearts-v3" aria-hidden="true">♡ ♡ ♡</span></button>
+          <button type="button" id="simaBowlV8" class="sima-bowl-v8" data-room-object="bowl" aria-label="Миска Симы"><img src="./games/sima/bowl-empty-v8.webp" alt="Керамическая миска Симы"><span>миска Симы</span></button>
+          <button type="button" id="simaFeedingV8" class="sima-feeding-v8" data-room-object="bowl" aria-label="Сима кушает из миски" hidden><img class="sima-feeding-cat-v8" src="./games/sima/sima-eat-v8.webp" alt="Сима кушает"><img class="sima-feeding-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt="Миска с кормом"><span>Сима кушает</span><i aria-hidden="true">мр-р</i></button>
           <button type="button" class="room-target target-bed" data-room-object="bed" aria-label="Отправить Аню спать"><span>кровать</span></button>
           <button type="button" class="room-target target-tv" data-room-object="tv" aria-label="Управлять телевизором"><span>телевизор</span></button>
           <button type="button" class="room-target target-laptop" data-room-object="laptop" aria-label="Выбрать игру на ноутбуке"><span>ноутбук</span></button>
@@ -169,12 +171,15 @@
     const anyaLaptopImage = qs("#anyaLaptopImage", section);
     const sima = qs("#simaSpriteV3", section);
     const simaImage = qs("img", sima);
+    const simaBowl = qs("#simaBowlV8", section);
+    const simaFeeding = qs("#simaFeedingV8", section);
     const audio = qs("#roomAudio", section);
     const simaPurr = qs("#simaPurr", section);
     let activity = "standing";
     let currentOutfit = "base";
     let trackIndex = 0;
     let simaTimeout = 0;
+    let simaIsEating = false;
     let lightsOn = true;
     let activePanelAnchor = null;
 
@@ -297,9 +302,40 @@
       }));
     }
     function petSima() {
+      if (simaIsEating) { say("Сима занята ужином. Погладим её чуть позже."); return; }
       simaPurr.pause(); simaPurr.currentTime = 0; simaPurr.volume = .68; simaPurr.play().catch(() => {});
       window.clearTimeout(simaTimeout); sima.classList.remove("walking"); sima.classList.add("petted"); simaImage.src = "./room/sima-pet-v2.webp"; simaImage.alt = "Довольная Сима после поглаживания"; say("Сима поглажена и очень довольна.");
       simaTimeout = window.setTimeout(() => { sima.classList.remove("petted"); sima.classList.add("walking"); simaImage.src = "./room/sima-walk-v2.webp"; simaImage.alt = "Сима гуляет по комнате"; }, 4200);
+    }
+    function finishFeeding() {
+      simaIsEating = false;
+      simaFeeding.hidden = true;
+      simaBowl.hidden = false;
+      sima.hidden = false;
+      sima.classList.add("walking");
+      simaImage.src = "./room/sima-walk-v2.webp";
+      simaImage.alt = "Сима гуляет по комнате";
+      say("Сима всё съела и снова пошла исследовать комнату.");
+    }
+    function feedSima() {
+      window.clearTimeout(simaTimeout);
+      closePanel();
+      simaIsEating = true;
+      sima.classList.remove("walking", "petted");
+      sima.hidden = true;
+      simaBowl.hidden = true;
+      simaFeeding.hidden = false;
+      say("Сима пришла к миске и с удовольствием кушает.");
+      simaTimeout = window.setTimeout(finishFeeding, 8500);
+    }
+    function openBowlPanel() {
+      if (simaIsEating) {
+        showPanel("bowl", "Миска Симы", '<button type="button" data-let-sima-eat>не мешать Симе кушать</button>');
+        qs("[data-let-sima-eat]", panel).addEventListener("click", closePanel);
+        return;
+      }
+      showPanel("bowl", "Миска Симы", '<button type="button" data-feed-sima>положить корм и позвать Симу</button>');
+      qs("[data-feed-sima]", panel).addEventListener("click", feedSima);
     }
     function toggleLamp() {
       lightsOn = !lightsOn; stage.classList.toggle("lights-off", !lightsOn); qs(".target-lamp", section).setAttribute("aria-label", lightsOn ? "Выключить свет" : "Включить свет"); say(lightsOn ? "Свет снова включён." : "Свет выключен. В комнате остался ночной свет из окна."); closePanel();
@@ -310,7 +346,7 @@
     setupModal(qs("#posterModal", section));
     qsa("[data-room-object]", stage).forEach((button) => button.addEventListener("click", (event) => {
       event.stopPropagation(); const kind = button.dataset.roomObject; activePanelAnchor = button;
-      if (kind === "anya") openAnyaPanel(); else if (kind === "bed") openBedPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima();
+      if (kind === "anya") openAnyaPanel(); else if (kind === "bed") openBedPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima(); else if (kind === "bowl") openBowlPanel();
     }));
     stage.addEventListener("click", (event) => { if (event.target === stage || event.target.classList.contains("room-backdrop-v3")) closePanel(); });
     audio.addEventListener("ended", () => { loadTrack(trackIndex + 1, true); if (!panel.hidden && panel.classList.contains("panel-radio")) openRadioPanel(); });
@@ -403,10 +439,17 @@
     section.innerHTML = `<div class="gameHubHeading contentWidth game-heading-v3"><h2>Игры</h2></div><div class="gameLaunchers contentWidth">
       <button type="button" class="gameLauncher cokeLauncher" data-open-game="coke"><span>01</span><img src="./games/cocacola-zero-v2.webp" alt=""><div><b>Zero hunt</b><p>Помоги Ане собрать запас колы.</p></div><i>играть →</i></button>
       <button type="button" class="gameLauncher ambulanceLauncher" data-open-game="ambulance"><span>02</span><img src="./games/ambulance-anya.webp" alt=""><div><b>Ночная смена</b><p>Помоги Ане доехать до всех вызовов.</p></div><i>играть →</i></button>
+      <button type="button" class="gameLauncher simaLauncherV8" data-open-game="sima"><span>03</span><span class="sima-launcher-art-v8" aria-hidden="true"><img class="sima-launcher-bg-v8" src="./games/sima/nook-background-v8.webp" alt=""><img class="sima-launcher-cat-v8" src="./games/sima/sima-idle-v8.webp" alt=""><img class="sima-launcher-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt=""></span><div><b>Симин уголок</b><p>Проведи с Симой один идеальный уютный день.</p></div><i>зайти →</i></button>
       </div><div id="enhancedGameOverlay" class="gameOverlay enhanced-game-overlay" role="dialog" aria-modal="true" hidden></div>`;
     const overlay = qs("#enhancedGameOverlay", section); let cleanup = () => {};
     function close() { cleanup(); cleanup = () => {}; overlay.hidden = true; overlay.innerHTML = ""; document.body.style.overflow = ""; }
-    qsa("[data-open-game]", section).forEach((button) => button.addEventListener("click", () => { overlay.hidden = false; document.body.style.overflow = "hidden"; cleanup = button.dataset.openGame === "coke" ? startCokeGame(overlay, close) : startAmbulanceGame(overlay, close); }));
+    qsa("[data-open-game]", section).forEach((button) => button.addEventListener("click", () => {
+      overlay.hidden = false;
+      document.body.style.overflow = "hidden";
+      if (button.dataset.openGame === "coke") cleanup = startCokeGame(overlay, close);
+      else if (button.dataset.openGame === "ambulance") cleanup = startAmbulanceGame(overlay, close);
+      else cleanup = startSimaGame(overlay, close);
+    }));
     window.addEventListener("keydown", (event) => { if (event.key === "Escape" && !overlay.hidden) close(); });
   }
 
@@ -445,6 +488,330 @@
     arena.addEventListener("pointerdown", (event) => { if (!running || event.target.closest("button")) return; const box = arena.getBoundingClientRect(); const y = ((event.clientY - box.top) / box.height) * 100; const closestLane = laneCenters.reduce((best, center, index) => Math.abs(center - y) < Math.abs(laneCenters[best] - y) ? index : best, 0); setLane(closestLane); });
     qsa("[data-lane-move]", root).forEach((button) => button.addEventListener("click", () => setLane(lane + (button.dataset.laneMove === "up" ? -1 : 1)))); window.addEventListener("keydown", keyHandler); qs(".gameClose", root).addEventListener("click", closeGame); qs("#ambulanceStart button", root).addEventListener("click", begin); updateHud(0);
     return () => { running = false; window.cancelAnimationFrame(raf); window.removeEventListener("keydown", keyHandler); };
+  }
+
+  function startSimaGame(root, closeGame) {
+    const activities = [
+      { id: "feed", label: "Ужин", note: "выбрать еду", asset: "bowl-full", stat: "fullness" },
+      { id: "play", label: "Игра", note: "поймать игрушку", asset: "feather", stat: "joy" },
+      { id: "brush", label: "Расчёсывание", note: "провести щёткой", asset: "brush", stat: "care" },
+      { id: "box", label: "Коробки", note: "найти лучший домик", asset: "box", stat: "joy" },
+      { id: "window", label: "Огоньки", note: "поймать светлячков", asset: "fireflies", stat: "joy" },
+      { id: "sleep", label: "Сон", note: "устроить тихий час", asset: "bed", stat: "rest" },
+    ];
+    const poseFiles = {
+      idle: "./games/sima/sima-idle-v8.webp",
+      eat: "./games/sima/sima-eat-v8.webp",
+      play: "./games/sima/sima-play-v8.webp",
+      groom: "./games/sima/sima-groom-v8.webp",
+      sleep: "./games/sima/sima-sleep-v8.webp",
+      box: "./games/sima/sima-box-v8.webp",
+    };
+    const propFile = (name) => `./games/sima/${name}-v8.webp`;
+    const storageKey = "anya-sima-nook-v8";
+    const freshState = { fullness: 38, joy: 42, care: 35, rest: 46, completed: [], visited: false, celebrated: false };
+    let state = { ...freshState };
+    try {
+      const stored = JSON.parse(localStorage.getItem(storageKey) || "null");
+      if (stored && typeof stored === "object") state = { ...freshState, ...stored, completed: Array.isArray(stored.completed) ? stored.completed.filter((id) => activities.some((activity) => activity.id === id)) : [] };
+    } catch {}
+
+    root.innerHTML = `<div class="gamePage sima-game-page-v8">
+      <button type="button" class="gameClose sima-game-close-v8">← к играм</button>
+      <header class="gameTopbar sima-topbar-v8">
+        <div class="sima-game-title-v8"><span>Симин уголок</span><small>тихий день без спешки</small></div>
+        <div class="sima-needs-v8" aria-label="Состояние Симы">
+          <div><span>сытость</span><i><b id="simaNeedFullness"></b></i><em id="simaNeedFullnessValue">0</em></div>
+          <div><span>радость</span><i><b id="simaNeedJoy"></b></i><em id="simaNeedJoyValue">0</em></div>
+          <div><span>уход</span><i><b id="simaNeedCare"></b></i><em id="simaNeedCareValue">0</em></div>
+          <div><span>отдых</span><i><b id="simaNeedRest"></b></i><em id="simaNeedRestValue">0</em></div>
+        </div>
+        <button type="button" id="simaCollectionButton" class="sima-collection-button-v8"><span>коллекция</span><b id="simaCollectionCount">0 / 6</b></button>
+      </header>
+      <main id="simaNookV8" class="sima-nook-v8">
+        <img class="sima-nook-background-v8" src="./games/sima/nook-background-v8.webp" alt="Уютный ночной уголок Симы">
+        <div class="sima-ambient-v8" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <button type="button" class="sima-scene-prop-v8 sima-scene-box-v8" data-sima-action="box" aria-label="Исследовать коробку"><img src="./games/sima/box-v8.webp" alt="Коробка с пледом"><span>коробки</span></button>
+        <button type="button" class="sima-scene-prop-v8 sima-scene-brush-v8" data-sima-action="brush" aria-label="Расчесать Симу"><img src="./games/sima/brush-v8.webp" alt="Щётка Симы"><span>щётка</span></button>
+        <button type="button" class="sima-scene-prop-v8 sima-scene-bowl-v8" data-sima-action="feed" aria-label="Покормить Симу"><img id="simaSceneBowlImage" src="./games/sima/bowl-empty-v8.webp" alt="Миска Симы"><span>миска</span></button>
+        <button type="button" class="sima-scene-prop-v8 sima-scene-yarn-v8" data-sima-action="play" aria-label="Поиграть с Симой"><img src="./games/sima/yarn-v8.webp" alt="Клубок Симы"><span>игрушки</span></button>
+        <button type="button" class="sima-scene-prop-v8 sima-scene-bed-v8" data-sima-action="sleep" aria-label="Уложить Симу спать"><img src="./games/sima/bed-v8.webp" alt="Лежанка Симы"><span>лежанка</span></button>
+        <button type="button" class="sima-window-hotspot-v8" data-sima-action="window" aria-label="Посмотреть с Симой в окно"><span>огоньки у окна</span></button>
+        <div id="simaActionPropV8" class="sima-action-prop-v8" hidden><img alt=""></div>
+        <button type="button" id="simaGameCatV8" class="sima-game-cat-v8" data-pose="idle" aria-label="Погладить Симу"><img src="${poseFiles.idle}" alt="Сима сидит в своём уютном уголке"><span class="sima-game-hearts-v8" aria-hidden="true">♡ ♡ ♡</span></button>
+        <div id="simaSpeechV8" class="sima-speech-v8" aria-live="polite">Сима внимательно осматривает свой уголок.</div>
+        <button type="button" id="simaPlayTargetV8" class="sima-play-target-v8" hidden><img alt="Игрушка Симы"></button>
+        <div id="simaFirefliesV8" class="sima-fireflies-v8" aria-live="polite"></div>
+        <div id="simaActivityV8" class="sima-activity-v8" hidden></div>
+        <div id="simaCollectionV8" class="sima-collection-v8" role="dialog" aria-modal="true" aria-label="Коллекция Симы" hidden><div><button type="button" data-close-sima-collection aria-label="Закрыть">×</button><p>маленькие сокровища</p><h3>Коллекция Симы</h3><section id="simaCollectionGridV8"></section><small>Каждое воспоминание открывается после нового занятия с Симой.</small></div></div>
+        <div id="simaWelcomeV8" class="sima-welcome-v8" ${state.visited ? "hidden" : ""}><div><img src="./games/sima/sima-idle-v8.webp" alt="Сима"><p>большая уютная игра</p><h2>Симин уголок</h2><span>Здесь не нужно побеждать и торопиться. Корми Симу, играй, расчёсывай, исследуй коробки и собирай воспоминания об идеальном тихом дне.</span><button type="button">зайти к Симе</button></div></div>
+        <div id="simaCompleteV8" class="sima-complete-v8" hidden><div><span aria-hidden="true">✦</span><p>все воспоминания собраны</p><h2>Идеальный день Симы</h2><small>Сима сыта, вычесана, наигралась и совершенно довольна.</small><button type="button">остаться с Симой</button></div></div>
+        <nav class="sima-action-dock-v8" aria-label="Занятия с Симой">${activities.map((activity) => `<button type="button" data-sima-action="${activity.id}"><img src="${propFile(activity.asset)}" alt=""><span>${activity.label}</span><small>${activity.note}</small><i aria-hidden="true"></i></button>`).join("")}</nav>
+        <audio id="simaGamePurrV8" src="./audio/sima-purr-v5.mp3" preload="auto"></audio>
+      </main>
+    </div>`;
+
+    const nook = qs("#simaNookV8", root);
+    const cat = qs("#simaGameCatV8", root);
+    const catImage = qs("img", cat);
+    const speech = qs("#simaSpeechV8", root);
+    const activityPanel = qs("#simaActivityV8", root);
+    const actionProp = qs("#simaActionPropV8", root);
+    const actionPropImage = qs("img", actionProp);
+    const playTarget = qs("#simaPlayTargetV8", root);
+    const fireflyLayer = qs("#simaFirefliesV8", root);
+    const collection = qs("#simaCollectionV8", root);
+    const collectionGrid = qs("#simaCollectionGridV8", root);
+    const complete = qs("#simaCompleteV8", root);
+    const purr = qs("#simaGamePurrV8", root);
+    const timers = new Set();
+    let activeActivity = "";
+    let busy = false;
+    let activityCleanup = () => {};
+
+    function later(callback, delay) {
+      const timer = window.setTimeout(() => { timers.delete(timer); callback(); }, delay);
+      timers.add(timer);
+      return timer;
+    }
+    function saveState() { try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch {} }
+    function cap(value) { return Math.max(0, Math.min(100, Math.round(value))); }
+    function renderState() {
+      ["fullness", "joy", "care", "rest"].forEach((key) => {
+        state[key] = cap(state[key]);
+        const label = key[0].toUpperCase() + key.slice(1);
+        qs(`#simaNeed${label}`, root).style.width = `${state[key]}%`;
+        qs(`#simaNeed${label}Value`, root).textContent = state[key];
+      });
+      qs("#simaCollectionCount", root).textContent = `${state.completed.length} / ${activities.length}`;
+      qsa("[data-sima-action]", root).forEach((button) => button.classList.toggle("completed", state.completed.includes(button.dataset.simaAction)));
+      renderCollection();
+    }
+    function renderCollection() {
+      collectionGrid.innerHTML = activities.map((item) => {
+        const unlocked = state.completed.includes(item.id);
+        return `<article class="${unlocked ? "unlocked" : "locked"}"><div><img src="${propFile(item.asset)}" alt=""></div><b>${unlocked ? escapeHtml(item.label) : "ещё не найдено"}</b><span>${unlocked ? "воспоминание сохранено" : "· · ·"}</span></article>`;
+      }).join("");
+    }
+    function setSpeech(message) { speech.textContent = message; speech.classList.remove("speaking"); void speech.offsetWidth; speech.classList.add("speaking"); }
+    function setPose(pose, activity = "") {
+      cat.dataset.pose = pose;
+      cat.dataset.activity = activity;
+      catImage.src = poseFiles[pose] || poseFiles.idle;
+      catImage.alt = pose === "sleep" ? "Сима свернулась клубочком и спит" : pose === "eat" ? "Сима кушает" : pose === "play" ? "Сима играет" : pose === "box" ? "Сима выглядывает из коробки" : "Сима в своём уголке";
+    }
+    function showActionProp(asset, kind) {
+      actionProp.hidden = false;
+      actionProp.className = `sima-action-prop-v8 prop-${kind}`;
+      actionPropImage.src = propFile(asset);
+      actionPropImage.alt = "";
+    }
+    function sparkle(x = 50, y = 48) {
+      const star = document.createElement("i");
+      star.className = "sima-care-spark-v8";
+      star.style.left = `${x}%`;
+      star.style.top = `${y}%`;
+      star.textContent = Math.random() > .5 ? "✦" : "♡";
+      nook.append(star);
+      later(() => star.remove(), 1200);
+    }
+    function clearActivity(resetPose = true) {
+      activityCleanup();
+      activityCleanup = () => {};
+      activeActivity = "";
+      busy = false;
+      activityPanel.hidden = true;
+      activityPanel.innerHTML = "";
+      playTarget.hidden = true;
+      playTarget.onclick = null;
+      fireflyLayer.innerHTML = "";
+      actionProp.hidden = true;
+      actionProp.removeAttribute("style");
+      nook.classList.remove("sima-eating-v8", "sima-playing-v8", "sima-brushing-v8", "sima-boxing-v8", "sima-windowing-v8", "sima-sleeping-v8");
+      cat.classList.remove("brushable");
+      if (resetPose) setPose("idle");
+    }
+    function celebrateCare() {
+      cat.classList.remove("cared-for");
+      void cat.offsetWidth;
+      cat.classList.add("cared-for");
+      for (let index = 0; index < 7; index += 1) later(() => sparkle(42 + Math.random() * 18, 35 + Math.random() * 30), index * 95);
+    }
+    function award(id, changes, message) {
+      Object.entries(changes).forEach(([key, gain]) => { state[key] = cap((state[key] || 0) + gain); });
+      if (!state.completed.includes(id)) state.completed.push(id);
+      saveState();
+      renderState();
+      setSpeech(message);
+      celebrateCare();
+      if (state.completed.length === activities.length && !state.celebrated) {
+        state.celebrated = true;
+        saveState();
+        later(() => { complete.hidden = false; nook.classList.add("sima-day-complete-v8"); }, 900);
+      }
+    }
+    function openPanel(title, text, body) {
+      activityPanel.innerHTML = `<button type="button" class="sima-activity-close-v8" aria-label="Закрыть">×</button><p>${escapeHtml(title)}</p><h3>${escapeHtml(text)}</h3><div>${body}</div>`;
+      activityPanel.hidden = false;
+      qs(".sima-activity-close-v8", activityPanel).addEventListener("click", clearActivity);
+    }
+    function feedActivity() {
+      openPanel("ужин", "Что положим в миску?", `<button type="button" data-sima-food="паштет"><img src="${propFile("bowl-full")}" alt="">куриный паштет</button><button type="button" data-sima-food="рыбку"><img src="${propFile("bowl-full")}" alt="">рыбка</button><button type="button" data-sima-food="лакомства"><img src="${propFile("treats")}" alt="">немного лакомств</button>`);
+      qsa("[data-sima-food]", activityPanel).forEach((button) => button.addEventListener("click", () => {
+        busy = true;
+        activityPanel.hidden = true;
+        setPose("eat", "feed");
+        showActionProp("bowl-full", "bowl");
+        qs("#simaSceneBowlImage", root).src = propFile("bowl-full");
+        nook.classList.add("sima-eating-v8");
+        setSpeech(`Сима одобрила ${button.dataset.simaFood}.`);
+        later(() => { award("feed", { fullness: 28, care: 4 }, "Миска пуста. Ужин официально одобрен."); qs("#simaSceneBowlImage", root).src = propFile("bowl-empty"); clearActivity(); }, 3300);
+      }));
+    }
+    function playActivity() {
+      openPanel("игра", "Какую игрушку выберет Сима?", `<button type="button" data-sima-toy="feather"><img src="${propFile("feather")}" alt="">удочка с перьями</button><button type="button" data-sima-toy="yarn"><img src="${propFile("yarn")}" alt="">клубок</button><button type="button" data-sima-toy="mouse"><img src="${propFile("mouse")}" alt="">мышка</button>`);
+      qsa("[data-sima-toy]", activityPanel).forEach((button) => button.addEventListener("click", () => {
+        const toy = button.dataset.simaToy;
+        let catches = 0;
+        busy = true;
+        activityPanel.hidden = true;
+        setPose("play", "play");
+        nook.classList.add("sima-playing-v8");
+        const image = qs("img", playTarget);
+        image.src = propFile(toy);
+        playTarget.hidden = false;
+        const moveToy = () => { playTarget.style.left = `${24 + Math.random() * 57}%`; playTarget.style.top = `${18 + Math.random() * 48}%`; };
+        moveToy();
+        setSpeech("Поймай игрушку пять раз — Сима уже приготовилась к прыжку.");
+        playTarget.onclick = () => {
+          catches += 1;
+          sparkle(Number.parseFloat(playTarget.style.left), Number.parseFloat(playTarget.style.top));
+          if (catches >= 5) { playTarget.hidden = true; award("play", { joy: 27, rest: -3 }, "Пять точных прыжков. Сима победила игрушку."); later(clearActivity, 1500); }
+          else { setSpeech(`${catches} из 5. Сима следит за каждым движением.`); moveToy(); }
+        };
+      }));
+    }
+    function brushActivity() {
+      openPanel("уход", "Расчеши пушистую шерсть", '<span class="sima-activity-instruction-v8">Проведи пальцем или мышью по Симе шесть раз.</span><button type="button" data-start-brushing>взять щётку</button>');
+      qs("[data-start-brushing]", activityPanel).addEventListener("click", () => {
+        let brushing = false;
+        let strokes = 0;
+        let lastX = 0;
+        let lastY = 0;
+        busy = true;
+        activityPanel.hidden = true;
+        setPose("groom", "brush");
+        showActionProp("brush", "brush");
+        nook.classList.add("sima-brushing-v8");
+        cat.classList.add("brushable");
+        setSpeech("Медленно проведи щёткой по шерсти Симы.");
+        const moveBrush = (event) => {
+          const box = nook.getBoundingClientRect();
+          const x = ((event.clientX - box.left) / box.width) * 100;
+          const y = ((event.clientY - box.top) / box.height) * 100;
+          actionProp.style.left = `${x}%`;
+          actionProp.style.top = `${y}%`;
+          if (!brushing) return;
+          const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY);
+          if (distance < 42) return;
+          lastX = event.clientX;
+          lastY = event.clientY;
+          strokes += 1;
+          sparkle(x, y);
+          setSpeech(`${Math.min(strokes, 6)} из 6 движений. Шерсть становится ещё пушистее.`);
+          if (strokes >= 6) { brushing = false; award("brush", { care: 30, joy: 6 }, "Готово. Сима стала почти неприлично пушистой."); later(clearActivity, 1700); }
+        };
+        const pointerDown = (event) => { brushing = true; lastX = event.clientX; lastY = event.clientY; cat.setPointerCapture?.(event.pointerId); moveBrush(event); };
+        const pointerUp = () => { brushing = false; };
+        cat.addEventListener("pointerdown", pointerDown);
+        cat.addEventListener("pointermove", moveBrush);
+        cat.addEventListener("pointerup", pointerUp);
+        cat.addEventListener("pointercancel", pointerUp);
+        activityCleanup = () => { cat.removeEventListener("pointerdown", pointerDown); cat.removeEventListener("pointermove", moveBrush); cat.removeEventListener("pointerup", pointerUp); cat.removeEventListener("pointercancel", pointerUp); };
+      });
+    }
+    function boxActivity() {
+      openPanel("экспедиция", "Какая коробка достойна Симы?", `<button type="button" data-sima-box="маленькую">маленькая, но гордая</button><button type="button" data-sima-box="уютную"><img src="${propFile("box")}" alt="">с пледом</button><button type="button" data-sima-box="огромную">неприлично большая</button>`);
+      qsa("[data-sima-box]", activityPanel).forEach((button) => button.addEventListener("click", () => {
+        busy = true;
+        activityPanel.hidden = true;
+        setPose("box", "box");
+        showActionProp("box", "box");
+        nook.classList.add("sima-boxing-v8");
+        const reactions = ["Коробка прошла проверку лапой.", "Сима заняла коробку. Теперь это недвижимость.", "Размер коробки признан безупречным."];
+        later(() => { award("box", { joy: 18, rest: 7 }, reactions[Math.floor(Math.random() * reactions.length)]); later(clearActivity, 1600); }, 1700);
+      }));
+    }
+    function windowActivity() {
+      openPanel("окно", "Посчитаем ночные огоньки?", '<span class="sima-activity-instruction-v8">Найди и коснись пяти светлячков у окна.</span><button type="button" data-start-fireflies>подойти к окну</button>');
+      qs("[data-start-fireflies]", activityPanel).addEventListener("click", () => {
+        const positions = [[43,16],[48,24],[54,18],[58,31],[46,37],[53,42],[61,23]];
+        let caught = 0;
+        busy = true;
+        activityPanel.hidden = true;
+        setPose("idle", "window");
+        nook.classList.add("sima-windowing-v8");
+        setSpeech("Огоньки спрятались у окна. Нужно найти пять.");
+        positions.forEach(([x, y], index) => {
+          const light = document.createElement("button");
+          light.type = "button";
+          light.className = "sima-firefly-v8";
+          light.style.left = `${x}%`;
+          light.style.top = `${y}%`;
+          light.style.setProperty("--firefly-delay", `${index * .17}s`);
+          light.setAttribute("aria-label", "Поймать светлячка");
+          light.addEventListener("click", () => {
+            if (light.classList.contains("caught")) return;
+            light.classList.add("caught");
+            caught += 1;
+            setSpeech(`${caught} из 5 огоньков. Сима наблюдает очень внимательно.`);
+            if (caught >= 5) { award("window", { joy: 15, rest: 10 }, "Пять огоньков собраны. За окном снова тихая ночь."); later(clearActivity, 1700); }
+          });
+          fireflyLayer.append(light);
+        });
+      });
+    }
+    function sleepActivity() {
+      openPanel("тихий час", "Устроим Симе сон?", '<span class="sima-activity-instruction-v8">Приглушим лампу и положим Симу на мягкую лежанку.</span><button type="button" data-start-sleep>уложить спать</button>');
+      qs("[data-start-sleep]", activityPanel).addEventListener("click", () => {
+        busy = true;
+        setPose("sleep", "sleep");
+        showActionProp("bed", "bed");
+        nook.classList.add("sima-sleeping-v8");
+        setSpeech("Тс-с. Сима свернулась клубочком.");
+        activityPanel.innerHTML = '<p>тихий час</p><h3>Сима уснула</h3><div><span class="sima-activity-instruction-v8">Можно немного посидеть рядом, а потом тихо разбудить.</span><button type="button" data-wake-sima>разбудить Симу</button></div>';
+        later(() => award("sleep", { rest: 32, care: 5 }, "Сима прекрасно выспалась и снова готова командовать."), 1800);
+        qs("[data-wake-sima]", activityPanel).addEventListener("click", () => { clearActivity(); setSpeech("Сима проснулась, потянулась и осмотрела владения."); });
+      });
+    }
+    function openActivity(id) {
+      if (busy) { setSpeech("Сначала закончим начатое занятие."); return; }
+      clearActivity();
+      activeActivity = id;
+      if (id === "feed") feedActivity();
+      else if (id === "play") playActivity();
+      else if (id === "brush") brushActivity();
+      else if (id === "box") boxActivity();
+      else if (id === "window") windowActivity();
+      else if (id === "sleep") sleepActivity();
+    }
+
+    qsa("[data-sima-action]", root).forEach((button) => button.addEventListener("click", () => openActivity(button.dataset.simaAction)));
+    qs("#simaCollectionButton", root).addEventListener("click", () => { renderCollection(); collection.hidden = false; });
+    qs("[data-close-sima-collection]", root).addEventListener("click", () => { collection.hidden = true; });
+    collection.addEventListener("click", (event) => { if (event.target === collection) collection.hidden = true; });
+    cat.addEventListener("click", () => {
+      if (activeActivity || busy) return;
+      purr.pause(); purr.currentTime = 0; purr.volume = .62; purr.play().catch(() => {});
+      state.joy = cap(state.joy + 2); saveState(); renderState(); celebrateCare();
+      const lines = ["Сима разрешила себя погладить.", "Мр-р. Это было принято благосклонно.", "Сима сделала вид, что не ждала поглаживания."];
+      setSpeech(lines[Math.floor(Math.random() * lines.length)]);
+    });
+    qs("#simaWelcomeV8 button", root)?.addEventListener("click", () => { state.visited = true; saveState(); qs("#simaWelcomeV8", root).hidden = true; setSpeech("Сима ждёт. Выбери любой предмет в комнате."); });
+    qs("#simaCompleteV8 button", root).addEventListener("click", () => { complete.hidden = true; nook.classList.remove("sima-day-complete-v8"); clearActivity(); setSpeech("Идеальный день можно продолжать сколько угодно."); });
+    qs(".sima-game-close-v8", root).addEventListener("click", closeGame);
+    renderState();
+    return () => { activityCleanup(); timers.forEach((timer) => window.clearTimeout(timer)); timers.clear(); purr.pause(); };
   }
 
   function pluralizeCalls(value) { const lastTwo = value % 100; const last = value % 10; if (lastTwo >= 11 && lastTwo <= 14) return "вызовов"; if (last === 1) return "вызова"; return "вызовов"; }
