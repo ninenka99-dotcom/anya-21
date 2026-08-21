@@ -2,9 +2,9 @@
   "use strict";
 
   const outfits = {
-    base: { label: "база", src: "./room/anya-base-v5.webp", laptopSrc: "./room/anya-laptop-base-v5.webp", alt: "Аня в чёрной водолазке, свободных чёрных брюках и застёгнутом бордовом кардигане" },
-    novinki: { label: "в новинки", src: "./room/anya-novinki-v2.webp", laptopSrc: "./room/anya-laptop-novinki-v5.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
-    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v2.webp", laptopSrc: "./room/anya-laptop-botanical-v5.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
+    base: { label: "база", src: "./room/anya-base-v6.webp", laptopSrc: "./room/anya-laptop-base-v5.webp", alt: "Аня в чёрной водолазке, свободных чёрных брюках и объёмном застёгнутом бордовом кардигане" },
+    novinki: { label: "в новинки", src: "./room/anya-novinki-v6.webp", laptopSrc: "./room/anya-laptop-novinki-v5.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
+    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v6.webp", laptopSrc: "./room/anya-laptop-botanical-v5.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
     ambulance: { label: "на смену", src: "./room/anya-ambulance-v5.webp", laptopSrc: "./room/anya-laptop-ambulance-v5.webp", alt: "Аня в бордовой форме скорой помощи с головой, повёрнутой в сторону" },
   };
 
@@ -50,8 +50,8 @@
       if (tries < 160) window.setTimeout(() => waitForApp(tries + 1), 50);
       return;
     }
-    if (document.documentElement.dataset.anyaEnhancements === "v5") return;
-    document.documentElement.dataset.anyaEnhancements = "v5";
+    if (document.documentElement.dataset.anyaEnhancements === "v6") return;
+    document.documentElement.dataset.anyaEnhancements = "v6";
     cleanOpeningScreen();
     enhanceRoom(room);
     enhanceGames(games);
@@ -122,7 +122,7 @@
       </div>
       <div class="roomViewport room-viewport-v3 contentWidth">
         <div class="roomStage room-stage-v3" id="roomStageV3">
-          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v5.webp" alt="Комната Ани, показанная прямо спереди">
+          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v6.webp" alt="Комната Ани, показанная прямо спереди">
           <div class="roomHud room-hud-v3" aria-live="polite"><span class="roomDot"></span><p id="roomStatus">Нажимай прямо на предметы в комнате.</p></div>
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
@@ -133,7 +133,7 @@
           <button type="button" class="room-object poster-object-v3" data-room-object="poster" aria-label="Рассмотреть плакат Лололошки и JDH"><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH"><span>плакат</span></button>
           <div id="addedBookSpines" class="added-book-spines-v3" aria-label="Книги на полке"></div>
           <div class="radio-readout-v3" id="radioRoomTitle">Key</div>
-          <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
+          <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" data-outfit="base" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
           <button type="button" id="anyaSleeping" class="sleeping-anya-v3" data-room-object="anya" aria-label="Разбудить Аню" hidden><img src="./room/anya-sleep-v2.webp" alt="Аня спит под одеялом"><span>разбудить</span></button>
           <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке у ноутбука, повернувшись к столу спиной к комнате"><span>Аня за ноутбуком</span></button>
           <button type="button" id="simaSpriteV3" class="sima-v3 walking" data-room-object="sima" aria-label="Погладить Симу"><span class="sima-visual-v5"><img src="./room/sima-walk-v2.webp" alt="Сима гуляет по комнате"></span><span class="sima-label">Сима</span><span class="sima-hearts-v3" aria-hidden="true">♡ ♡ ♡</span></button>
@@ -250,6 +250,7 @@
         const outfit = outfits[currentOutfit];
         anyaImage.classList.add("changing");
         window.setTimeout(() => {
+          anyaStanding.dataset.outfit = currentOutfit;
           anyaImage.src = outfit.src;
           anyaImage.alt = outfit.alt;
           anyaLaptopImage.src = outfit.laptopSrc;
