@@ -127,7 +127,7 @@
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
           <div class="laptop-unit-v5" aria-hidden="true">
-            <img class="laptop-shell-v5" src="./room/laptop-shell-v5.webp" alt="">
+            <img class="laptop-shell-v5" src="./room/laptop-shell-v10.webp" alt="">
             <div class="laptop-screen-v5"><img id="laptopImage" src="${laptopGames.minecraft.src}" alt="Заставка Minecraft"></div>
           </div>
           <button type="button" class="room-object poster-object-v3" data-room-object="poster" aria-label="Рассмотреть плакат Лололошки и JDH"><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH"><span>плакат</span></button>

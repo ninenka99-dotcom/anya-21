@@ -281,9 +281,9 @@ input:focus-visible {
   position: absolute;
   z-index: 20;
   left: 66.55%;
-  top: 36.15%;
+  top: 36.55%;
   width: 11.7%;
-  aspect-ratio: 1100 / 730;
+  aspect-ratio: 1538 / 1023;
   pointer-events: none;
   filter: drop-shadow(0 8px 7px rgba(0,0,0,.42));
   transition: filter .3s ease;
@@ -301,10 +301,10 @@ input:focus-visible {
 .laptop-screen-v5 {
   position: absolute;
   z-index: 3;
-  left: 13.15%;
-  top: 4.35%;
-  width: 73.65%;
-  height: 61.45%;
+  left: 10.85%;
+  top: 5.25%;
+  width: 70.75%;
+  height: 60.85%;
   overflow: hidden;
   background: #080b11;
   border-radius: 1.2%;
@@ -728,7 +728,7 @@ input:focus-visible {
 }
 
 .target-tv { left: 39.6%; top: 35.2%; width: 14.2%; height: 24.2%; }
-.target-laptop { left: 66.25%; top: 35.45%; width: 12.5%; height: 17.2%; }
+.target-laptop { left: 66.25%; top: 35.85%; width: 12.5%; height: 17.2%; }
 .target-radio { left: 61.4%; top: 41.4%; width: 6.3%; height: 11.4%; }
 .target-books { left: 20.7%; top: 11.4%; width: 13.7%; height: 61.2%; }
 .target-wardrobe { left: 82.8%; top: 18.2%; width: 15.1%; height: 55.8%; }
