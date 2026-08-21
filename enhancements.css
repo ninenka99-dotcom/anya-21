@@ -280,10 +280,10 @@ input:focus-visible {
 .laptop-unit-v5 {
   position: absolute;
   z-index: 20;
-  left: 66.55%;
-  top: 36.55%;
-  width: 11.7%;
-  aspect-ratio: 1538 / 1023;
+  left: 65.3%;
+  top: 35.8%;
+  width: 15%;
+  aspect-ratio: 1536 / 1024;
   pointer-events: none;
   filter: drop-shadow(0 8px 7px rgba(0,0,0,.42));
   transition: filter .3s ease;
@@ -301,25 +301,24 @@ input:focus-visible {
 .laptop-screen-v5 {
   position: absolute;
   z-index: 3;
-  left: 10.85%;
-  top: 5.25%;
-  width: 70.75%;
-  height: 60.85%;
-  overflow: hidden;
-  background: #080b11;
-  border-radius: 1.2%;
-  box-shadow: 0 0 11px rgba(105,144,215,.34), inset 0 0 6px rgba(0,0,0,.65);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
 }
 
 .laptop-screen-v5 img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  filter: drop-shadow(0 0 7px rgba(105,144,215,.25));
   transition: opacity .12s ease;
 }
 
 .laptop-screen-v5 img.switching { opacity: .1; }
-.anya-at-laptop .laptop-screen-v5 { box-shadow: 0 0 18px rgba(112,157,237,.68), inset 0 0 6px rgba(0,0,0,.65); }
+.anya-at-laptop .laptop-screen-v5 img { filter: drop-shadow(0 0 11px rgba(112,157,237,.62)) brightness(1.03); }
 
 .poster-object-v3 {
   position: absolute;
@@ -728,7 +727,7 @@ input:focus-visible {
 }
 
 .target-tv { left: 39.6%; top: 35.2%; width: 14.2%; height: 24.2%; }
-.target-laptop { left: 66.25%; top: 35.85%; width: 12.5%; height: 17.2%; }
+.target-laptop { left: 64.9%; top: 35.35%; width: 15.8%; height: 18.4%; }
 .target-radio { left: 61.4%; top: 41.4%; width: 6.3%; height: 11.4%; }
 .target-books { left: 20.7%; top: 11.4%; width: 13.7%; height: 61.2%; }
 .target-wardrobe { left: 82.8%; top: 18.2%; width: 15.1%; height: 55.8%; }
