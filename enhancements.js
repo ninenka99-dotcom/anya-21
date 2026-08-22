@@ -122,7 +122,7 @@
       </div>
       <div class="roomViewport room-viewport-v3 contentWidth">
         <div class="roomStage room-stage-v3" id="roomStageV3">
-          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v13.webp" alt="Комната Ани, показанная прямо спереди">
+          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v14.webp" alt="Мягко освещённая фиолетовая комната Ани, показанная прямо спереди">
           <div class="roomHud room-hud-v3" aria-live="polite"><span class="roomDot"></span><p id="roomStatus">Нажимай прямо на предметы в комнате.</p></div>
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
@@ -131,6 +131,8 @@
             <div class="laptop-screen-v5"><img id="laptopImage" src="${laptopGames.minecraft.src}" alt="Заставка Minecraft"></div>
           </div>
           <button type="button" class="room-object poster-object-v3" data-room-object="poster" aria-label="Рассмотреть плакат Лололошки и JDH"><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH"><span>плакат</span></button>
+          <button type="button" class="poster-placeholder-v14 poster-placeholder-top-v14" data-room-object="poster-placeholder" aria-label="Свободная рамка для будущего постера"><span>место для постера</span></button>
+          <button type="button" class="poster-placeholder-v14 poster-placeholder-bottom-v14" data-room-object="poster-placeholder" aria-label="Свободная рамка для будущего постера"><span>место для постера</span></button>
           <div id="addedBookSpines" class="added-book-spines-v3" aria-label="Книги на полке"></div>
           <div class="radio-readout-v3" id="radioRoomTitle">Key</div>
           <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" data-outfit="base" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
@@ -139,6 +141,7 @@
           <button type="button" id="simaSpriteV3" class="sima-v3 walking" data-room-object="sima" aria-label="Погладить Симу"><span class="sima-visual-v5"><img src="./room/sima-walk-v2.webp" alt="Сима гуляет по комнате"></span><span class="sima-label">Сима</span><span class="sima-hearts-v3" aria-hidden="true">♡ ♡ ♡</span></button>
           <button type="button" id="simaBowlV8" class="sima-bowl-v8" data-room-object="bowl" aria-label="Миска Симы"><img src="./games/sima/bowl-empty-v8.webp" alt="Керамическая миска Симы"><span>миска Симы</span></button>
           <button type="button" id="simaFeedingV8" class="sima-feeding-v8" data-room-object="bowl" aria-label="Сима кушает из миски" hidden><img class="sima-feeding-cat-v8" src="./games/sima/sima-eat-v8.webp" alt="Сима кушает"><img class="sima-feeding-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt="Миска с кормом"><span>Сима кушает</span><i aria-hidden="true">мр-р</i></button>
+          <button type="button" id="anyaHeadphonesV14" class="anya-headphones-v14" data-room-object="headphones" aria-label="Надеть наушники Ани и открыть тихий мир"><img src="./room/headphones-floor-v14.webp" alt="Холодно-синие беспроводные наушники Ани"><span>наушники</span></button>
           <button type="button" class="room-target target-bed" data-room-object="bed" aria-label="Отправить Аню спать"><span>кровать</span></button>
           <button type="button" class="room-target target-tv" data-room-object="tv" aria-label="Управлять телевизором"><span>телевизор</span></button>
           <button type="button" class="room-target target-laptop" data-room-object="laptop" aria-label="Выбрать игру на ноутбуке"><span>ноутбук</span></button>
@@ -154,11 +157,23 @@
       <div id="booksModal" class="room-modal room-modal-v3" role="dialog" aria-modal="true" aria-labelledby="booksTitle" hidden>
         <div class="room-modal-card"><button type="button" class="room-modal-close" aria-label="Закрыть">×</button><p class="sectionKicker">книжный шкаф</p><h3 id="booksTitle">Книги Ани</h3>
           <form id="bookForm"><label for="bookTitle">Название книги</label><div><input id="bookTitle" maxlength="60" autocomplete="off" placeholder="Название книги"><button type="submit">добавить</button></div></form>
-          <ul id="bookList"></ul><small>Добавленные книги сохраняются на этом устройстве и появляются на полке.</small>
+          <ul id="bookList"></ul><small>Добавленные книги сохраняются на этом устройстве. На трёх полках помещается до 18 книг.</small>
         </div>
       </div>
       <div id="posterModal" class="room-modal poster-modal-v3" role="dialog" aria-modal="true" aria-label="Плакат Лололошки и JDH" hidden>
         <div class="poster-modal-card"><button type="button" class="room-modal-close" aria-label="Закрыть">×</button><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH крупным планом"></div>
+      </div>
+      <div id="headphoneWorldV14" class="headphone-world-v14" role="dialog" aria-modal="true" aria-label="Мир Ани в наушниках" hidden>
+        <img class="headphone-world-bg-v14" src="./room/world/ocean-cliffs-v14.webp" alt="Спокойный океан и горы в мягком вечернем свете">
+        <div class="headphone-world-clouds-v14" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="headphone-world-birds-v14" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <img class="headphone-world-anya-v14" src="./room/world/anya-seated-headphones-v14.webp" alt="Аня сидит на скале в синих наушниках и смотрит на океан">
+        <div class="headphone-world-controls-v14">
+          <p>мир в наушниках</p>
+          <span>Океан, горы и немного тишины.</span>
+          <div><button type="button" data-world-audio>пауза</button><button type="button" data-leave-headphone-world>снять наушники</button></div>
+        </div>
+        <audio id="headphoneWorldAudioV14" src="./audio/magic-by-medasin-v14.mp3" preload="metadata"></audio>
       </div>`;
 
     const stage = qs("#roomStageV3", section);
@@ -175,6 +190,9 @@
     const simaFeeding = qs("#simaFeedingV8", section);
     const audio = qs("#roomAudio", section);
     const simaPurr = qs("#simaPurr", section);
+    const headphoneWorld = qs("#headphoneWorldV14", section);
+    const headphoneWorldAudio = qs("#headphoneWorldAudioV14", section);
+    const headphoneWorldToggle = qs("[data-world-audio]", headphoneWorld);
     let activity = "standing";
     let currentOutfit = "base";
     let trackIndex = 0;
@@ -341,33 +359,86 @@
       lightsOn = !lightsOn; stage.classList.toggle("lights-off", !lightsOn); qs(".target-lamp", section).setAttribute("aria-label", lightsOn ? "Выключить свет" : "Включить свет"); say(lightsOn ? "Свет снова включён." : "Свет выключен. В комнате остался ночной свет из окна."); closePanel();
     }
     function openPoster() { qs("#posterModal", section).hidden = false; document.body.classList.add("room-modal-open"); }
+    function openPosterPlaceholder() {
+      showPanel("poster-placeholder", "Свободная рамка", "<span>Сюда можно будет добавить ещё один постер, когда появится подходящая картинка.</span>");
+    }
+    function syncHeadphoneWorldAudio() {
+      headphoneWorldToggle.textContent = headphoneWorldAudio.paused ? "включить музыку" : "пауза";
+      headphoneWorldToggle.setAttribute("aria-pressed", headphoneWorldAudio.paused ? "false" : "true");
+    }
+    function openHeadphoneWorld() {
+      closePanel();
+      audio.pause();
+      stage.classList.remove("radio-playing");
+      headphoneWorld.hidden = false;
+      document.body.classList.add("headphone-world-open-v14");
+      headphoneWorldAudio.currentTime = 0;
+      headphoneWorldAudio.volume = .72;
+      headphoneWorldAudio.play().then(syncHeadphoneWorldAudio).catch(syncHeadphoneWorldAudio);
+      say("Аня надела наушники и оказалась у тихого океана.");
+    }
+    function closeHeadphoneWorld() {
+      headphoneWorldAudio.pause();
+      headphoneWorldAudio.currentTime = 0;
+      syncHeadphoneWorldAudio();
+      headphoneWorld.hidden = true;
+      document.body.classList.remove("headphone-world-open-v14");
+      say("Аня сняла наушники и вернулась в комнату.");
+    }
 
     const booksController = setupBooks(section, say);
     setupModal(qs("#posterModal", section));
     qsa("[data-room-object]", stage).forEach((button) => button.addEventListener("click", (event) => {
       event.stopPropagation(); const kind = button.dataset.roomObject; activePanelAnchor = button;
-      if (kind === "anya") openAnyaPanel(); else if (kind === "bed") openBedPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima(); else if (kind === "bowl") openBowlPanel();
+      if (kind === "anya") openAnyaPanel(); else if (kind === "bed") openBedPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "poster-placeholder") openPosterPlaceholder(); else if (kind === "sima") petSima(); else if (kind === "bowl") openBowlPanel(); else if (kind === "headphones") openHeadphoneWorld();
     }));
     stage.addEventListener("click", (event) => { if (event.target === stage || event.target.classList.contains("room-backdrop-v3")) closePanel(); });
     audio.addEventListener("ended", () => { loadTrack(trackIndex + 1, true); if (!panel.hidden && panel.classList.contains("panel-radio")) openRadioPanel(); });
+    headphoneWorldToggle.addEventListener("click", () => {
+      if (headphoneWorldAudio.paused) headphoneWorldAudio.play().then(syncHeadphoneWorldAudio).catch(syncHeadphoneWorldAudio);
+      else { headphoneWorldAudio.pause(); syncHeadphoneWorldAudio(); }
+    });
+    qs("[data-leave-headphone-world]", headphoneWorld).addEventListener("click", closeHeadphoneWorld);
+    headphoneWorldAudio.addEventListener("play", syncHeadphoneWorldAudio);
+    headphoneWorldAudio.addEventListener("pause", syncHeadphoneWorldAudio);
+    headphoneWorldAudio.addEventListener("ended", () => { headphoneWorldAudio.currentTime = 0; syncHeadphoneWorldAudio(); });
+    window.addEventListener("keydown", (event) => { if (event.key === "Escape" && !headphoneWorld.hidden) closeHeadphoneWorld(); });
     loadTrack(0, false); say("Нажимай прямо на предметы в комнате.");
   }
 
   function setupBooks(section, say) {
-    const modal = qs("#booksModal", section); const form = qs("#bookForm", section); const input = qs("#bookTitle", section); const list = qs("#bookList", section); const spines = qs("#addedBookSpines", section); const storageKey = "anya-room-books-v3"; let customBooks = [];
+    const modal = qs("#booksModal", section); const form = qs("#bookForm", section); const input = qs("#bookTitle", section); const list = qs("#bookList", section); const spines = qs("#addedBookSpines", section); const storageKey = "anya-room-books-v3"; const maxBooks = 18; let customBooks = [];
+    const shelfSlots = [];
+    const rows = [
+      { top: 15.1, height: 10.7, starts: [22.25, 23.02, 23.82, 24.6, 25.42, 26.22] },
+      { top: 28.5, height: 10.8, starts: [22.28, 23.07, 23.88, 24.68, 25.5, 26.32] },
+      { top: 42.25, height: 15.25, starts: [22.26, 23.08, 23.92, 24.78, 25.65, 26.52] },
+    ];
+    for (let index = 0; index < 6; index += 1) rows.forEach((row, rowIndex) => shelfSlots.push({ left: row.starts[index], top: row.top, width: .74 + ((index + rowIndex) % 3) * .07, height: row.height - ((index + rowIndex) % 3) * .7, tilt: ((index * 2 + rowIndex) % 5) - 2 }));
     try { customBooks = JSON.parse(localStorage.getItem(storageKey) || "[]"); if (!Array.isArray(customBooks)) customBooks = []; } catch { customBooks = []; }
+    customBooks = customBooks.filter((book) => typeof book === "string" && book.trim()).slice(0, maxBooks - defaultBooks.length);
     const allBooks = () => [...defaultBooks, ...customBooks];
     function save() { try { localStorage.setItem(storageKey, JSON.stringify(customBooks)); } catch {} }
     function render() {
       list.innerHTML = allBooks().map((book, index) => { const isDefault = index < defaultBooks.length; return `<li><span>${escapeHtml(book)}</span>${isDefault ? '<small>уже на полке</small>' : `<button type="button" data-remove-book="${index - defaultBooks.length}" aria-label="Убрать книгу ${escapeHtml(book)}">×</button>`}</li>`; }).join("");
-      const colors = ["#6e405c", "#47547d", "#7a6245", "#58466f", "#3f6668", "#824d4d", "#525d85", "#765a70"];
-      spines.innerHTML = allBooks().slice(0, 10).map((book, index) => `<span style="--book-index:${index};--book-color:${colors[index % colors.length]}" title="${escapeHtml(book)}"><i></i><b>${escapeHtml(book)}</b></span>`).join("");
+      const colors = ["#6f405b", "#45547a", "#7b6041", "#56456c", "#3e6367", "#814b4a", "#536087", "#76566c", "#465b4d", "#6e536f", "#8a684c", "#40566e"];
+      spines.innerHTML = allBooks().slice(0, maxBooks).map((book, index) => {
+        const slot = shelfSlots[index];
+        return `<span class="book-spine-v14" style="--book-left:${slot.left}%;--book-top:${slot.top}%;--book-width:${slot.width}%;--book-height:${slot.height}%;--book-tilt:${slot.tilt}deg;--book-color:${colors[index % colors.length]}" title="${escapeHtml(book)}"><i></i><b>${escapeHtml(book)}</b></span>`;
+      }).join("");
       qsa("[data-remove-book]", list).forEach((button) => button.addEventListener("click", () => { customBooks.splice(Number(button.dataset.removeBook), 1); save(); render(); }));
     }
     function open() { modal.hidden = false; document.body.classList.add("room-modal-open"); window.setTimeout(() => input.focus(), 30); }
     function close() { modal.hidden = true; document.body.classList.remove("room-modal-open"); }
     qs(".room-modal-close", modal).addEventListener("click", close); modal.addEventListener("click", (event) => { if (event.target === modal) close(); });
-    form.addEventListener("submit", (event) => { event.preventDefault(); const value = input.value.trim(); if (!value) return; if (!allBooks().some((book) => book.toLocaleLowerCase("ru") === value.toLocaleLowerCase("ru"))) { customBooks.push(value); customBooks = customBooks.slice(-17); save(); render(); say(`Книга «${value}» появилась на полке.`); } input.value = ""; });
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const value = input.value.trim();
+      if (!value) return;
+      if (allBooks().length >= maxBooks) { say("Все 18 мест на книжных полках уже заняты."); input.select(); return; }
+      if (!allBooks().some((book) => book.toLocaleLowerCase("ru") === value.toLocaleLowerCase("ru"))) { customBooks.push(value); save(); render(); say(`Книга «${value}» появилась на одной из свободных полок.`); }
+      input.value = "";
+    });
     render(); return { open, close };
   }
 
@@ -498,6 +569,7 @@
       { id: "box", label: "Коробки", note: "найти лучший домик", asset: "box", stat: "joy" },
       { id: "window", label: "Огоньки", note: "поймать светлячков", asset: "fireflies", stat: "joy" },
       { id: "sleep", label: "Сон", note: "устроить тихий час", asset: "bed", stat: "rest" },
+      { id: "sing", label: "Караоке", note: "спеть в микрофон", asset: "microphone", stat: "joy" },
     ];
     const poseFiles = {
       idle: "./games/sima/sima-idle-v8.webp",
@@ -506,8 +578,10 @@
       groom: "./games/sima/sima-groom-v8.webp",
       sleep: "./games/sima/sima-sleep-v8.webp",
       box: "./games/sima/sima-box-v8.webp",
+      sing: "./games/sima/sima-sing-v14.webp",
     };
-    const propFile = (name) => `./games/sima/${name}-v8.webp`;
+    const propFiles = { microphone: "./games/sima/microphone-v14.webp" };
+    const propFile = (name) => propFiles[name] || `./games/sima/${name}-v8.webp`;
     const storageKey = "anya-sima-nook-v8";
     const freshState = { fullness: 38, joy: 42, care: 35, rest: 46, completed: [], visited: false, celebrated: false };
     let state = { ...freshState };
@@ -515,6 +589,7 @@
       const stored = JSON.parse(localStorage.getItem(storageKey) || "null");
       if (stored && typeof stored === "object") state = { ...freshState, ...stored, completed: Array.isArray(stored.completed) ? stored.completed.filter((id) => activities.some((activity) => activity.id === id)) : [] };
     } catch {}
+    if (state.completed.length < activities.length) state.celebrated = false;
 
     root.innerHTML = `<div class="gamePage sima-game-page-v8">
       <button type="button" class="gameClose sima-game-close-v8">← к играм</button>
@@ -526,7 +601,7 @@
           <div><span>уход</span><i><b id="simaNeedCare"></b></i><em id="simaNeedCareValue">0</em></div>
           <div><span>отдых</span><i><b id="simaNeedRest"></b></i><em id="simaNeedRestValue">0</em></div>
         </div>
-        <button type="button" id="simaCollectionButton" class="sima-collection-button-v8"><span>коллекция</span><b id="simaCollectionCount">0 / 6</b></button>
+        <button type="button" id="simaCollectionButton" class="sima-collection-button-v8"><span>коллекция</span><b id="simaCollectionCount">0 / ${activities.length}</b></button>
       </header>
       <main id="simaNookV8" class="sima-nook-v8">
         <img class="sima-nook-background-v8" src="./games/sima/nook-background-v8.webp" alt="Уютный ночной уголок Симы">
@@ -536,6 +611,7 @@
         <button type="button" class="sima-scene-prop-v8 sima-scene-bowl-v8" data-sima-action="feed" aria-label="Покормить Симу"><img id="simaSceneBowlImage" src="./games/sima/bowl-empty-v8.webp" alt="Миска Симы"><span>миска</span></button>
         <button type="button" class="sima-scene-prop-v8 sima-scene-yarn-v8" data-sima-action="play" aria-label="Поиграть с Симой"><img src="./games/sima/yarn-v8.webp" alt="Клубок Симы"><span>игрушки</span></button>
         <button type="button" class="sima-scene-prop-v8 sima-scene-bed-v8" data-sima-action="sleep" aria-label="Уложить Симу спать"><img src="./games/sima/bed-v8.webp" alt="Лежанка Симы"><span>лежанка</span></button>
+        <button type="button" class="sima-scene-prop-v8 sima-scene-microphone-v14" data-sima-action="sing" aria-label="Дать Симе попеть"><img src="./games/sima/microphone-v14.webp" alt="Микрофон Симы"><span>караоке</span></button>
         <button type="button" class="sima-window-hotspot-v8" data-sima-action="window" aria-label="Посмотреть с Симой в окно"><span>огоньки у окна</span></button>
         <div id="simaActionPropV8" class="sima-action-prop-v8" hidden><img alt=""></div>
         <button type="button" id="simaGameCatV8" class="sima-game-cat-v8" data-pose="idle" aria-label="Погладить Симу"><img src="${poseFiles.idle}" alt="Сима сидит в своём уютном уголке"><span class="sima-game-hearts-v8" aria-hidden="true">♡ ♡ ♡</span></button>
@@ -544,10 +620,11 @@
         <div id="simaFirefliesV8" class="sima-fireflies-v8" aria-live="polite"></div>
         <div id="simaActivityV8" class="sima-activity-v8" hidden></div>
         <div id="simaCollectionV8" class="sima-collection-v8" role="dialog" aria-modal="true" aria-label="Коллекция Симы" hidden><div><button type="button" data-close-sima-collection aria-label="Закрыть">×</button><p>маленькие сокровища</p><h3>Коллекция Симы</h3><section id="simaCollectionGridV8"></section><small>Каждое воспоминание открывается после нового занятия с Симой.</small></div></div>
-        <div id="simaWelcomeV8" class="sima-welcome-v8" ${state.visited ? "hidden" : ""}><div><img src="./games/sima/sima-idle-v8.webp" alt="Сима"><p>большая уютная игра</p><h2>Симин уголок</h2><span>Здесь не нужно побеждать и торопиться. Корми Симу, играй, расчёсывай, исследуй коробки и собирай воспоминания об идеальном тихом дне.</span><button type="button">зайти к Симе</button></div></div>
+        <div id="simaWelcomeV8" class="sima-welcome-v8" ${state.visited ? "hidden" : ""}><div><img src="./games/sima/sima-idle-v8.webp" alt="Сима"><p>большая уютная игра</p><h2>Симин уголок</h2><span>Здесь не нужно побеждать и торопиться. Корми Симу, играй, расчёсывай, исследуй коробки, пой с ней караоке и собирай воспоминания об идеальном тихом дне.</span><button type="button">зайти к Симе</button></div></div>
         <div id="simaCompleteV8" class="sima-complete-v8" hidden><div><span aria-hidden="true">✦</span><p>все воспоминания собраны</p><h2>Идеальный день Симы</h2><small>Сима сыта, вычесана, наигралась и совершенно довольна.</small><button type="button">остаться с Симой</button></div></div>
         <nav class="sima-action-dock-v8" aria-label="Занятия с Симой">${activities.map((activity) => `<button type="button" data-sima-action="${activity.id}"><img src="${propFile(activity.asset)}" alt=""><span>${activity.label}</span><small>${activity.note}</small><i aria-hidden="true"></i></button>`).join("")}</nav>
         <audio id="simaGamePurrV8" src="./audio/sima-purr-v5.mp3" preload="auto"></audio>
+        <audio id="simaKaraokeAudioV14" src="./audio/sima-karaoke-v14.mp3" preload="metadata"></audio>
       </main>
     </div>`;
 
@@ -564,6 +641,7 @@
     const collectionGrid = qs("#simaCollectionGridV8", root);
     const complete = qs("#simaCompleteV8", root);
     const purr = qs("#simaGamePurrV8", root);
+    const karaoke = qs("#simaKaraokeAudioV14", root);
     const timers = new Set();
     let activeActivity = "";
     let busy = false;
@@ -598,7 +676,7 @@
       cat.dataset.pose = pose;
       cat.dataset.activity = activity;
       catImage.src = poseFiles[pose] || poseFiles.idle;
-      catImage.alt = pose === "sleep" ? "Сима свернулась клубочком и спит" : pose === "eat" ? "Сима кушает" : pose === "play" ? "Сима играет" : pose === "box" ? "Сима выглядывает из коробки" : "Сима в своём уголке";
+      catImage.alt = pose === "sleep" ? "Сима свернулась клубочком и спит" : pose === "eat" ? "Сима кушает" : pose === "play" ? "Сима играет" : pose === "box" ? "Сима выглядывает из коробки" : pose === "sing" ? "Сима поёт в микрофон" : "Сима в своём уголке";
     }
     function showActionProp(asset, kind) {
       actionProp.hidden = false;
@@ -628,7 +706,10 @@
       fireflyLayer.innerHTML = "";
       actionProp.hidden = true;
       actionProp.removeAttribute("style");
-      nook.classList.remove("sima-eating-v8", "sima-playing-v8", "sima-brushing-v8", "sima-boxing-v8", "sima-windowing-v8", "sima-sleeping-v8");
+      karaoke.pause();
+      karaoke.currentTime = 0;
+      nook.classList.remove("sima-eating-v8", "sima-playing-v8", "sima-brushing-v8", "sima-boxing-v8", "sima-windowing-v8", "sima-sleeping-v8", "sima-singing-v14");
+      activityPanel.classList.remove("sima-karaoke-controls-v14");
       cat.classList.remove("brushable");
       if (resetPose) setPose("idle");
     }
@@ -786,6 +867,34 @@
         qs("[data-wake-sima]", activityPanel).addEventListener("click", () => { clearActivity(); setSpeech("Сима проснулась, потянулась и осмотрела владения."); });
       });
     }
+    function singActivity() {
+      openPanel("караоке", "Дадим Симе попеть?", `<span class="sima-activity-instruction-v8">Музыка включится только после нажатия. Её в любой момент можно поставить на паузу или выключить.</span><button type="button" data-start-singing><img src="${propFile("microphone")}" alt="">начать караоке</button>`);
+      qs("[data-start-singing]", activityPanel).addEventListener("click", () => {
+        busy = true;
+        setPose("sing", "sing");
+        nook.classList.add("sima-singing-v14");
+        activityPanel.classList.add("sima-karaoke-controls-v14");
+        activityPanel.innerHTML = '<p>караоке</p><h3>Сима поёт</h3><div><button type="button" data-toggle-karaoke>пауза</button><button type="button" data-stop-karaoke>закончить</button></div>';
+        const toggle = qs("[data-toggle-karaoke]", activityPanel);
+        const finish = () => {
+          award("sing", { joy: 30, rest: -2 }, "Концерт окончен. Сима явно ждёт оваций.");
+          clearActivity();
+        };
+        const syncToggle = () => { toggle.textContent = karaoke.paused ? "продолжить" : "пауза"; };
+        const onEnded = () => finish();
+        toggle.addEventListener("click", () => {
+          if (karaoke.paused) karaoke.play().then(syncToggle).catch(syncToggle);
+          else { karaoke.pause(); syncToggle(); }
+        });
+        qs("[data-stop-karaoke]", activityPanel).addEventListener("click", finish);
+        karaoke.addEventListener("ended", onEnded);
+        activityCleanup = () => karaoke.removeEventListener("ended", onEnded);
+        karaoke.currentTime = 0;
+        karaoke.volume = .7;
+        karaoke.play().then(syncToggle).catch(syncToggle);
+        setSpeech("Сима начала свой сольный концерт.");
+      });
+    }
     function openActivity(id) {
       if (busy) { setSpeech("Сначала закончим начатое занятие."); return; }
       clearActivity();
@@ -796,6 +905,7 @@
       else if (id === "box") boxActivity();
       else if (id === "window") windowActivity();
       else if (id === "sleep") sleepActivity();
+      else if (id === "sing") singActivity();
     }
 
     qsa("[data-sima-action]", root).forEach((button) => button.addEventListener("click", () => openActivity(button.dataset.simaAction)));
@@ -813,7 +923,7 @@
     qs("#simaCompleteV8 button", root).addEventListener("click", () => { complete.hidden = true; nook.classList.remove("sima-day-complete-v8"); clearActivity(); setSpeech("Идеальный день можно продолжать сколько угодно."); });
     qs(".sima-game-close-v8", root).addEventListener("click", closeGame);
     renderState();
-    return () => { activityCleanup(); timers.forEach((timer) => window.clearTimeout(timer)); timers.clear(); purr.pause(); };
+    return () => { activityCleanup(); timers.forEach((timer) => window.clearTimeout(timer)); timers.clear(); purr.pause(); karaoke.pause(); };
   }
 
   function pluralizeCalls(value) { const lastTwo = value % 100; const last = value % 10; if (lastTwo >= 11 && lastTwo <= 14) return "вызовов"; if (last === 1) return "вызова"; return "вызовов"; }
