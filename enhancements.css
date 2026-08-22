@@ -225,12 +225,14 @@ input:focus-visible {
 .lights-off .room-backdrop-v3 { filter: brightness(.35) saturate(.68) contrast(1.08); }
 .lights-off .lamp-glow-v3 { opacity: 0; }
 .lights-off .poster-object-v3,
+.lights-off .poster-placeholder-v14,
 .lights-off .anya-object-v3,
 .lights-off .sleeping-anya-v3,
 .lights-off .laptop-anya-v3,
 .lights-off .sima-v3,
 .lights-off .sima-bowl-v8,
 .lights-off .sima-feeding-v8,
+.lights-off .anya-headphones-v14,
 .lights-off .added-book-spines-v3,
 .lights-off .laptop-unit-v5 { filter: brightness(.55) saturate(.75); }
 
@@ -323,18 +325,54 @@ input:focus-visible {
 .poster-object-v3 {
   position: absolute;
   z-index: 7;
-  left: 65.25%;
-  top: 16.1%;
-  width: 10.75%;
-  height: 19.65%;
+  left: 63.45%;
+  top: 13.55%;
+  width: 7.65%;
+  height: 19.35%;
   padding: 0;
   cursor: zoom-in;
   background: #17161f;
   border: 0;
   border-radius: 1px;
-  box-shadow: 0 0 0 4px rgba(69,42,26,.7);
+  box-shadow: 0 0 0 3px rgba(69,42,26,.72);
   transition: filter .3s ease, transform .2s ease, box-shadow .2s ease;
 }
+
+.poster-placeholder-v14 {
+  position: absolute;
+  z-index: 8;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+}
+
+.poster-placeholder-top-v14 { left: 72.43%; top: 14.35%; width: 5.08%; height: 10.2%; }
+.poster-placeholder-bottom-v14 { left: 72.18%; top: 26.85%; width: 5.72%; height: 10.15%; }
+
+.poster-placeholder-v14 > span {
+  position: absolute;
+  left: 50%;
+  bottom: -25px;
+  padding: 5px 8px;
+  color: #f0ebf4;
+  white-space: nowrap;
+  opacity: 0;
+  background: rgba(15,16,24,.86);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  transform: translate(-50%, 4px);
+  transition: opacity .18s ease, transform .18s ease;
+  font-size: clamp(5px, .58vw, 8px);
+  pointer-events: none;
+}
+
+.poster-placeholder-v14:hover,
+.poster-placeholder-v14:focus-visible,
+.poster-placeholder-v14.selected { box-shadow: 0 0 24px rgba(222,191,239,.28); }
+.poster-placeholder-v14:hover > span,
+.poster-placeholder-v14:focus-visible > span { opacity: 1; transform: translate(-50%, 0); }
 
 .poster-object-v3 img {
   width: 100%;
@@ -400,33 +438,28 @@ input:focus-visible {
 .added-book-spines-v3 {
   position: absolute;
   z-index: 8;
-  left: 21.85%;
-  top: 50.25%;
-  width: 11.25%;
-  height: 9.5%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: .65%;
-  overflow: hidden;
+  inset: 0;
   pointer-events: none;
 }
 
-.added-book-spines-v3 > span {
-  position: relative;
+.added-book-spines-v3 > .book-spine-v14 {
+  position: absolute;
+  left: var(--book-left);
+  top: var(--book-top);
   display: block;
-  width: 9.2%;
-  height: calc(68% + (var(--book-index) % 3) * 11%);
+  width: var(--book-width);
+  height: var(--book-height);
   overflow: hidden;
   background: var(--book-color);
   border: 1px solid rgba(255,232,203,.28);
-  border-bottom: 0;
-  border-radius: 2px 2px 0 0;
-  box-shadow: inset 2px 0 rgba(255,255,255,.12), 1px 0 4px rgba(0,0,0,.48);
+  border-radius: 2px 2px 1px 1px;
+  box-shadow: inset 2px 0 rgba(255,255,255,.13), inset -2px 0 rgba(0,0,0,.16), 1px 2px 4px rgba(0,0,0,.48);
+  transform: rotate(var(--book-tilt));
+  transform-origin: center bottom;
 }
 
-.added-book-spines-v3 > span::before,
-.added-book-spines-v3 > span::after {
+.added-book-spines-v3 > .book-spine-v14::before,
+.added-book-spines-v3 > .book-spine-v14::after {
   content: "";
   position: absolute;
   left: 8%;
@@ -435,8 +468,8 @@ input:focus-visible {
   background: rgba(229,202,143,.7);
 }
 
-.added-book-spines-v3 > span::before { top: 10%; }
-.added-book-spines-v3 > span::after { bottom: 9%; }
+.added-book-spines-v3 > .book-spine-v14::before { top: 9%; }
+.added-book-spines-v3 > .book-spine-v14::after { bottom: 8%; }
 
 .added-book-spines-v3 i {
   position: absolute;
@@ -454,7 +487,7 @@ input:focus-visible {
   color: rgba(255,247,226,.88);
   writing-mode: vertical-rl;
   transform: translateX(-50%);
-  font-size: clamp(2px, .25vw, 4.5px);
+  font-size: clamp(2px, .22vw, 4px);
   font-weight: 650;
   line-height: 1;
 }
@@ -462,11 +495,11 @@ input:focus-visible {
 .radio-readout-v3 {
   position: absolute;
   z-index: 9;
-  left: 63.1%;
-  top: 47.1%;
-  width: 2.25%;
+  left: 63.25%;
+  top: 46.75%;
+  width: 2.65%;
   overflow: hidden;
-  color: #d5bb79;
+  color: #68584d;
   white-space: nowrap;
   text-align: center;
   text-overflow: ellipsis;
@@ -476,8 +509,8 @@ input:focus-visible {
 }
 
 .radio-playing .radio-readout-v3 {
-  color: #ffe49a;
-  text-shadow: 0 0 5px #dba54c;
+  color: #f7e5c4;
+  text-shadow: 0 0 5px #9c8fb4;
   animation: radioPulse 1.2s ease-in-out infinite;
 }
 
@@ -557,6 +590,8 @@ input:focus-visible {
   object-fit: contain;
   object-position: center bottom;
   filter: drop-shadow(0 10px 10px rgba(0,0,0,.44));
+  transform: translateX(-.25%) rotate(-.45deg);
+  transform-origin: center bottom;
 }
 
 @keyframes laptopFocus {
@@ -668,23 +703,64 @@ input:focus-visible {
 .sima-feeding-cat-v8 {
   position: absolute;
   z-index: 1;
-  right: 7%;
-  bottom: 3%;
-  width: 88%;
-  height: 96%;
+  right: -5%;
+  bottom: 10%;
+  width: 91%;
+  height: 98%;
   object-fit: contain;
   object-position: center bottom;
+  transform: rotate(1.2deg);
+  transform-origin: center bottom;
 }
 
 .sima-feeding-bowl-v8 {
   position: absolute;
   z-index: 3;
-  right: 0;
+  right: 1%;
   bottom: 0;
   width: 37%;
   height: 35%;
   object-fit: contain;
 }
+
+.anya-headphones-v14 {
+  position: absolute;
+  z-index: 23;
+  right: 28.8%;
+  bottom: 2.15%;
+  width: 6.4%;
+  height: 10.5%;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  filter: drop-shadow(0 8px 7px rgba(0,0,0,.42));
+  transition: transform .2s ease, filter .2s ease;
+}
+
+.anya-headphones-v14 img { width: 100%; height: 100%; object-fit: contain; transform: perspective(420px) rotateX(42deg) rotateZ(-10deg); }
+.anya-headphones-v14:hover,
+.anya-headphones-v14:focus-visible,
+.anya-headphones-v14.selected { transform: translateY(-4%) scale(1.035); filter: drop-shadow(0 8px 7px rgba(0,0,0,.42)) drop-shadow(0 0 14px rgba(139,145,199,.42)); }
+.anya-headphones-v14 > span {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  z-index: 80;
+  padding: 6px 9px;
+  color: #f0ebf4;
+  white-space: nowrap;
+  opacity: 0;
+  background: rgba(15,16,24,.86);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  transform: translate(-50%, 4px);
+  transition: opacity .18s ease, transform .18s ease;
+  font-size: clamp(5px, .58vw, 8px);
+  pointer-events: none;
+}
+.anya-headphones-v14:hover > span,
+.anya-headphones-v14:focus-visible > span { opacity: 1; transform: translate(-50%, 0); }
 
 .sima-feeding-v8 i {
   position: absolute;
@@ -728,7 +804,7 @@ input:focus-visible {
 
 .target-tv { left: 39.6%; top: 35.2%; width: 14.2%; height: 24.2%; }
 .target-laptop { left: 64.9%; top: 35.35%; width: 15.8%; height: 18.4%; }
-.target-radio { left: 61.4%; top: 41.4%; width: 6.3%; height: 11.4%; }
+.target-radio { left: 62.1%; top: 41.3%; width: 6.1%; height: 11.3%; }
 .target-books { left: 20.7%; top: 11.4%; width: 13.7%; height: 61.2%; }
 .target-wardrobe { left: 82.8%; top: 18.2%; width: 15.1%; height: 55.8%; }
 .target-lamp { left: 79.4%; top: 34.8%; width: 4.5%; height: 17.5%; }
@@ -953,6 +1029,128 @@ input:focus-visible {
   object-fit: contain;
   border-radius: 9px;
 }
+
+/* Anya's quiet world behind the headphones */
+.headphone-world-open-v14 { overflow: hidden; }
+
+.headphone-world-v14 {
+  position: fixed;
+  inset: 0;
+  z-index: 9900;
+  overflow: hidden;
+  color: #eef1f7;
+  background: #536785;
+  isolation: isolate;
+  animation: headphoneWorldIn .75s ease both;
+}
+
+.headphone-world-v14[hidden] { display: none; }
+
+.headphone-world-bg-v14 {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.88) contrast(.96) brightness(.96);
+  animation: headphoneWorldBreathe 18s ease-in-out infinite alternate;
+}
+
+.headphone-world-v14::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(29,43,67,.06), transparent 50%, rgba(20,30,48,.22)), radial-gradient(circle at 50% 45%, transparent 45%, rgba(20,29,46,.13));
+}
+
+.headphone-world-anya-v14 {
+  position: absolute;
+  right: 8%;
+  bottom: -4%;
+  z-index: 5;
+  width: min(34vw, 560px);
+  max-height: 84vh;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 22px 20px rgba(18,28,46,.34));
+  animation: headphoneAnyaBreathe 6.5s ease-in-out infinite alternate;
+}
+
+.headphone-world-clouds-v14,
+.headphone-world-birds-v14 { position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
+
+.headphone-world-clouds-v14 i {
+  position: absolute;
+  left: -38vw;
+  width: 30vw;
+  height: 7vw;
+  opacity: .2;
+  background: radial-gradient(ellipse at 25% 65%, rgba(236,240,248,.72), transparent 55%), radial-gradient(ellipse at 63% 45%, rgba(230,236,247,.62), transparent 59%);
+  filter: blur(3px);
+  animation: headphoneCloudDrift 54s linear infinite;
+}
+.headphone-world-clouds-v14 i:nth-child(1) { top: 9%; animation-delay: -9s; }
+.headphone-world-clouds-v14 i:nth-child(2) { top: 23%; width: 23vw; height: 5.5vw; opacity: .15; animation-delay: -34s; animation-duration: 68s; }
+.headphone-world-clouds-v14 i:nth-child(3) { top: 34%; width: 20vw; height: 4.5vw; opacity: .11; animation-delay: -51s; animation-duration: 78s; }
+
+.headphone-world-birds-v14 i {
+  position: absolute;
+  left: -5vw;
+  top: var(--bird-y, 28%);
+  width: 24px;
+  height: 12px;
+  opacity: .48;
+  animation: headphoneBirdFly 28s linear infinite;
+}
+.headphone-world-birds-v14 i::before,
+.headphone-world-birds-v14 i::after { content: ""; position: absolute; top: 5px; width: 13px; height: 7px; border-top: 2px solid rgba(37,49,68,.86); border-radius: 50%; }
+.headphone-world-birds-v14 i::before { left: 0; transform: rotate(18deg); }
+.headphone-world-birds-v14 i::after { right: 0; transform: rotate(-18deg); }
+.headphone-world-birds-v14 i:nth-child(1) { --bird-y: 24%; animation-delay: -4s; }
+.headphone-world-birds-v14 i:nth-child(2) { --bird-y: 31%; animation-delay: -13s; animation-duration: 35s; transform: scale(.75); }
+.headphone-world-birds-v14 i:nth-child(3) { --bird-y: 19%; animation-delay: -23s; animation-duration: 39s; transform: scale(.55); }
+.headphone-world-birds-v14 i:nth-child(4) { --bird-y: 37%; animation-delay: -28s; animation-duration: 33s; transform: scale(.68); }
+
+.headphone-world-controls-v14 {
+  position: absolute;
+  left: clamp(18px, 4vw, 64px);
+  bottom: clamp(18px, 4vw, 58px);
+  z-index: 12;
+  width: min(410px, calc(100% - 36px));
+  padding: clamp(18px, 2.5vw, 29px);
+  background: rgba(27,39,58,.68);
+  border: 1px solid rgba(235,241,250,.25);
+  border-radius: 22px;
+  box-shadow: 0 22px 65px rgba(19,28,44,.3);
+  backdrop-filter: blur(18px);
+}
+.headphone-world-controls-v14 > p { margin: 0 0 7px; color: #cfd7e6; font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
+.headphone-world-controls-v14 > span { display: block; margin-bottom: 17px; font: 500 clamp(23px, 3vw, 38px)/1.08 Playfair Display, Georgia, serif; }
+.headphone-world-controls-v14 > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.headphone-world-controls-v14 button {
+  flex: 1 1 150px;
+  min-height: 45px;
+  padding: 10px 16px;
+  color: #edf1f7;
+  cursor: pointer;
+  background: rgba(235,241,250,.09);
+  border: 1px solid rgba(235,241,250,.24);
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: .07em;
+}
+.headphone-world-controls-v14 button:hover,
+.headphone-world-controls-v14 button:focus-visible { background: rgba(235,241,250,.17); }
+
+@keyframes headphoneWorldIn { from { opacity: 0; } }
+@keyframes headphoneWorldBreathe { to { transform: scale(1.012); filter: saturate(.92) contrast(.97) brightness(.99); } }
+@keyframes headphoneAnyaBreathe { to { transform: translateY(-.35%); } }
+@keyframes headphoneCloudDrift { to { transform: translateX(148vw); } }
+@keyframes headphoneBirdFly { to { transform: translate(110vw, -7vh); } }
 
 /* Archive gate: a normal text field keeps Cyrillic keyboards available. */
 .archive-gate {
@@ -1608,6 +1806,7 @@ input:focus-visible {
 .sima-scene-bowl-v8 { left: 31%; bottom: 13%; width: 7%; height: 12%; }
 .sima-scene-yarn-v8 { right: 29%; bottom: 14%; width: 7%; height: 13%; }
 .sima-scene-bed-v8 { right: 5%; bottom: 13%; width: 17%; height: 26%; }
+.sima-scene-microphone-v14 { right: 21.5%; bottom: 14%; width: 6.3%; height: 18%; }
 .sima-window-hotspot-v8 { left: 38%; top: 6%; width: 28%; height: 47%; border-radius: 45%; }
 .sima-window-hotspot-v8 span { bottom: 10%; }
 
@@ -1680,7 +1879,7 @@ input:focus-visible {
   left: 50%;
   bottom: 12px;
   display: grid;
-  grid-template-columns: repeat(6, minmax(90px, 1fr));
+  grid-template-columns: repeat(7, minmax(82px, 1fr));
   gap: 7px;
   width: min(1030px, calc(100% - 32px));
   padding: 8px;
@@ -1782,6 +1981,18 @@ input:focus-visible {
   animation: simaSleepNoticeIn .28s ease both;
 }
 
+.sima-activity-v8.sima-karaoke-controls-v14 {
+  top: 84px;
+  bottom: auto;
+  left: 20px;
+  width: min(315px, calc(100% - 40px));
+  padding: 17px;
+  transform: none;
+}
+.sima-karaoke-controls-v14 > p { margin-bottom: 4px; }
+.sima-karaoke-controls-v14 h3 { margin-bottom: 12px; font-size: 25px; }
+.sima-karaoke-controls-v14 button:not(.sima-activity-close-v8) { min-height: 43px; font-size: 9px; }
+
 @keyframes simaSleepNoticeIn {
   from { opacity: 0; transform: translateY(-10px) scale(.98); }
 }
@@ -1802,12 +2013,15 @@ input:focus-visible {
 .sima-action-prop-v8.prop-bed { z-index: 27; left: 50%; bottom: 14%; width: 31%; height: 38%; transform: translateX(-50%); }
 .sima-action-prop-v8.prop-brush { z-index: 60; left: 50%; top: 46%; width: 8%; height: 15%; transform: translate(-50%, -50%) rotate(-18deg); transition: left .08s linear, top .08s linear; }
 
-.sima-eating-v8 .sima-game-cat-v8 { left: 45%; bottom: 15%; width: min(30vw, 430px); }
+.sima-eating-v8 .sima-game-cat-v8 { left: 48%; bottom: 21%; width: min(30vw, 430px); transform: translateX(-50%) rotate(1deg); }
 .sima-playing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(34vw, 500px); }
 .sima-brushing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(28vw, 410px); }
 .sima-boxing-v8 .sima-game-cat-v8 { z-index: 34; bottom: 16%; width: min(21vw, 310px); }
 .sima-windowing-v8 .sima-game-cat-v8 { left: 68%; bottom: 18%; width: min(19vw, 275px); }
 .sima-sleeping-v8 .sima-game-cat-v8 { z-index: 34; bottom: 16%; width: min(26vw, 390px); }
+.sima-singing-v14 .sima-game-cat-v8 { left: 54%; bottom: 13%; width: min(31vw, 455px); height: 67%; }
+.sima-singing-v14 .sima-game-cat-v8 img { object-position: center bottom; }
+.sima-singing-v14 .sima-nook-background-v8 { filter: saturate(.86) brightness(.82); }
 .sima-sleeping-v8 .sima-nook-background-v8 { filter: saturate(.72) brightness(.54); }
 .sima-sleeping-v8::before { content: "z z z"; position: absolute; z-index: 48; left: 58%; top: 30%; color: #d9c5dc; font: italic 24px Playfair Display, Georgia, serif; letter-spacing: .2em; animation: simaZzz 2.2s ease-in-out infinite; }
 @keyframes simaZzz { 50% { opacity: .45; transform: translateY(-8px); } }
@@ -2062,7 +2276,7 @@ input:focus-visible {
   .sima-topbar-v8 { grid-template-columns: minmax(420px, 1fr) 90px; padding-left: 145px; gap: 14px; }
   .sima-game-title-v8 { display: none; }
   .sima-game-cat-v8 { width: min(34vw, 350px); }
-  .sima-action-dock-v8 { grid-template-columns: repeat(3, 1fr); width: min(700px, calc(100% - 20px)); }
+  .sima-action-dock-v8 { grid-template-columns: repeat(4, 1fr); width: min(700px, calc(100% - 20px)); }
   .sima-action-dock-v8 button { min-height: 53px; }
   .sima-activity-v8 { bottom: 145px; }
   .sima-activity-v8.sima-sleep-notice-v9 { top: 66px; bottom: auto; left: 14px; }
@@ -2082,6 +2296,12 @@ input:focus-visible {
   .room-object-panel > div { gap: 8px; }
   .room-object-panel button { min-height: 42px; padding: 9px 13px; font-size: 13px; }
   .room-object-panel .room-panel-close { width: 34px; min-height: 34px; font-size: 20px; }
+  .headphone-world-bg-v14 { object-position: 45% center; }
+  .headphone-world-anya-v14 { right: -10%; bottom: 8%; width: min(67vw, 390px); max-height: 68vh; }
+  .headphone-world-controls-v14 { left: 12px; bottom: 12px; width: calc(100% - 24px); padding: 16px; border-radius: 18px; }
+  .headphone-world-controls-v14 > span { margin-bottom: 12px; font-size: 25px; }
+  .headphone-world-controls-v14 button { min-height: 43px; font-size: 10px; }
+  .headphone-world-clouds-v14 i { width: 55vw; height: 15vw; }
   .room-modal { padding: 12px; }
   .room-modal-card { padding: 34px 20px 24px; border-radius: 15px; }
   .room-modal-card form > div,
@@ -2139,10 +2359,11 @@ input:focus-visible {
   .sima-scene-bowl-v8 { left: 27%; bottom: 24%; width: 12%; height: 10%; }
   .sima-scene-yarn-v8 { right: 24%; bottom: 24%; width: 11%; height: 10%; }
   .sima-scene-bed-v8 { right: -3%; bottom: 24%; width: 24%; height: 20%; }
+  .sima-scene-microphone-v14 { right: 17%; bottom: 24%; width: 10%; height: 17%; }
   .sima-window-hotspot-v8 { left: 25%; top: 4%; width: 52%; height: 43%; }
   .sima-scene-prop-v8 span, .sima-window-hotspot-v8 span { display: none; }
   .sima-scene-prop-v8.completed::after, .sima-window-hotspot-v8.completed::after { width: 18px; height: 18px; font-size: 8px; }
-  .sima-action-dock-v8 { bottom: 5px; grid-template-columns: repeat(3, 1fr); gap: 4px; width: calc(100% - 10px); padding: 5px; border-radius: 14px; }
+  .sima-action-dock-v8 { bottom: 5px; grid-template-columns: repeat(4, 1fr); gap: 4px; width: calc(100% - 10px); padding: 5px; border-radius: 14px; }
   .sima-action-dock-v8 button { grid-template-columns: 29px 1fr; min-height: 51px; padding: 4px 5px; border-radius: 9px; }
   .sima-action-dock-v8 button > img { width: 27px; height: 36px; }
   .sima-action-dock-v8 button > span { font-size: 7px; }
@@ -2162,6 +2383,18 @@ input:focus-visible {
     padding: 10px;
     border-radius: 13px;
   }
+  .sima-activity-v8.sima-karaoke-controls-v14 {
+    top: 50px;
+    bottom: auto;
+    left: 8px;
+    width: min(196px, calc(100% - 16px));
+    max-height: none;
+    overflow: visible;
+    padding: 11px;
+    border-radius: 14px;
+  }
+  .sima-karaoke-controls-v14 h3 { margin: 0 0 8px; font-size: 19px; }
+  .sima-karaoke-controls-v14 button:not(.sima-activity-close-v8) { min-height: 37px; padding: 6px 8px; font-size: 8px; }
   .sima-sleep-notice-v9 > p { display: none; }
   .sima-sleep-notice-v9 h3 { margin: 0 0 7px; font-size: 18px; }
   .sima-sleep-notice-v9 button:not(.sima-activity-close-v8) { min-height: 36px; padding: 6px 8px; font-size: 8px; }
@@ -2169,12 +2402,13 @@ input:focus-visible {
   .sima-action-prop-v8.prop-box { bottom: 23%; width: 43%; height: 29%; }
   .sima-action-prop-v8.prop-bed { bottom: 23%; width: 49%; height: 29%; }
   .sima-action-prop-v8.prop-brush { width: 15%; height: 12%; }
-  .sima-eating-v8 .sima-game-cat-v8 { left: 42%; bottom: 25%; width: min(57vw, 285px); }
+  .sima-eating-v8 .sima-game-cat-v8 { left: 45%; bottom: 30%; width: min(57vw, 285px); transform: translateX(-50%) rotate(1deg); }
   .sima-playing-v8 .sima-game-cat-v8 { bottom: 24%; width: min(60vw, 300px); }
   .sima-brushing-v8 .sima-game-cat-v8 { bottom: 23%; width: min(52vw, 270px); }
   .sima-boxing-v8 .sima-game-cat-v8 { bottom: 25%; width: min(40vw, 205px); }
   .sima-windowing-v8 .sima-game-cat-v8 { left: 71%; bottom: 25%; width: min(36vw, 185px); }
   .sima-sleeping-v8 .sima-game-cat-v8 { bottom: 25%; width: min(48vw, 245px); }
+  .sima-singing-v14 .sima-game-cat-v8 { left: 56%; bottom: 23%; width: min(58vw, 300px); height: 58%; }
   .sima-sleeping-v8::before { left: 64%; top: 26%; font-size: 16px; }
   .sima-play-target-v8 { width: 62px; height: 62px; }
   .sima-collection-v8, .sima-welcome-v8, .sima-complete-v8 { padding: 8px; }
@@ -2197,4 +2431,8 @@ input:focus-visible {
   .age-balloons { animation: balloonsRise 7.6s cubic-bezier(.18,.62,.3,1) .2s both !important; }
   .age-balloons .balloon-one { animation: balloonSway 2.7s ease-in-out .5s infinite alternate !important; }
   .age-balloons .balloon-two { animation: balloonSway 3.1s ease-in-out infinite alternate-reverse !important; }
+  .headphone-world-bg-v14,
+  .headphone-world-anya-v14,
+  .headphone-world-clouds-v14 i,
+  .headphone-world-birds-v14 i { animation: none !important; }
 }
