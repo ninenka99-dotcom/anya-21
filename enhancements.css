@@ -308,7 +308,7 @@ input:focus-visible {
 .laptop-unit-v5 {
   position: absolute;
   z-index: 20;
-  left: 64.3%;
+  left: 64.85%;
   top: 34.8%;
   width: 16.4%;
   aspect-ratio: 1536 / 1024;
@@ -609,8 +609,8 @@ input:focus-visible {
 
 .laptop-anya-v3 {
   z-index: 22;
-  left: 71.7%;
-  top: 28.8%;
+  left: 71.25%;
+  top: 29.3%;
   width: 20.8%;
   height: 54.5%;
   animation: laptopFocus 2.6s ease-in-out infinite;
@@ -735,8 +735,8 @@ input:focus-visible {
 .sima-feeding-cat-v8 {
   position: absolute;
   z-index: 4;
-  right: 1%;
-  bottom: 16%;
+  right: -1%;
+  bottom: 17.5%;
   width: 91%;
   height: 98%;
   object-fit: contain;
@@ -835,7 +835,7 @@ input:focus-visible {
 }
 
 .target-tv { left: 39.6%; top: 35.2%; width: 14.2%; height: 24.2%; }
-.target-laptop { left: 64.9%; top: 35.35%; width: 15.8%; height: 18.4%; }
+.target-laptop { left: 65.45%; top: 35.35%; width: 15.8%; height: 18.4%; }
 .target-radio { left: 62.45%; top: 42.15%; width: 5.65%; height: 8.15%; }
 .target-books { left: 20.7%; top: 11.4%; width: 13.7%; height: 61.2%; }
 .target-wardrobe { left: 82.8%; top: 18.2%; width: 15.1%; height: 55.8%; }
@@ -2132,7 +2132,7 @@ input:focus-visible {
 .sima-action-prop-v8.prop-bed { z-index: 27; left: 50%; bottom: 14%; width: 31%; height: 38%; transform: translateX(-50%); }
 .sima-action-prop-v8.prop-brush { z-index: 60; left: 50%; top: 46%; width: 8%; height: 15%; transform: translate(-50%, -50%) rotate(-18deg); transition: left .08s linear, top .08s linear; }
 
-.sima-eating-v8 .sima-game-cat-v8 { left: 49%; bottom: 21.7%; width: min(30vw, 430px); transform: translateX(-50%) rotate(1deg); }
+.sima-eating-v8 .sima-game-cat-v8 { left: 50%; bottom: 22.7%; width: min(30vw, 430px); transform: translateX(-50%) rotate(1deg); }
 .sima-playing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(34vw, 500px); }
 .sima-brushing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(28vw, 410px); }
 .sima-boxing-v8 .sima-game-cat-v8 { z-index: 34; bottom: 16%; width: min(21vw, 310px); }
@@ -2388,7 +2388,7 @@ input:focus-visible {
   .room-object-panel button { min-height: 40px; padding: 8px 12px; }
   .anya-object-v3 { left: 50.2%; width: 17.7%; }
   .sima-v3 { width: 11.4%; }
-  .laptop-anya-v3 { left: 71.55%; width: 21.2%; }
+  .laptop-anya-v3 { left: 71.1%; width: 21.2%; }
   .simaLauncherV8 { min-height: 390px; }
   .simaLauncherV8 > div { max-width: 48%; }
   .sima-launcher-art-v8 { inset: 0 0 0 20% !important; }
@@ -2524,7 +2524,7 @@ input:focus-visible {
   .sima-action-prop-v8.prop-box { bottom: 23%; width: 43%; height: 29%; }
   .sima-action-prop-v8.prop-bed { bottom: 23%; width: 49%; height: 29%; }
   .sima-action-prop-v8.prop-brush { width: 15%; height: 12%; }
-  .sima-eating-v8 .sima-game-cat-v8 { left: 46%; bottom: 30.7%; width: min(57vw, 285px); transform: translateX(-50%) rotate(1deg); }
+  .sima-eating-v8 .sima-game-cat-v8 { left: 47%; bottom: 31.7%; width: min(57vw, 285px); transform: translateX(-50%) rotate(1deg); }
   .sima-playing-v8 .sima-game-cat-v8 { bottom: 24%; width: min(60vw, 300px); }
   .sima-brushing-v8 .sima-game-cat-v8 { bottom: 23%; width: min(52vw, 270px); }
   .sima-boxing-v8 .sima-game-cat-v8 { bottom: 25%; width: min(40vw, 205px); }
