@@ -11,13 +11,14 @@
   const films = {
     spider: { label: "Человек-паук", src: "./room/spider-poster.jpg", alt: "Постер Человека-паука" },
     dragon: { label: "Как приручить дракона", src: "./room/dragon-poster.jpg", alt: "Постер фильма Как приручить дракона" },
+    sledstvie: { label: "Следствие вели", src: "./room/tv-sledstvie-v15.png", alt: "Заставка программы Следствие вели с Леонидом Каневским", fit: "contain" },
   };
 
   const laptopGames = {
-    minecraft: { label: "Minecraft", src: "./room/laptop/minecraft-angle-v11.webp" },
-    roblox: { label: "Roblox", src: "./room/laptop/roblox-angle-v11.webp" },
-    terraria: { label: "Terraria", src: "./room/laptop/terraria-angle-v11.webp" },
-    genshin: { label: "Genshin Impact", src: "./room/laptop/genshin-angle-v11.webp" },
+    minecraft: { label: "Minecraft", src: "./room/laptop/minecraft-opt.jpg" },
+    roblox: { label: "Roblox", src: "./room/laptop/roblox-opt.jpg" },
+    terraria: { label: "Terraria", src: "./room/laptop/terraria-opt.jpg" },
+    genshin: { label: "Genshin Impact", src: "./room/laptop/genshin-opt.jpg" },
   };
 
   const tracks = [
@@ -127,14 +128,21 @@
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
           <div class="laptop-unit-v5" aria-hidden="true">
-            <img class="laptop-shell-v5" src="./room/laptop-shell-v11.webp" alt="">
+            <img class="laptop-shell-v5" src="./room/laptop-shell-v15.webp" alt="">
             <div class="laptop-screen-v5"><img id="laptopImage" src="${laptopGames.minecraft.src}" alt="Заставка Minecraft"></div>
           </div>
-          <button type="button" class="room-object poster-object-v3" data-room-object="poster" aria-label="Рассмотреть плакат Лололошки и JDH"><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH"><span>плакат</span></button>
-          <button type="button" class="poster-placeholder-v14 poster-placeholder-top-v14" data-room-object="poster-placeholder" aria-label="Свободная рамка для будущего постера"><span>место для постера</span></button>
-          <button type="button" class="poster-placeholder-v14 poster-placeholder-bottom-v14" data-room-object="poster-placeholder" aria-label="Свободная рамка для будущего постера"><span>место для постера</span></button>
+          <button type="button" class="room-object poster-object-v3" data-room-object="poster" data-poster-id="main" data-poster-src="./room/lololoshka-jdh-poster.jpg" data-poster-alt="Плакат Лололошки и JDH крупным планом" data-poster-kind="main" aria-label="Рассмотреть или поменять плакат Лололошки и JDH"><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH"><span>плакат</span></button>
+          <button type="button" class="room-object poster-object-v15 poster-object-sima-v15" data-room-object="poster" data-poster-id="sima" data-poster-src="./room/poster-sima-v15.webp" data-poster-alt="Постер с Симой крупным планом" data-poster-kind="sima" aria-label="Рассмотреть или поменять постер с Симой"><img src="./room/poster-sima-v15.webp" alt="Постер с Симой"><span>Сима</span></button>
+          <button type="button" class="room-object poster-object-v15 poster-object-ink-v15" data-room-object="poster" data-poster-id="ink" data-poster-src="./room/poster-ink-v15.jpg" data-poster-alt="Графический постер с чёрным кругом и красными акцентами крупным планом" data-poster-kind="ink" aria-label="Рассмотреть или поменять графический постер"><img src="./room/poster-ink-v15.jpg" alt="Графический постер с чёрным кругом и красными акцентами"><span>постер</span></button>
           <div id="addedBookSpines" class="added-book-spines-v3" aria-label="Книги на полке"></div>
-          <div class="radio-readout-v3" id="radioRoomTitle">Key</div>
+          <button type="button" id="roomRadioV15" class="room-radio-v15" data-room-object="radio" aria-label="Управлять светло-фиолетовым радио">
+            <span class="radio-handle-v15" aria-hidden="true"></span>
+            <span class="radio-speaker-v15" aria-hidden="true"></span>
+            <span class="radio-tuner-v15"><b class="radio-readout-v3" id="radioRoomTitle">Key</b></span>
+            <span class="radio-knob-v15 radio-knob-left-v15" aria-hidden="true"></span>
+            <span class="radio-knob-v15 radio-knob-right-v15" aria-hidden="true"></span>
+            <span class="radio-label-v15">радио</span>
+          </button>
           <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" data-outfit="base" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
           <button type="button" id="anyaSleeping" class="sleeping-anya-v3" data-room-object="anya" aria-label="Разбудить Аню" hidden><img src="./room/anya-sleep-v2.webp" alt="Аня спит под одеялом"><span>разбудить</span></button>
           <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке у ноутбука, повернувшись к столу спиной к комнате"><span>Аня за ноутбуком</span></button>
@@ -145,7 +153,6 @@
           <button type="button" class="room-target target-bed" data-room-object="bed" aria-label="Отправить Аню спать"><span>кровать</span></button>
           <button type="button" class="room-target target-tv" data-room-object="tv" aria-label="Управлять телевизором"><span>телевизор</span></button>
           <button type="button" class="room-target target-laptop" data-room-object="laptop" aria-label="Выбрать игру на ноутбуке"><span>ноутбук</span></button>
-          <button type="button" class="room-target target-radio" data-room-object="radio" aria-label="Управлять радио"><span>радио</span></button>
           <button type="button" class="room-target target-books" data-room-object="books" aria-label="Открыть книжный шкаф"><span>книжный шкаф</span></button>
           <button type="button" class="room-target target-wardrobe" data-room-object="wardrobe" aria-label="Переодеть Аню"><span>гардероб</span></button>
           <button type="button" class="room-target target-lamp" data-room-object="lamp" aria-label="Выключить свет"><span>свет</span></button>
@@ -157,11 +164,11 @@
       <div id="booksModal" class="room-modal room-modal-v3" role="dialog" aria-modal="true" aria-labelledby="booksTitle" hidden>
         <div class="room-modal-card"><button type="button" class="room-modal-close" aria-label="Закрыть">×</button><p class="sectionKicker">книжный шкаф</p><h3 id="booksTitle">Книги Ани</h3>
           <form id="bookForm"><label for="bookTitle">Название книги</label><div><input id="bookTitle" maxlength="60" autocomplete="off" placeholder="Название книги"><button type="submit">добавить</button></div></form>
-          <ul id="bookList"></ul><small>Добавленные книги сохраняются на этом устройстве. На трёх полках помещается до 18 книг.</small>
+          <ul id="bookList"></ul><small>Добавленные книги сохраняются на этом устройстве. На четырёх полках помещается до 18 книг.</small>
         </div>
       </div>
-      <div id="posterModal" class="room-modal poster-modal-v3" role="dialog" aria-modal="true" aria-label="Плакат Лололошки и JDH" hidden>
-        <div class="poster-modal-card"><button type="button" class="room-modal-close" aria-label="Закрыть">×</button><img src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH крупным планом"></div>
+      <div id="posterModal" class="room-modal poster-modal-v3" role="dialog" aria-modal="true" aria-label="Просмотр постера" hidden>
+        <div class="poster-modal-card"><button type="button" class="room-modal-close" aria-label="Закрыть">×</button><div id="posterModalArtworkV15" class="poster-modal-artwork-v15"><img id="posterModalImageV15" src="./room/lololoshka-jdh-poster.jpg" alt="Плакат Лололошки и JDH крупным планом"></div><div class="poster-modal-controls-v15"><label class="poster-upload-v15">поменять изображение<input id="posterUploadV15" type="file" accept="image/*"></label><button type="button" data-reset-poster>вернуть исходное</button><small id="posterUploadStatusV15" aria-live="polite">Изменение сохранится на этом устройстве.</small></div></div>
       </div>
       <div id="headphoneWorldV14" class="headphone-world-v14" role="dialog" aria-modal="true" aria-label="Мир Ани в наушниках" hidden>
         <img class="headphone-world-bg-v14" src="./room/world/ocean-cliffs-v14.webp" alt="Спокойный океан и горы в мягком вечернем свете">
@@ -170,7 +177,6 @@
         <img class="headphone-world-anya-v14" src="./room/world/anya-seated-headphones-v14.webp" alt="Аня сидит на скале в синих наушниках и смотрит на океан">
         <div class="headphone-world-controls-v14">
           <p>мир в наушниках</p>
-          <span>Океан, горы и немного тишины.</span>
           <div><button type="button" data-world-audio>пауза</button><button type="button" data-leave-headphone-world>снять наушники</button></div>
         </div>
         <audio id="headphoneWorldAudioV14" src="./audio/magic-by-medasin-v14.mp3" preload="metadata"></audio>
@@ -193,6 +199,12 @@
     const headphoneWorld = qs("#headphoneWorldV14", section);
     const headphoneWorldAudio = qs("#headphoneWorldAudioV14", section);
     const headphoneWorldToggle = qs("[data-world-audio]", headphoneWorld);
+    const posterModal = qs("#posterModal", section);
+    const posterArtwork = qs("#posterModalArtworkV15", posterModal);
+    const posterModalImage = qs("#posterModalImageV15", posterModal);
+    const posterUpload = qs("#posterUploadV15", posterModal);
+    const posterUploadStatus = qs("#posterUploadStatusV15", posterModal);
+    const posterStoragePrefix = "anya-room-poster-v15-";
     let activity = "standing";
     let currentOutfit = "base";
     let trackIndex = 0;
@@ -200,6 +212,7 @@
     let simaIsEating = false;
     let lightsOn = true;
     let activePanelAnchor = null;
+    let activePosterButton = null;
 
     function say(message) { status.textContent = message; }
     function closePanel() {
@@ -286,9 +299,9 @@
     function openTvPanel() {
       showPanel("tv", "Что включить?", `${Object.entries(films).map(([key, film]) => `<button type="button" data-film="${key}">${escapeHtml(film.label)}</button>`).join("")}<button type="button" data-film="off">выключить</button>`);
       qsa("[data-film]", panel).forEach((button) => button.addEventListener("click", () => {
-        const image = qs("#tvImage", section); const noise = qs("#tvNoiseV3", section); const key = button.dataset.film;
-        if (key === "off") { image.hidden = true; image.removeAttribute("src"); noise.hidden = false; say("Телевизор выключен."); }
-        else { image.src = films[key].src; image.alt = films[key].alt; image.hidden = false; noise.hidden = true; say(`На телевизоре — ${films[key].label}.`); }
+        const image = qs("#tvImage", section); const noise = qs("#tvNoiseV3", section); const screen = image.closest(".tv-screen-v3"); const key = button.dataset.film;
+        if (key === "off") { image.hidden = true; image.removeAttribute("src"); image.removeAttribute("data-fit"); screen.classList.remove("tv-has-image-v15"); screen.style.removeProperty("--tv-backdrop"); noise.hidden = false; say("Телевизор выключен."); }
+        else { const film = films[key]; image.src = film.src; image.alt = film.alt; image.dataset.fit = film.fit || "cover"; screen.style.setProperty("--tv-backdrop", `url("${film.src}")`); screen.classList.add("tv-has-image-v15"); image.hidden = false; noise.hidden = true; say(`На телевизоре — ${film.label}.`); }
         closePanel();
       }));
     }
@@ -358,9 +371,50 @@
     function toggleLamp() {
       lightsOn = !lightsOn; stage.classList.toggle("lights-off", !lightsOn); qs(".target-lamp", section).setAttribute("aria-label", lightsOn ? "Выключить свет" : "Включить свет"); say(lightsOn ? "Свет снова включён." : "Свет выключен. В комнате остался ночной свет из окна."); closePanel();
     }
-    function openPoster() { qs("#posterModal", section).hidden = false; document.body.classList.add("room-modal-open"); }
-    function openPosterPlaceholder() {
-      showPanel("poster-placeholder", "Свободная рамка", "<span>Сюда можно будет добавить ещё один постер, когда появится подходящая картинка.</span>");
+    function applyPosterSource(button, source, isCustom = false) {
+      if (!button || !source) return;
+      const image = qs("img", button);
+      image.src = source;
+      image.alt = isCustom ? "Выбранное изображение на постере" : button.dataset.posterAlt.replace(" крупным планом", "");
+      button.classList.toggle("has-custom-poster-v15", isCustom);
+    }
+    function preparePosterImage(file) {
+      return new Promise((resolve, reject) => {
+        if (!file?.type.startsWith("image/")) { reject(new Error("Выбери файл изображения.")); return; }
+        if (file.size > 15 * 1024 * 1024) { reject(new Error("Изображение слишком большое. Максимум — 15 МБ.")); return; }
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error("Не получилось прочитать изображение."));
+        reader.onload = () => {
+          const image = new Image();
+          image.onerror = () => reject(new Error("Не получилось открыть изображение."));
+          image.onload = () => {
+            const maxEdge = 1100;
+            const scale = Math.min(1, maxEdge / Math.max(image.naturalWidth, image.naturalHeight));
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+            canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+            const context = canvas.getContext("2d", { alpha: false });
+            context.imageSmoothingEnabled = true;
+            context.imageSmoothingQuality = "high";
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL("image/webp", .78));
+          };
+          image.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    function openPoster() {
+      activePosterButton = activePanelAnchor?.matches("[data-poster-id]") ? activePanelAnchor : null;
+      const source = qs("img", activePosterButton)?.getAttribute("src") || "./room/lololoshka-jdh-poster.jpg";
+      const kind = activePosterButton?.dataset.posterKind || "main";
+      posterModalImage.src = source;
+      posterModalImage.alt = activePosterButton?.dataset.posterAlt || "Постер крупным планом";
+      posterArtwork.dataset.posterKind = kind;
+      posterArtwork.dataset.custom = activePosterButton?.classList.contains("has-custom-poster-v15") ? "true" : "false";
+      posterUploadStatus.textContent = "Изменение сохранится на этом устройстве.";
+      posterModal.hidden = false;
+      document.body.classList.add("room-modal-open");
     }
     function syncHeadphoneWorldAudio() {
       headphoneWorldToggle.textContent = headphoneWorldAudio.paused ? "включить музыку" : "пауза";
@@ -386,11 +440,46 @@
       say("Аня сняла наушники и вернулась в комнату.");
     }
 
+    qsa("[data-poster-id]", stage).forEach((button) => {
+      try {
+        const saved = localStorage.getItem(`${posterStoragePrefix}${button.dataset.posterId}`);
+        if (saved) applyPosterSource(button, saved, true);
+      } catch {}
+    });
+    posterUpload.addEventListener("change", async () => {
+      const file = posterUpload.files?.[0];
+      if (!file || !activePosterButton) return;
+      posterUploadStatus.textContent = "Подготавливаю изображение…";
+      try {
+        const source = await preparePosterImage(file);
+        localStorage.setItem(`${posterStoragePrefix}${activePosterButton.dataset.posterId}`, source);
+        applyPosterSource(activePosterButton, source, true);
+        posterModalImage.src = source;
+        posterModalImage.alt = "Выбранное изображение на постере крупным планом";
+        posterArtwork.dataset.custom = "true";
+        posterUploadStatus.textContent = "Готово — постер изменён и сохранён на этом устройстве.";
+        say("Изображение на постере изменено.");
+      } catch (error) {
+        posterUploadStatus.textContent = error?.name === "QuotaExceededError" ? "Не хватило памяти браузера. Попробуй изображение поменьше." : (error?.message || "Не получилось заменить изображение.");
+      }
+      posterUpload.value = "";
+    });
+    qs("[data-reset-poster]", posterModal).addEventListener("click", () => {
+      if (!activePosterButton) return;
+      try { localStorage.removeItem(`${posterStoragePrefix}${activePosterButton.dataset.posterId}`); } catch {}
+      applyPosterSource(activePosterButton, activePosterButton.dataset.posterSrc, false);
+      posterModalImage.src = activePosterButton.dataset.posterSrc;
+      posterModalImage.alt = activePosterButton.dataset.posterAlt;
+      posterArtwork.dataset.custom = "false";
+      posterUploadStatus.textContent = "Возвращено исходное изображение.";
+      say("На постер возвращено исходное изображение.");
+    });
+
     const booksController = setupBooks(section, say);
-    setupModal(qs("#posterModal", section));
+    setupModal(posterModal);
     qsa("[data-room-object]", stage).forEach((button) => button.addEventListener("click", (event) => {
       event.stopPropagation(); const kind = button.dataset.roomObject; activePanelAnchor = button;
-      if (kind === "anya") openAnyaPanel(); else if (kind === "bed") openBedPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "poster-placeholder") openPosterPlaceholder(); else if (kind === "sima") petSima(); else if (kind === "bowl") openBowlPanel(); else if (kind === "headphones") openHeadphoneWorld();
+      if (kind === "anya") openAnyaPanel(); else if (kind === "bed") openBedPanel(); else if (kind === "tv") openTvPanel(); else if (kind === "laptop") openLaptopPanel(); else if (kind === "radio") openRadioPanel(); else if (kind === "books") booksController.open(); else if (kind === "wardrobe") openWardrobePanel(); else if (kind === "lamp") toggleLamp(); else if (kind === "poster") openPoster(); else if (kind === "sima") petSima(); else if (kind === "bowl") openBowlPanel(); else if (kind === "headphones") openHeadphoneWorld();
     }));
     stage.addEventListener("click", (event) => { if (event.target === stage || event.target.classList.contains("room-backdrop-v3")) closePanel(); });
     audio.addEventListener("ended", () => { loadTrack(trackIndex + 1, true); if (!panel.hidden && panel.classList.contains("panel-radio")) openRadioPanel(); });
@@ -410,21 +499,25 @@
     const modal = qs("#booksModal", section); const form = qs("#bookForm", section); const input = qs("#bookTitle", section); const list = qs("#bookList", section); const spines = qs("#addedBookSpines", section); const storageKey = "anya-room-books-v3"; const maxBooks = 18; let customBooks = [];
     const shelfSlots = [];
     const rows = [
-      { top: 15.1, height: 10.7, starts: [22.25, 23.02, 23.82, 24.6, 25.42, 26.22] },
-      { top: 28.5, height: 10.8, starts: [22.28, 23.07, 23.88, 24.68, 25.5, 26.32] },
-      { top: 42.25, height: 15.25, starts: [22.26, 23.08, 23.92, 24.78, 25.65, 26.52] },
+      { bottom: 25.72, starts: [22.18, 22.79, 23.4, 24.01, 24.62], heights: [9.75, 9.48, 9.92, 9.6, 9.82] },
+      { bottom: 39.45, starts: [22.22, 22.84, 23.46, 24.08, 24.7], heights: [9.72, 9.95, 9.55, 9.82, 9.64] },
+      { bottom: 56.42, starts: [22.2, 22.84, 23.48, 24.12], heights: [10.78, 10.5, 10.86, 10.62] },
+      { bottom: 71.45, starts: [22.22, 22.86, 23.5, 24.14], heights: [10.72, 10.5, 10.82, 10.58] },
     ];
-    for (let index = 0; index < 6; index += 1) rows.forEach((row, rowIndex) => shelfSlots.push({ left: row.starts[index], top: row.top, width: .74 + ((index + rowIndex) % 3) * .07, height: row.height - ((index + rowIndex) % 3) * .7, tilt: ((index * 2 + rowIndex) % 5) - 2 }));
+    rows.forEach((row, rowIndex) => row.starts.forEach((left, columnIndex) => {
+      const height = row.heights[columnIndex];
+      shelfSlots.push({ left, top: row.bottom - height, width: .51 + ((columnIndex + rowIndex) % 2) * .04, height, tilt: 0 });
+    }));
     try { customBooks = JSON.parse(localStorage.getItem(storageKey) || "[]"); if (!Array.isArray(customBooks)) customBooks = []; } catch { customBooks = []; }
     customBooks = customBooks.filter((book) => typeof book === "string" && book.trim()).slice(0, maxBooks - defaultBooks.length);
     const allBooks = () => [...defaultBooks, ...customBooks];
     function save() { try { localStorage.setItem(storageKey, JSON.stringify(customBooks)); } catch {} }
     function render() {
       list.innerHTML = allBooks().map((book, index) => { const isDefault = index < defaultBooks.length; return `<li><span>${escapeHtml(book)}</span>${isDefault ? '<small>уже на полке</small>' : `<button type="button" data-remove-book="${index - defaultBooks.length}" aria-label="Убрать книгу ${escapeHtml(book)}">×</button>`}</li>`; }).join("");
-      const colors = ["#6f405b", "#45547a", "#7b6041", "#56456c", "#3e6367", "#814b4a", "#536087", "#76566c", "#465b4d", "#6e536f", "#8a684c", "#40566e"];
+      const colors = ["#46384a", "#354157", "#514536", "#3a4849", "#523b42", "#394355", "#493b49", "#3a4438", "#4f3e34", "#3d3a50", "#34494c", "#514047"];
       spines.innerHTML = allBooks().slice(0, maxBooks).map((book, index) => {
         const slot = shelfSlots[index];
-        return `<span class="book-spine-v14" style="--book-left:${slot.left}%;--book-top:${slot.top}%;--book-width:${slot.width}%;--book-height:${slot.height}%;--book-tilt:${slot.tilt}deg;--book-color:${colors[index % colors.length]}" title="${escapeHtml(book)}"><i></i><b>${escapeHtml(book)}</b></span>`;
+        return `<span class="book-spine-v15" style="--book-left:${slot.left}%;--book-top:${slot.top}%;--book-width:${slot.width}%;--book-height:${slot.height}%;--book-tilt:${slot.tilt}deg;--book-color:${colors[index % colors.length]}" title="${escapeHtml(book)}"><i></i><b>${escapeHtml(book)}</b></span>`;
       }).join("");
       qsa("[data-remove-book]", list).forEach((button) => button.addEventListener("click", () => { customBooks.splice(Number(button.dataset.removeBook), 1); save(); render(); }));
     }
