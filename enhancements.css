@@ -503,11 +503,14 @@ input:focus-visible {
   width: var(--book-width);
   height: var(--book-height);
   overflow: hidden;
-  background: linear-gradient(90deg, rgba(255,255,255,.045), transparent 24% 73%, rgba(0,0,0,.2)), var(--book-color);
-  border: 1px solid rgba(24,18,25,.78);
-  border-bottom: 2px solid rgba(15,12,16,.9);
-  border-radius: 1px 1px 0 0;
-  box-shadow: inset 1px 0 rgba(255,255,255,.055), inset -1px 0 rgba(0,0,0,.22), 1px 1px 3px rgba(0,0,0,.5);
+  background:
+    linear-gradient(90deg, rgba(224,198,180,.07), transparent 24% 72%, rgba(0,0,0,.24)),
+    linear-gradient(180deg, rgba(224,196,177,.035), transparent 20%, rgba(8,7,10,.16)),
+    var(--book-color);
+  border: 1px solid rgba(20,15,21,.7);
+  border-bottom: 1px solid rgba(12,9,13,.88);
+  border-radius: 1.5px 1.5px .5px .5px;
+  box-shadow: inset 1px 0 rgba(236,213,194,.045), inset -1px 0 rgba(0,0,0,.24), 1px 2px 3px rgba(0,0,0,.42);
   transform: rotate(var(--book-tilt));
   transform-origin: center bottom;
 }
@@ -516,10 +519,10 @@ input:focus-visible {
 .added-book-spines-v3 > .book-spine-v15::after {
   content: "";
   position: absolute;
-  left: 13%;
-  right: 13%;
+  left: 17%;
+  right: 17%;
   height: 1px;
-  background: rgba(184,162,135,.42);
+  background: rgba(176,151,127,.25);
 }
 
 .added-book-spines-v3 > .book-spine-v15::before { top: 8%; }
@@ -531,7 +534,7 @@ input:focus-visible {
   right: 32%;
   bottom: 13%;
   left: 32%;
-  border-left: 1px solid rgba(217,199,174,.12);
+  border-left: 1px solid rgba(211,187,166,.09);
 }
 
 .added-book-spines-v3 b {
@@ -540,12 +543,13 @@ input:focus-visible {
   left: 50%;
   max-height: 92%;
   overflow: hidden;
-  color: rgba(213,203,190,.72);
+  color: rgba(203,190,174,.62);
   writing-mode: vertical-rl;
   transform: translateX(-50%);
-  font-size: clamp(2px, .18vw, 3.4px);
+  font-size: clamp(2px, .19vw, 3.5px);
   font-weight: 550;
   line-height: 1;
+  text-shadow: 0 1px 1px rgba(0,0,0,.45);
 }
 
 .anya-object-v3,
@@ -609,7 +613,7 @@ input:focus-visible {
 
 .laptop-anya-v3 {
   z-index: 22;
-  left: 71.25%;
+  left: 70.7%;
   top: 29.3%;
   width: 20.8%;
   height: 54.5%;
@@ -735,7 +739,7 @@ input:focus-visible {
 .sima-feeding-cat-v8 {
   position: absolute;
   z-index: 4;
-  right: -1%;
+  right: -5%;
   bottom: 17.5%;
   width: 91%;
   height: 98%;
@@ -2132,7 +2136,7 @@ input:focus-visible {
 .sima-action-prop-v8.prop-bed { z-index: 27; left: 50%; bottom: 14%; width: 31%; height: 38%; transform: translateX(-50%); }
 .sima-action-prop-v8.prop-brush { z-index: 60; left: 50%; top: 46%; width: 8%; height: 15%; transform: translate(-50%, -50%) rotate(-18deg); transition: left .08s linear, top .08s linear; }
 
-.sima-eating-v8 .sima-game-cat-v8 { left: 50%; bottom: 22.7%; width: min(30vw, 430px); transform: translateX(-50%) rotate(1deg); }
+.sima-eating-v8 .sima-game-cat-v8 { left: 52%; bottom: 22.7%; width: min(30vw, 430px); transform: translateX(-50%) rotate(1deg); }
 .sima-playing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(34vw, 500px); }
 .sima-brushing-v8 .sima-game-cat-v8 { bottom: 13%; width: min(28vw, 410px); }
 .sima-boxing-v8 .sima-game-cat-v8 { z-index: 34; bottom: 16%; width: min(21vw, 310px); }
@@ -2388,7 +2392,7 @@ input:focus-visible {
   .room-object-panel button { min-height: 40px; padding: 8px 12px; }
   .anya-object-v3 { left: 50.2%; width: 17.7%; }
   .sima-v3 { width: 11.4%; }
-  .laptop-anya-v3 { left: 71.1%; width: 21.2%; }
+  .laptop-anya-v3 { left: 70.55%; width: 21.2%; }
   .simaLauncherV8 { min-height: 390px; }
   .simaLauncherV8 > div { max-width: 48%; }
   .sima-launcher-art-v8 { inset: 0 0 0 20% !important; }
@@ -2524,7 +2528,7 @@ input:focus-visible {
   .sima-action-prop-v8.prop-box { bottom: 23%; width: 43%; height: 29%; }
   .sima-action-prop-v8.prop-bed { bottom: 23%; width: 49%; height: 29%; }
   .sima-action-prop-v8.prop-brush { width: 15%; height: 12%; }
-  .sima-eating-v8 .sima-game-cat-v8 { left: 47%; bottom: 31.7%; width: min(57vw, 285px); transform: translateX(-50%) rotate(1deg); }
+  .sima-eating-v8 .sima-game-cat-v8 { left: 49%; bottom: 31.7%; width: min(57vw, 285px); transform: translateX(-50%) rotate(1deg); }
   .sima-playing-v8 .sima-game-cat-v8 { bottom: 24%; width: min(60vw, 300px); }
   .sima-brushing-v8 .sima-game-cat-v8 { bottom: 23%; width: min(52vw, 270px); }
   .sima-boxing-v8 .sima-game-cat-v8 { bottom: 25%; width: min(40vw, 205px); }
