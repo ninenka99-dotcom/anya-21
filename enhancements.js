@@ -157,7 +157,7 @@
       <div id="booksModal" class="room-modal room-modal-v3" role="dialog" aria-modal="true" aria-labelledby="booksTitle" hidden>
         <div class="room-modal-card"><button type="button" class="room-modal-close" aria-label="Закрыть">×</button><p class="sectionKicker">книжный шкаф</p><h3 id="booksTitle">Книги Ани</h3>
           <form id="bookForm"><label for="bookTitle">Название книги</label><div><input id="bookTitle" maxlength="60" autocomplete="off" placeholder="Название книги"><button type="submit">добавить</button></div></form>
-          <ul id="bookList"></ul><small>Добавленные книги сохраняются на этом устройстве. На четырёх полках помещается до 18 книг.</small>
+          <ul id="bookList"></ul><small>Добавленные книги сохраняются на этом устройстве. На четырёх полках помещается до 22 книг.</small>
         </div>
       </div>
       <div id="posterModal" class="room-modal poster-modal-v3" role="dialog" aria-modal="true" aria-label="Просмотр постера" hidden>
@@ -489,17 +489,17 @@
   }
 
   function setupBooks(section, say) {
-    const modal = qs("#booksModal", section); const form = qs("#bookForm", section); const input = qs("#bookTitle", section); const list = qs("#bookList", section); const spines = qs("#addedBookSpines", section); const storageKey = "anya-room-books-v3"; const maxBooks = 18; let customBooks = [];
+    const modal = qs("#booksModal", section); const form = qs("#bookForm", section); const input = qs("#bookTitle", section); const list = qs("#bookList", section); const spines = qs("#addedBookSpines", section); const storageKey = "anya-room-books-v3"; const maxBooks = 22; let customBooks = [];
     const shelfSlots = [];
     const rows = [
-      { bottom: 25.72, starts: [22.18, 22.79, 23.4, 24.01, 24.62], heights: [9.75, 9.48, 9.92, 9.6, 9.82] },
-      { bottom: 37.8, starts: [22.22, 22.84, 23.46, 24.08, 24.7], heights: [9.72, 9.95, 9.55, 9.82, 9.64] },
-      { bottom: 56.42, starts: [22.2, 22.84, 23.48, 24.12], heights: [10.78, 10.5, 10.86, 10.62] },
-      { bottom: 71.45, starts: [22.22, 22.86, 23.5, 24.14], heights: [10.72, 10.5, 10.82, 10.58] },
+      { bottom: 25.72, starts: [22.18, 22.96, 23.74, 24.52, 25.3], heights: [9.75, 9.48, 9.92, 9.6, 9.82] },
+      { bottom: 37.8, starts: [22.22, 23, 23.78, 24.56, 25.34], heights: [9.72, 9.95, 9.55, 9.82, 9.64] },
+      { bottom: 49.72, starts: [22.2, 22.98, 23.76, 24.54, 25.32, 26.1], heights: [9.15, 9.42, 9.08, 9.36, 9.2, 9.48] },
+      { bottom: 60.92, starts: [22.22, 23, 23.78, 24.56, 25.34, 26.12], heights: [9.3, 9.05, 9.4, 9.18, 9.5, 9.24] },
     ];
     rows.forEach((row, rowIndex) => row.starts.forEach((left, columnIndex) => {
       const height = row.heights[columnIndex];
-      shelfSlots.push({ left, top: row.bottom - height, width: .51 + ((columnIndex + rowIndex) % 2) * .04, height, tilt: 0 });
+      shelfSlots.push({ left, top: row.bottom - height, width: .64 + ((columnIndex + rowIndex) % 2) * .06, height, tilt: 0 });
     }));
     try { customBooks = JSON.parse(localStorage.getItem(storageKey) || "[]"); if (!Array.isArray(customBooks)) customBooks = []; } catch { customBooks = []; }
     customBooks = customBooks.filter((book) => typeof book === "string" && book.trim()).slice(0, maxBooks - defaultBooks.length);
@@ -507,7 +507,7 @@
     function save() { try { localStorage.setItem(storageKey, JSON.stringify(customBooks)); } catch {} }
     function render() {
       list.innerHTML = allBooks().map((book, index) => { const isDefault = index < defaultBooks.length; return `<li><span>${escapeHtml(book)}</span>${isDefault ? '<small>уже на полке</small>' : `<button type="button" data-remove-book="${index - defaultBooks.length}" aria-label="Убрать книгу ${escapeHtml(book)}">×</button>`}</li>`; }).join("");
-      const colors = ["#46384a", "#354157", "#514536", "#3a4849", "#523b42", "#394355", "#493b49", "#3a4438", "#4f3e34", "#3d3a50", "#34494c", "#514047"];
+      const colors = ["#302938", "#293343", "#44342e", "#303b37", "#3e2e37", "#293442", "#382f3b", "#2e3731", "#45362d", "#312e3d", "#293b3d", "#3f3032"];
       spines.innerHTML = allBooks().slice(0, maxBooks).map((book, index) => {
         const slot = shelfSlots[index];
         return `<span class="book-spine-v15" style="--book-left:${slot.left}%;--book-top:${slot.top}%;--book-width:${slot.width}%;--book-height:${slot.height}%;--book-tilt:${slot.tilt}deg;--book-color:${colors[index % colors.length]}" title="${escapeHtml(book)}"><i></i><b>${escapeHtml(book)}</b></span>`;
@@ -521,7 +521,7 @@
       event.preventDefault();
       const value = input.value.trim();
       if (!value) return;
-      if (allBooks().length >= maxBooks) { say("Все 18 мест на книжных полках уже заняты."); input.select(); return; }
+      if (allBooks().length >= maxBooks) { say(`Все ${maxBooks} мест на книжных полках уже заняты.`); input.select(); return; }
       if (!allBooks().some((book) => book.toLocaleLowerCase("ru") === value.toLocaleLowerCase("ru"))) { customBooks.push(value); save(); render(); say(`Книга «${value}» появилась на одной из свободных полок.`); }
       input.value = "";
     });
