@@ -226,7 +226,6 @@ input:focus-visible {
 .lights-off .lamp-glow-v3 { opacity: 0; }
 .lights-off .poster-object-v3,
 .lights-off .poster-object-v15,
-.lights-off .room-radio-v15,
 .lights-off .anya-object-v3,
 .lights-off .sleeping-anya-v3,
 .lights-off .laptop-anya-v3,
@@ -549,158 +548,6 @@ input:focus-visible {
   line-height: 1;
 }
 
-.room-radio-v15 {
-  position: absolute;
-  z-index: 10;
-  left: 60.55%;
-  top: 41.05%;
-  width: 8.45%;
-  height: 9.7%;
-  padding: 0;
-  cursor: pointer;
-  background:
-    radial-gradient(circle at 72% 18%, rgba(255,239,224,.4), transparent 23%),
-    linear-gradient(145deg, #c9b8d7 0%, #ad98c0 48%, #87799e 100%);
-  border: 1px solid rgba(78,61,93,.72);
-  border-radius: 16% 16% 13% 13% / 22% 22% 18% 18%;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -5px 10px rgba(68,52,82,.18), 0 8px 8px rgba(25,17,24,.38);
-  transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
-}
-
-.room-radio-v15::after {
-  content: "";
-  position: absolute;
-  right: 4%;
-  bottom: -3%;
-  left: 4%;
-  height: 7%;
-  background: rgba(34,24,39,.52);
-  border-radius: 50%;
-  filter: blur(2px);
-}
-
-.room-radio-v15:hover,
-.room-radio-v15:focus-visible,
-.room-radio-v15.selected {
-  transform: translateY(-2%) scale(1.02);
-  filter: brightness(1.05);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -5px 10px rgba(68,52,82,.16), 0 8px 8px rgba(25,17,24,.38), 0 0 18px rgba(200,180,220,.34);
-}
-
-.radio-handle-v15 {
-  position: absolute;
-  z-index: 0;
-  top: -18%;
-  left: 24%;
-  width: 52%;
-  height: 28%;
-  background: #9582aa;
-  border: 2px solid #655771;
-  border-bottom: 0;
-  border-radius: 48% 48% 8% 8% / 72% 72% 10% 10%;
-  box-shadow: inset 0 2px 2px rgba(255,255,255,.22), 0 2px 3px rgba(20,14,22,.24);
-}
-
-.radio-speaker-v15 {
-  position: absolute;
-  z-index: 1;
-  top: 20%;
-  left: 8%;
-  width: 46%;
-  height: 57%;
-  background:
-    repeating-linear-gradient(0deg, rgba(53,43,58,.82) 0 2px, transparent 2px 5px),
-    linear-gradient(135deg, #6c5e70, #4c424f);
-  border: 1px solid rgba(64,50,70,.86);
-  border-radius: 10%;
-  box-shadow: inset 0 0 0 2px rgba(230,217,238,.19), inset 0 0 8px rgba(16,12,19,.4);
-}
-
-.radio-tuner-v15 {
-  position: absolute;
-  z-index: 1;
-  top: 18%;
-  right: 8%;
-  display: grid;
-  place-items: center;
-  width: 31%;
-  height: 31%;
-  overflow: hidden;
-  background: linear-gradient(180deg, #d9c59f, #aa8d63);
-  border: 1px solid #715d5a;
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 2px rgba(255,244,212,.24), inset 0 2px 5px rgba(255,246,224,.3);
-}
-
-.radio-tuner-v15::after {
-  content: "";
-  position: absolute;
-  top: 12%;
-  bottom: 12%;
-  left: 52%;
-  width: 1px;
-  background: rgba(82,56,47,.65);
-  box-shadow: -6px 0 rgba(82,56,47,.22), 6px 0 rgba(82,56,47,.22);
-}
-
-.radio-readout-v3 {
-  position: relative;
-  z-index: 2;
-  display: block;
-  width: 86%;
-  overflow: hidden;
-  color: #4e3f4d;
-  white-space: nowrap;
-  text-align: center;
-  text-overflow: ellipsis;
-  pointer-events: none;
-  font-size: clamp(2px, .22vw, 4px);
-  font-weight: 700;
-  line-height: 1;
-}
-
-.radio-knob-v15 {
-  position: absolute;
-  z-index: 1;
-  bottom: 13%;
-  width: 14%;
-  aspect-ratio: 1;
-  background: radial-gradient(circle at 38% 30%, #eadbbf, #a6896c 58%, #604e56 62% 100%);
-  border: 1px solid rgba(68,51,63,.88);
-  border-radius: 50%;
-  box-shadow: inset 1px 1px 2px rgba(255,255,255,.38), 0 1px 2px rgba(25,17,25,.36);
-}
-.radio-knob-left-v15 { right: 27%; }
-.radio-knob-right-v15 { right: 8%; }
-
-.radio-label-v15 {
-  position: absolute;
-  left: 50%;
-  bottom: -21px;
-  z-index: 5;
-  padding: 5px 8px;
-  color: #f0ebf4;
-  white-space: nowrap;
-  opacity: 0;
-  background: rgba(15,16,24,.86);
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 999px;
-  transform: translate(-50%, 4px);
-  transition: opacity .18s ease, transform .18s ease;
-  font-size: clamp(5px, .58vw, 8px);
-  pointer-events: none;
-}
-.room-radio-v15:hover .radio-label-v15,
-.room-radio-v15:focus-visible .radio-label-v15 { opacity: 1; transform: translate(-50%, 0); }
-
-.radio-playing .radio-readout-v3 {
-  color: #f7e5c4;
-  text-shadow: 0 0 5px #9c8fb4;
-  animation: radioPulse 1.2s ease-in-out infinite;
-}
-
-@keyframes radioPulse { 50% { opacity: .56; } }
-
 .anya-object-v3,
 .sleeping-anya-v3,
 .laptop-anya-v3,
@@ -888,8 +735,8 @@ input:focus-visible {
 .sima-feeding-cat-v8 {
   position: absolute;
   z-index: 4;
-  right: -5%;
-  bottom: 12%;
+  right: 1%;
+  bottom: 16%;
   width: 91%;
   height: 98%;
   object-fit: contain;
@@ -989,10 +836,16 @@ input:focus-visible {
 
 .target-tv { left: 39.6%; top: 35.2%; width: 14.2%; height: 24.2%; }
 .target-laptop { left: 64.9%; top: 35.35%; width: 15.8%; height: 18.4%; }
+.target-radio { left: 62.45%; top: 42.15%; width: 5.65%; height: 8.15%; }
 .target-books { left: 20.7%; top: 11.4%; width: 13.7%; height: 61.2%; }
 .target-wardrobe { left: 82.8%; top: 18.2%; width: 15.1%; height: 55.8%; }
 .target-lamp { left: 79.4%; top: 34.8%; width: 4.5%; height: 17.5%; }
 .target-bed { left: .4%; top: 40.4%; width: 19.2%; height: 34.5%; }
+
+.radio-playing .target-radio {
+  border-color: rgba(220,196,232,.54);
+  box-shadow: inset 0 0 0 1px rgba(234,218,242,.14), 0 0 18px rgba(184,151,207,.22);
+}
 
 .room-object-panel {
   position: absolute;
