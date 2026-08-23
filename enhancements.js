@@ -123,7 +123,7 @@
       </div>
       <div class="roomViewport room-viewport-v3 contentWidth">
         <div class="roomStage room-stage-v3" id="roomStageV3">
-          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v14.webp" alt="Мягко освещённая фиолетовая комната Ани, показанная прямо спереди">
+          <img class="roomBackdrop room-backdrop-v3" src="./room/room-front-v16.webp" alt="Мягко освещённая фиолетовая комната Ани с маленьким светло-фиолетовым радио, показанная прямо спереди">
           <div class="roomHud room-hud-v3" aria-live="polite"><span class="roomDot"></span><p id="roomStatus">Нажимай прямо на предметы в комнате.</p></div>
           <div class="lamp-glow-v3" aria-hidden="true"></div>
           <div class="tv-screen-v3" aria-hidden="true"><img id="tvImage" alt="" hidden><div id="tvNoiseV3" class="tv-noise-v3"><span>тихий эфир</span></div></div>
@@ -135,14 +135,6 @@
           <button type="button" class="room-object poster-object-v15 poster-object-sima-v15" data-room-object="poster" data-poster-id="sima" data-poster-src="./room/poster-sima-v15.webp" data-poster-alt="Постер с Симой крупным планом" data-poster-kind="sima" aria-label="Рассмотреть или поменять постер с Симой"><img src="./room/poster-sima-v15.webp" alt="Постер с Симой"><span>Сима</span></button>
           <button type="button" class="room-object poster-object-v15 poster-object-ink-v15" data-room-object="poster" data-poster-id="ink" data-poster-src="./room/poster-ink-v15.jpg" data-poster-alt="Графический постер с чёрным кругом и красными акцентами крупным планом" data-poster-kind="ink" aria-label="Рассмотреть или поменять графический постер"><img src="./room/poster-ink-v15.jpg" alt="Графический постер с чёрным кругом и красными акцентами"><span>постер</span></button>
           <div id="addedBookSpines" class="added-book-spines-v3" aria-label="Книги на полке"></div>
-          <button type="button" id="roomRadioV15" class="room-radio-v15" data-room-object="radio" aria-label="Управлять светло-фиолетовым радио">
-            <span class="radio-handle-v15" aria-hidden="true"></span>
-            <span class="radio-speaker-v15" aria-hidden="true"></span>
-            <span class="radio-tuner-v15"><b class="radio-readout-v3" id="radioRoomTitle">Key</b></span>
-            <span class="radio-knob-v15 radio-knob-left-v15" aria-hidden="true"></span>
-            <span class="radio-knob-v15 radio-knob-right-v15" aria-hidden="true"></span>
-            <span class="radio-label-v15">радио</span>
-          </button>
           <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" data-outfit="base" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
           <button type="button" id="anyaSleeping" class="sleeping-anya-v3" data-room-object="anya" aria-label="Разбудить Аню" hidden><img src="./room/anya-sleep-v2.webp" alt="Аня спит под одеялом"><span>разбудить</span></button>
           <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке у ноутбука, повернувшись к столу спиной к комнате"><span>Аня за ноутбуком</span></button>
@@ -153,6 +145,7 @@
           <button type="button" class="room-target target-bed" data-room-object="bed" aria-label="Отправить Аню спать"><span>кровать</span></button>
           <button type="button" class="room-target target-tv" data-room-object="tv" aria-label="Управлять телевизором"><span>телевизор</span></button>
           <button type="button" class="room-target target-laptop" data-room-object="laptop" aria-label="Выбрать игру на ноутбуке"><span>ноутбук</span></button>
+          <button type="button" class="room-target target-radio" data-room-object="radio" aria-label="Управлять светло-фиолетовым радио"><span id="radioRoomTitle">Key</span></button>
           <button type="button" class="room-target target-books" data-room-object="books" aria-label="Открыть книжный шкаф"><span>книжный шкаф</span></button>
           <button type="button" class="room-target target-wardrobe" data-room-object="wardrobe" aria-label="Переодеть Аню"><span>гардероб</span></button>
           <button type="button" class="room-target target-lamp" data-room-object="lamp" aria-label="Выключить свет"><span>свет</span></button>
@@ -500,7 +493,7 @@
     const shelfSlots = [];
     const rows = [
       { bottom: 25.72, starts: [22.18, 22.79, 23.4, 24.01, 24.62], heights: [9.75, 9.48, 9.92, 9.6, 9.82] },
-      { bottom: 39.45, starts: [22.22, 22.84, 23.46, 24.08, 24.7], heights: [9.72, 9.95, 9.55, 9.82, 9.64] },
+      { bottom: 37.8, starts: [22.22, 22.84, 23.46, 24.08, 24.7], heights: [9.72, 9.95, 9.55, 9.82, 9.64] },
       { bottom: 56.42, starts: [22.2, 22.84, 23.48, 24.12], heights: [10.78, 10.5, 10.86, 10.62] },
       { bottom: 71.45, starts: [22.22, 22.86, 23.5, 24.14], heights: [10.72, 10.5, 10.82, 10.58] },
     ];
