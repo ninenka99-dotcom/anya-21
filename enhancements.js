@@ -2,16 +2,16 @@
   "use strict";
 
   const outfits = {
-    base: { label: "база", src: "./room/anya-base-v6.webp", laptopSrc: "./room/anya-laptop-base-v5.webp", alt: "Аня в чёрной водолазке, свободных чёрных брюках и объёмном застёгнутом бордовом кардигане" },
-    novinki: { label: "в новинки", src: "./room/anya-novinki-v6.webp", laptopSrc: "./room/anya-laptop-novinki-v5.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
-    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v6.webp", laptopSrc: "./room/anya-laptop-botanical-v5.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
-    ambulance: { label: "на смену", src: "./room/anya-ambulance-v5.webp", laptopSrc: "./room/anya-laptop-ambulance-v5.webp", alt: "Аня в бордовой форме скорой помощи с головой, повёрнутой в сторону" },
+    base: { label: "база", src: "./room/anya-base-v6.webp", laptopSrc: "./room/anya-laptop-base-v5.webp", simaPlaySrc: "./room/interactions/anya-sima-base-v19.webp", alt: "Аня в чёрной водолазке, свободных чёрных брюках и объёмном застёгнутом бордовом кардигане" },
+    novinki: { label: "в новинки", src: "./room/anya-novinki-v6.webp", laptopSrc: "./room/anya-laptop-novinki-v5.webp", simaPlaySrc: "./room/interactions/anya-sima-novinki-v19.webp", alt: "Аня в полностью белом образе со смирительной рубашкой" },
+    botanical: { label: "в ботанический сад", src: "./room/anya-botanical-v6.webp", laptopSrc: "./room/anya-laptop-botanical-v5.webp", simaPlaySrc: "./room/interactions/anya-sima-botanical-v19.webp", alt: "Аня в чёрной майке, белой шёлковой юбке и чёрных таби с бабл-ти" },
+    ambulance: { label: "на смену", src: "./room/anya-ambulance-v5.webp", laptopSrc: "./room/anya-laptop-ambulance-v5.webp", simaPlaySrc: "./room/interactions/anya-sima-ambulance-v19.webp", alt: "Аня в бордовой форме скорой помощи с головой, повёрнутой в сторону" },
   };
 
   const films = {
     spider: { label: "Человек-паук", src: "./room/spider-poster.jpg", alt: "Постер Человека-паука" },
     dragon: { label: "Как приручить дракона", src: "./room/dragon-poster.jpg", alt: "Постер фильма Как приручить дракона" },
-    sledstvie: { label: "Следствие вели", src: "./room/tv-sledstvie-v15.png", alt: "Заставка программы Следствие вели с Леонидом Каневским", fit: "contain" },
+    sledstvie: { label: "Следствие вели", src: "./room/tv-sledstvie-v15.png", alt: "Заставка программы Следствие вели с Леонидом Каневским", fit: "cover", position: "center 35%" },
   };
 
   const laptopGames = {
@@ -49,10 +49,14 @@
     const letter = qs(".letterSection");
     if (!room || !games || !archive || !dictionary || !letter) {
       if (tries < 160) window.setTimeout(() => waitForApp(tries + 1), 50);
+      else document.documentElement.classList.remove("anya-booting-v19");
       return;
     }
-    if (document.documentElement.dataset.anyaEnhancements === "v8") return;
-    document.documentElement.dataset.anyaEnhancements = "v8";
+    if (document.documentElement.dataset.anyaEnhancements === "v19") {
+      document.documentElement.classList.remove("anya-booting-v19");
+      return;
+    }
+    document.documentElement.dataset.anyaEnhancements = "v19";
     cleanOpeningScreen();
     enhanceRoom(room);
     enhanceGames(games);
@@ -61,6 +65,7 @@
     cleanThenAndNow();
     lockPastSection();
     replaceLetterWithFinale(letter);
+    window.requestAnimationFrame(() => document.documentElement.classList.remove("anya-booting-v19"));
   }
 
   function cleanOpeningScreen() {
@@ -138,6 +143,7 @@
           <button type="button" id="anyaStanding" class="anya-object-v3" data-room-object="anya" data-outfit="base" aria-label="Выбрать действие для Ани"><img id="anyaCharacter" src="${outfits.base.src}" alt="${outfits.base.alt}"><span>Аня</span></button>
           <button type="button" id="anyaSleeping" class="sleeping-anya-v3" data-room-object="anya" aria-label="Разбудить Аню" hidden><img src="./room/anya-sleep-v2.webp" alt="Аня спит под одеялом"><span>разбудить</span></button>
           <button type="button" id="anyaLaptop" class="laptop-anya-v3" data-room-object="anya" aria-label="Аня сидит за ноутбуком" hidden><img id="anyaLaptopImage" src="${outfits.base.laptopSrc}" alt="Аня в базовом образе сидит на табуретке у ноутбука, повернувшись к столу спиной к комнате"><span>Аня за ноутбуком</span></button>
+          <button type="button" id="anyaPlayingSimaV19" class="anya-sima-play-v19" data-room-object="anya" aria-label="Аня играет с Симой" hidden><img id="anyaPlayingSimaImageV19" src="${outfits.base.simaPlaySrc}" alt="Аня в базовом образе играет с Симой"><span>Аня и Сима</span><i aria-hidden="true">♡</i></button>
           <button type="button" id="simaSpriteV3" class="sima-v3 walking" data-room-object="sima" aria-label="Погладить Симу"><span class="sima-visual-v5"><img src="./room/sima-walk-v2.webp" alt="Сима гуляет по комнате"></span><span class="sima-label">Сима</span><span class="sima-hearts-v3" aria-hidden="true">♡ ♡ ♡</span></button>
           <button type="button" id="simaBowlV8" class="sima-bowl-v8" data-room-object="bowl" aria-label="Миска Симы"><img src="./games/sima/bowl-empty-v8.webp" alt="Керамическая миска Симы"><span>миска Симы</span></button>
           <button type="button" id="simaFeedingV8" class="sima-feeding-v8" data-room-object="bowl" aria-label="Сима кушает из миски" hidden><img class="sima-feeding-cat-v8" src="./games/sima/sima-eat-v8.webp" alt="Сима кушает"><img class="sima-feeding-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt="Миска с кормом"><span>Сима кушает</span><i aria-hidden="true">мр-р</i></button>
@@ -181,8 +187,10 @@
     const anyaStanding = qs("#anyaStanding", section);
     const anyaSleeping = qs("#anyaSleeping", section);
     const anyaLaptop = qs("#anyaLaptop", section);
+    const anyaPlayingSima = qs("#anyaPlayingSimaV19", section);
     const anyaImage = qs("#anyaCharacter", section);
     const anyaLaptopImage = qs("#anyaLaptopImage", section);
+    const anyaPlayingSimaImage = qs("#anyaPlayingSimaImageV19", section);
     const sima = qs("#simaSpriteV3", section);
     const simaImage = qs("img", sima);
     const simaBowl = qs("#simaBowlV8", section);
@@ -255,16 +263,29 @@
         anyaLaptopImage.src = outfit.laptopSrc;
         anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке у ноутбука спиной к комнате`;
       }
+      if (next === "playing-sima") {
+        const outfit = outfits[currentOutfit];
+        window.clearTimeout(simaTimeout);
+        simaIsEating = false;
+        simaFeeding.hidden = true;
+        simaBowl.hidden = false;
+        anyaPlayingSimaImage.src = outfit.simaPlaySrc;
+        anyaPlayingSimaImage.alt = `Аня в образе «${outfit.label}» играет с Симой`;
+      }
       anyaStanding.hidden = next !== "standing";
       anyaSleeping.hidden = next !== "sleeping";
       anyaLaptop.hidden = next !== "laptop";
+      anyaPlayingSima.hidden = next !== "playing-sima";
+      sima.hidden = next === "playing-sima" || simaIsEating;
       stage.classList.toggle("anya-at-laptop", next === "laptop");
+      stage.classList.toggle("anya-playing-sima-v19", next === "playing-sima");
       if (next === "sleeping") say("Аня легла точно на кровать и уже спит.");
       else if (next === "laptop") say("Аня села на табуретку и устроилась за ноутбуком.");
+      else if (next === "playing-sima") say("Аня устроилась на полу и играет с Симой удочкой с перьями.");
       else say("Аня снова в комнате.");
     }
     function openAnyaPanel() {
-      showPanel("anya", "Что будет делать Аня?", `<button type="button" data-anya-action="sleeping">отправить спать</button><button type="button" data-anya-action="laptop">посидеть за ноутбуком</button>${activity !== "standing" ? '<button type="button" data-anya-action="standing">вернуться в комнату</button>' : ""}`);
+      showPanel("anya", "Что будет делать Аня?", `<button type="button" data-anya-action="sleeping">отправить спать</button><button type="button" data-anya-action="laptop">посидеть за ноутбуком</button><button type="button" data-anya-action="playing-sima">поиграть с Симой</button>${activity !== "standing" ? '<button type="button" data-anya-action="standing">вернуться в комнату</button>' : ""}`);
       qsa("[data-anya-action]", panel).forEach((button) => button.addEventListener("click", () => { setActivity(button.dataset.anyaAction); closePanel(); }));
     }
     function openBedPanel() {
@@ -284,6 +305,8 @@
           anyaImage.alt = outfit.alt;
           anyaLaptopImage.src = outfit.laptopSrc;
           anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке у ноутбука спиной к комнате`;
+          anyaPlayingSimaImage.src = outfit.simaPlaySrc;
+          anyaPlayingSimaImage.alt = `Аня в образе «${outfit.label}» играет с Симой`;
           anyaImage.classList.remove("changing");
         }, 140);
         setActivity("standing"); say(`Выбран образ «${outfit.label}».`); closePanel();
@@ -293,8 +316,8 @@
       showPanel("tv", "Что включить?", `${Object.entries(films).map(([key, film]) => `<button type="button" data-film="${key}">${escapeHtml(film.label)}</button>`).join("")}<button type="button" data-film="off">выключить</button>`);
       qsa("[data-film]", panel).forEach((button) => button.addEventListener("click", () => {
         const image = qs("#tvImage", section); const noise = qs("#tvNoiseV3", section); const screen = image.closest(".tv-screen-v3"); const key = button.dataset.film;
-        if (key === "off") { image.hidden = true; image.removeAttribute("src"); image.removeAttribute("data-fit"); screen.classList.remove("tv-has-image-v15"); screen.style.removeProperty("--tv-backdrop"); noise.hidden = false; say("Телевизор выключен."); }
-        else { const film = films[key]; image.src = film.src; image.alt = film.alt; image.dataset.fit = film.fit || "cover"; screen.style.setProperty("--tv-backdrop", `url("${film.src}")`); screen.classList.add("tv-has-image-v15"); image.hidden = false; noise.hidden = true; say(`На телевизоре — ${film.label}.`); }
+        if (key === "off") { image.hidden = true; image.removeAttribute("src"); image.removeAttribute("data-fit"); image.removeAttribute("data-film"); image.style.removeProperty("object-position"); screen.classList.remove("tv-has-image-v15"); screen.style.removeProperty("--tv-backdrop"); noise.hidden = false; say("Телевизор выключен."); }
+        else { const film = films[key]; image.src = film.src; image.alt = film.alt; image.dataset.fit = film.fit || "cover"; image.dataset.film = key; image.style.objectPosition = film.position || "center 35%"; screen.style.setProperty("--tv-backdrop", `url("${film.src}")`); screen.classList.add("tv-has-image-v15"); image.hidden = false; noise.hidden = true; say(`На телевизоре — ${film.label}.`); }
         closePanel();
       }));
     }
@@ -596,7 +619,7 @@
     section.innerHTML = `<div class="gameHubHeading contentWidth game-heading-v3"><h2>Игры</h2></div><div class="gameLaunchers contentWidth">
       <button type="button" class="gameLauncher cokeLauncher" data-open-game="coke"><span>01</span><img src="./games/cocacola-zero-v2.webp" alt=""><div><b>Zero hunt</b><p>Помоги Ане собрать запас колы.</p></div><i>играть →</i></button>
       <button type="button" class="gameLauncher ambulanceLauncher" data-open-game="ambulance"><span>02</span><img src="./games/ambulance-anya.webp" alt=""><div><b>Ночная смена</b><p>Помоги Ане доехать до всех вызовов.</p></div><i>играть →</i></button>
-      <button type="button" class="gameLauncher simaLauncherV8" data-open-game="sima"><span>03</span><span class="sima-launcher-art-v8" aria-hidden="true"><img class="sima-launcher-bg-v8" src="./games/sima/nook-background-v8.webp" alt=""><img class="sima-launcher-cat-v8" src="./games/sima/sima-idle-v8.webp" alt=""><img class="sima-launcher-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt=""></span><div><b>Симин уголок</b><p>Проведи с Симой один идеальный уютный день.</p></div><i>зайти →</i></button>
+      <button type="button" class="gameLauncher simaLauncherV8" data-open-game="sima"><span>03</span><span class="sima-launcher-art-v8" aria-hidden="true"><img class="sima-launcher-bg-v8" src="./games/sima/nook-background-v8.webp" alt=""><img class="sima-launcher-cat-v8" src="./games/sima/sima-idle-v19.webp" alt=""><img class="sima-launcher-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt=""></span><div><b>Симин уголок</b><p>Проведи с Симой один идеальный уютный день.</p></div><i>зайти →</i></button>
       </div><div id="enhancedGameOverlay" class="gameOverlay enhanced-game-overlay" role="dialog" aria-modal="true" hidden></div>`;
     const overlay = qs("#enhancedGameOverlay", section); let cleanup = () => {};
     function close() { cleanup(); cleanup = () => {}; overlay.hidden = true; overlay.innerHTML = ""; document.body.style.overflow = ""; }
@@ -658,7 +681,8 @@
       { id: "sing", label: "Караоке", note: "спеть в микрофон", asset: "microphone", stat: "joy" },
     ];
     const poseFiles = {
-      idle: "./games/sima/sima-idle-v8.webp",
+      idle: "./games/sima/sima-idle-v19.webp",
+      petted: "./games/sima/sima-petted-v19.webp",
       eat: "./games/sima/sima-eat-v8.webp",
       play: "./games/sima/sima-play-v8.webp",
       groom: "./games/sima/sima-groom-v8.webp",
@@ -700,13 +724,14 @@
         <button type="button" class="sima-scene-prop-v8 sima-scene-microphone-v14" data-sima-action="sing" aria-label="Дать Симе попеть"><img src="./games/sima/microphone-v14.webp" alt="Микрофон Симы"><span>караоке</span></button>
         <button type="button" class="sima-window-hotspot-v8" data-sima-action="window" aria-label="Посмотреть с Симой в окно"><span>огоньки у окна</span></button>
         <div id="simaActionPropV8" class="sima-action-prop-v8" hidden><img alt=""></div>
+        <div id="simaBrushZoneV19" class="sima-brush-zone-v19" aria-label="Зона расчёсывания Симы" hidden></div>
         <button type="button" id="simaGameCatV8" class="sima-game-cat-v8" data-pose="idle" aria-label="Погладить Симу"><img src="${poseFiles.idle}" alt="Сима сидит в своём уютном уголке"><span class="sima-game-hearts-v8" aria-hidden="true">♡ ♡ ♡</span></button>
         <div id="simaSpeechV8" class="sima-speech-v8" aria-live="polite">Сима внимательно осматривает свой уголок.</div>
         <button type="button" id="simaPlayTargetV8" class="sima-play-target-v8" hidden><img alt="Игрушка Симы"></button>
         <div id="simaFirefliesV8" class="sima-fireflies-v8" aria-live="polite"></div>
         <div id="simaActivityV8" class="sima-activity-v8" hidden></div>
         <div id="simaCollectionV8" class="sima-collection-v8" role="dialog" aria-modal="true" aria-label="Коллекция Симы" hidden><div><button type="button" data-close-sima-collection aria-label="Закрыть">×</button><p>маленькие сокровища</p><h3>Коллекция Симы</h3><section id="simaCollectionGridV8"></section><small>Каждое воспоминание открывается после нового занятия с Симой.</small></div></div>
-        <div id="simaWelcomeV8" class="sima-welcome-v8" ${state.visited ? "hidden" : ""}><div><img src="./games/sima/sima-idle-v8.webp" alt="Сима"><p>большая уютная игра</p><h2>Симин уголок</h2><span>Здесь не нужно побеждать и торопиться. Корми Симу, играй, расчёсывай, исследуй коробки, пой с ней караоке и собирай воспоминания об идеальном тихом дне.</span><button type="button">зайти к Симе</button></div></div>
+        <div id="simaWelcomeV8" class="sima-welcome-v8" ${state.visited ? "hidden" : ""}><div><img src="./games/sima/sima-idle-v19.webp" alt="Сима"><p>большая уютная игра</p><h2>Симин уголок</h2><span>Здесь не нужно побеждать и торопиться. Корми Симу, играй, расчёсывай, исследуй коробки, пой с ней караоке и собирай воспоминания об идеальном тихом дне.</span><button type="button">зайти к Симе</button></div></div>
         <div id="simaCompleteV8" class="sima-complete-v8" hidden><div><span aria-hidden="true">✦</span><p>все воспоминания собраны</p><h2>Идеальный день Симы</h2><small>Сима сыта, вычесана, наигралась и совершенно довольна.</small><button type="button">остаться с Симой</button></div></div>
         <nav class="sima-action-dock-v8" aria-label="Занятия с Симой">${activities.map((activity) => `<button type="button" data-sima-action="${activity.id}"><img src="${propFile(activity.asset)}" alt=""><span>${activity.label}</span><small>${activity.note}</small><i aria-hidden="true"></i></button>`).join("")}</nav>
         <audio id="simaGamePurrV8" src="./audio/sima-purr-v5.mp3" preload="auto"></audio>
@@ -721,6 +746,7 @@
     const activityPanel = qs("#simaActivityV8", root);
     const actionProp = qs("#simaActionPropV8", root);
     const actionPropImage = qs("img", actionProp);
+    const brushZone = qs("#simaBrushZoneV19", root);
     const playTarget = qs("#simaPlayTargetV8", root);
     const fireflyLayer = qs("#simaFirefliesV8", root);
     const collection = qs("#simaCollectionV8", root);
@@ -762,7 +788,7 @@
       cat.dataset.pose = pose;
       cat.dataset.activity = activity;
       catImage.src = poseFiles[pose] || poseFiles.idle;
-      catImage.alt = pose === "sleep" ? "Сима свернулась клубочком и спит" : pose === "eat" ? "Сима кушает" : pose === "play" ? "Сима играет" : pose === "box" ? "Сима выглядывает из коробки" : pose === "sing" ? "Сима поёт в микрофон" : "Сима в своём уголке";
+      catImage.alt = pose === "sleep" ? "Сима свернулась клубочком и спит" : pose === "eat" ? "Сима кушает" : pose === "play" ? "Сима играет" : pose === "box" ? "Сима выглядывает из коробки" : pose === "sing" ? "Сима поёт в микрофон" : pose === "petted" ? "Довольная Сима прикрыла глаза от поглаживания" : "Сима в своём уголке";
     }
     function showActionProp(asset, kind) {
       actionProp.hidden = false;
@@ -790,11 +816,12 @@
       playTarget.hidden = true;
       playTarget.onclick = null;
       fireflyLayer.innerHTML = "";
+      brushZone.hidden = true;
       actionProp.hidden = true;
       actionProp.removeAttribute("style");
       karaoke.pause();
       karaoke.currentTime = 0;
-      nook.classList.remove("sima-eating-v8", "sima-playing-v8", "sima-brushing-v8", "sima-boxing-v8", "sima-windowing-v8", "sima-sleeping-v8", "sima-singing-v14");
+      nook.classList.remove("sima-eating-v8", "sima-playing-v8", "sima-brushing-v8", "sima-brush-active-v19", "sima-boxing-v8", "sima-windowing-v8", "sima-sleeping-v8", "sima-singing-v14");
       activityPanel.classList.remove("sima-karaoke-controls-v14");
       cat.classList.remove("brushable");
       if (resetPose) setPose("idle");
@@ -871,12 +898,15 @@
         setPose("groom", "brush");
         showActionProp("brush", "brush");
         nook.classList.add("sima-brushing-v8");
+        nook.classList.add("sima-brush-active-v19");
         cat.classList.add("brushable");
+        brushZone.hidden = false;
         setSpeech("Медленно проведи щёткой по шерсти Симы.");
         const moveBrush = (event) => {
           const box = nook.getBoundingClientRect();
-          const x = ((event.clientX - box.left) / box.width) * 100;
-          const y = ((event.clientY - box.top) / box.height) * 100;
+          event.preventDefault();
+          const x = Math.max(34, Math.min(68, ((event.clientX - box.left) / box.width) * 100));
+          const y = Math.max(22, Math.min(69, ((event.clientY - box.top) / box.height) * 100));
           actionProp.style.left = `${x}%`;
           actionProp.style.top = `${y}%`;
           if (!brushing) return;
@@ -889,13 +919,13 @@
           setSpeech(`${Math.min(strokes, 6)} из 6 движений. Шерсть становится ещё пушистее.`);
           if (strokes >= 6) { brushing = false; award("brush", { care: 30, joy: 6 }, "Готово. Сима стала почти неприлично пушистой."); later(clearActivity, 1700); }
         };
-        const pointerDown = (event) => { brushing = true; lastX = event.clientX; lastY = event.clientY; cat.setPointerCapture?.(event.pointerId); moveBrush(event); };
-        const pointerUp = () => { brushing = false; };
-        cat.addEventListener("pointerdown", pointerDown);
-        cat.addEventListener("pointermove", moveBrush);
-        cat.addEventListener("pointerup", pointerUp);
-        cat.addEventListener("pointercancel", pointerUp);
-        activityCleanup = () => { cat.removeEventListener("pointerdown", pointerDown); cat.removeEventListener("pointermove", moveBrush); cat.removeEventListener("pointerup", pointerUp); cat.removeEventListener("pointercancel", pointerUp); };
+        const pointerDown = (event) => { event.preventDefault(); brushing = true; lastX = event.clientX; lastY = event.clientY; brushZone.setPointerCapture?.(event.pointerId); moveBrush(event); };
+        const pointerUp = (event) => { event.preventDefault(); brushing = false; if (brushZone.hasPointerCapture?.(event.pointerId)) brushZone.releasePointerCapture(event.pointerId); };
+        brushZone.addEventListener("pointerdown", pointerDown);
+        brushZone.addEventListener("pointermove", moveBrush);
+        brushZone.addEventListener("pointerup", pointerUp);
+        brushZone.addEventListener("pointercancel", pointerUp);
+        activityCleanup = () => { brushZone.removeEventListener("pointerdown", pointerDown); brushZone.removeEventListener("pointermove", moveBrush); brushZone.removeEventListener("pointerup", pointerUp); brushZone.removeEventListener("pointercancel", pointerUp); };
       });
     }
     function boxActivity() {
@@ -1001,9 +1031,11 @@
     cat.addEventListener("click", () => {
       if (activeActivity || busy) return;
       purr.pause(); purr.currentTime = 0; purr.volume = .62; purr.play().catch(() => {});
+      setPose("petted", "pet");
       state.joy = cap(state.joy + 2); saveState(); renderState(); celebrateCare();
       const lines = ["Сима разрешила себя погладить.", "Мр-р. Это было принято благосклонно.", "Сима сделала вид, что не ждала поглаживания."];
       setSpeech(lines[Math.floor(Math.random() * lines.length)]);
+      later(() => { if (!activeActivity && !busy && cat.dataset.pose === "petted") setPose("idle"); }, 2100);
     });
     qs("#simaWelcomeV8 button", root)?.addEventListener("click", () => { state.visited = true; saveState(); qs("#simaWelcomeV8", root).hidden = true; setSpeech("Сима ждёт. Выбери любой предмет в комнате."); });
     qs("#simaCompleteV8 button", root).addEventListener("click", () => { complete.hidden = true; nook.classList.remove("sima-day-complete-v8"); clearActivity(); setSpeech("Идеальный день можно продолжать сколько угодно."); });
