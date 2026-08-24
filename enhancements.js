@@ -40,6 +40,31 @@
   const defaultBooks = ["Цветы для Элджернона", "Всё ради игры", "Лето в пионерском галстуке"];
   const qs = (selector, root = document) => root.querySelector(selector);
   const qsa = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const imageWarmups = new Map();
+
+  function preloadImage(source) {
+    if (!source) return Promise.resolve();
+    if (imageWarmups.has(source)) return imageWarmups.get(source);
+    const warmup = new Promise((resolve) => {
+      const image = new Image();
+      image.decoding = "async";
+      image.addEventListener("load", () => {
+        try {
+          const decoded = typeof image.decode === "function" ? image.decode().catch(() => {}) : null;
+          if (decoded) decoded.finally(resolve);
+          else resolve();
+        } catch { resolve(); }
+      }, { once: true });
+      image.addEventListener("error", resolve, { once: true });
+      image.src = source;
+    });
+    imageWarmups.set(source, warmup);
+    return warmup;
+  }
+
+  function warmImages(sources) {
+    [...new Set(sources.filter(Boolean))].forEach((source) => { void preloadImage(source); });
+  }
 
   function waitForApp(tries = 0) {
     const room = qs(".roomSection");
@@ -52,11 +77,11 @@
       else document.documentElement.classList.remove("anya-booting-v19");
       return;
     }
-    if (document.documentElement.dataset.anyaEnhancements === "v19") {
+    if (document.documentElement.dataset.anyaEnhancements === "v20") {
       document.documentElement.classList.remove("anya-booting-v19");
       return;
     }
-    document.documentElement.dataset.anyaEnhancements = "v19";
+    document.documentElement.dataset.anyaEnhancements = "v20";
     cleanOpeningScreen();
     enhanceRoom(room);
     enhanceGames(games);
@@ -65,6 +90,24 @@
     cleanThenAndNow();
     lockPastSection();
     replaceLetterWithFinale(letter);
+    const warmInteractiveAssets = () => warmImages([
+      ...Object.values(outfits).flatMap((outfit) => [outfit.src, outfit.laptopSrc, outfit.simaPlaySrc]),
+      ...Object.values(films).map((film) => film.src),
+      ...Object.values(laptopGames).map((game) => game.src),
+      "./room/anya-sleep-v2.webp",
+      "./room/sima-walk-v2.webp",
+      "./room/sima-pet-v2.webp",
+      "./games/sima/sima-idle-v20.webp",
+      "./games/sima/sima-petted-v19.webp",
+      "./games/sima/sima-eat-v8.webp",
+      "./games/sima/sima-play-v8.webp",
+      "./games/sima/sima-groom-v8.webp",
+      "./games/sima/sima-sleep-v8.webp",
+      "./games/sima/sima-box-v8.webp",
+      "./games/sima/sima-sing-v14.webp",
+    ]);
+    if ("requestIdleCallback" in window) window.requestIdleCallback(warmInteractiveAssets, { timeout: 900 });
+    else window.setTimeout(warmInteractiveAssets, 250);
     window.requestAnimationFrame(() => document.documentElement.classList.remove("anya-booting-v19"));
   }
 
@@ -214,6 +257,9 @@
     let lightsOn = true;
     let activePanelAnchor = null;
     let activePosterButton = null;
+    let outfitRequest = 0;
+    let tvRequest = 0;
+    let laptopRequest = 0;
 
     function say(message) { status.textContent = message; }
     function closePanel() {
@@ -295,38 +341,49 @@
     }
     function openWardrobePanel() {
       showPanel("wardrobe", "Гардероб", Object.entries(outfits).map(([key, outfit]) => `<button type="button" data-outfit="${key}" class="${key === currentOutfit ? "active" : ""}">${escapeHtml(outfit.label)}</button>`).join(""));
-      qsa("[data-outfit]", panel).forEach((button) => button.addEventListener("click", () => {
+      qsa("[data-outfit]", panel).forEach((button) => button.addEventListener("click", async () => {
         currentOutfit = button.dataset.outfit;
         const outfit = outfits[currentOutfit];
-        anyaImage.classList.add("changing");
-        window.setTimeout(() => {
-          anyaStanding.dataset.outfit = currentOutfit;
-          anyaImage.src = outfit.src;
-          anyaImage.alt = outfit.alt;
-          anyaLaptopImage.src = outfit.laptopSrc;
-          anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке у ноутбука спиной к комнате`;
-          anyaPlayingSimaImage.src = outfit.simaPlaySrc;
-          anyaPlayingSimaImage.alt = `Аня в образе «${outfit.label}» играет с Симой`;
-          anyaImage.classList.remove("changing");
-        }, 140);
-        setActivity("standing"); say(`Выбран образ «${outfit.label}».`); closePanel();
+        const request = ++outfitRequest;
+        setActivity("standing");
+        say(`Готовлю образ «${outfit.label}»…`);
+        closePanel();
+        await Promise.all([outfit.src, outfit.laptopSrc, outfit.simaPlaySrc].map(preloadImage));
+        if (request !== outfitRequest) return;
+        anyaStanding.dataset.outfit = currentOutfit;
+        anyaImage.src = outfit.src;
+        anyaImage.alt = outfit.alt;
+        anyaLaptopImage.src = outfit.laptopSrc;
+        anyaLaptopImage.alt = `Аня в образе «${outfit.label}» сидит на табуретке у ноутбука спиной к комнате`;
+        anyaPlayingSimaImage.src = outfit.simaPlaySrc;
+        anyaPlayingSimaImage.alt = `Аня в образе «${outfit.label}» играет с Симой`;
+        say(`Выбран образ «${outfit.label}».`);
       }));
     }
     function openTvPanel() {
       showPanel("tv", "Что включить?", `${Object.entries(films).map(([key, film]) => `<button type="button" data-film="${key}">${escapeHtml(film.label)}</button>`).join("")}<button type="button" data-film="off">выключить</button>`);
-      qsa("[data-film]", panel).forEach((button) => button.addEventListener("click", () => {
+      qsa("[data-film]", panel).forEach((button) => button.addEventListener("click", async () => {
         const image = qs("#tvImage", section); const noise = qs("#tvNoiseV3", section); const screen = image.closest(".tv-screen-v3"); const key = button.dataset.film;
-        if (key === "off") { image.hidden = true; image.removeAttribute("src"); image.removeAttribute("data-fit"); image.removeAttribute("data-film"); image.style.removeProperty("object-position"); screen.classList.remove("tv-has-image-v15"); screen.style.removeProperty("--tv-backdrop"); noise.hidden = false; say("Телевизор выключен."); }
-        else { const film = films[key]; image.src = film.src; image.alt = film.alt; image.dataset.fit = film.fit || "cover"; image.dataset.film = key; image.style.objectPosition = film.position || "center 35%"; screen.style.setProperty("--tv-backdrop", `url("${film.src}")`); screen.classList.add("tv-has-image-v15"); image.hidden = false; noise.hidden = true; say(`На телевизоре — ${film.label}.`); }
+        const request = ++tvRequest;
+        if (key === "off") { image.hidden = true; image.removeAttribute("src"); image.removeAttribute("data-fit"); image.removeAttribute("data-film"); image.style.removeProperty("object-position"); screen.classList.remove("tv-has-image-v15"); screen.style.removeProperty("--tv-backdrop"); noise.hidden = false; say("Телевизор выключен."); closePanel(); return; }
+        const film = films[key];
+        say(`Включаю «${film.label}»…`);
         closePanel();
+        await preloadImage(film.src);
+        if (request !== tvRequest) return;
+        image.src = film.src; image.alt = film.alt; image.dataset.fit = film.fit || "cover"; image.dataset.film = key; image.style.objectPosition = film.position || "center 35%"; screen.style.setProperty("--tv-backdrop", `url("${film.src}")`); screen.classList.add("tv-has-image-v15"); image.hidden = false; noise.hidden = true; say(`На телевизоре — ${film.label}.`);
       }));
     }
     function openLaptopPanel() {
       showPanel("laptop", "Во что поиграть?", `${Object.entries(laptopGames).map(([key, game]) => `<button type="button" data-laptop-game="${key}">${escapeHtml(game.label)}</button>`).join("")}<button type="button" data-seat-anya>посадить Аню за ноутбук</button>`);
-      qsa("[data-laptop-game]", panel).forEach((button) => button.addEventListener("click", () => {
-        const game = laptopGames[button.dataset.laptopGame]; const image = qs("#laptopImage", section); image.classList.add("switching");
-        window.setTimeout(() => { image.src = game.src; image.alt = `Заставка ${game.label}`; image.classList.remove("switching"); }, 120);
-        say(`На ноутбуке выбрана игра ${game.label}.`); closePanel();
+      qsa("[data-laptop-game]", panel).forEach((button) => button.addEventListener("click", async () => {
+        const game = laptopGames[button.dataset.laptopGame]; const image = qs("#laptopImage", section);
+        const request = ++laptopRequest;
+        say(`Загружаю ${game.label}…`); closePanel();
+        await preloadImage(game.src);
+        if (request !== laptopRequest) return;
+        image.src = game.src; image.alt = `Заставка ${game.label}`;
+        say(`На ноутбуке выбрана игра ${game.label}.`);
       }));
       qs("[data-seat-anya]", panel).addEventListener("click", () => { setActivity("laptop"); closePanel(); });
     }
@@ -619,7 +676,7 @@
     section.innerHTML = `<div class="gameHubHeading contentWidth game-heading-v3"><h2>Игры</h2></div><div class="gameLaunchers contentWidth">
       <button type="button" class="gameLauncher cokeLauncher" data-open-game="coke"><span>01</span><img src="./games/cocacola-zero-v2.webp" alt=""><div><b>Zero hunt</b><p>Помоги Ане собрать запас колы.</p></div><i>играть →</i></button>
       <button type="button" class="gameLauncher ambulanceLauncher" data-open-game="ambulance"><span>02</span><img src="./games/ambulance-anya.webp" alt=""><div><b>Ночная смена</b><p>Помоги Ане доехать до всех вызовов.</p></div><i>играть →</i></button>
-      <button type="button" class="gameLauncher simaLauncherV8" data-open-game="sima"><span>03</span><span class="sima-launcher-art-v8" aria-hidden="true"><img class="sima-launcher-bg-v8" src="./games/sima/nook-background-v8.webp" alt=""><img class="sima-launcher-cat-v8" src="./games/sima/sima-idle-v19.webp" alt=""><img class="sima-launcher-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt=""></span><div><b>Симин уголок</b><p>Проведи с Симой один идеальный уютный день.</p></div><i>зайти →</i></button>
+      <button type="button" class="gameLauncher simaLauncherV8" data-open-game="sima"><span>03</span><span class="sima-launcher-art-v8" aria-hidden="true"><img class="sima-launcher-bg-v8" src="./games/sima/nook-background-v8.webp" alt=""><img class="sima-launcher-cat-v8" src="./games/sima/sima-idle-v20.webp" alt=""><img class="sima-launcher-bowl-v8" src="./games/sima/bowl-full-v8.webp" alt=""></span><div><b>Симин уголок</b><p>Проведи с Симой один идеальный уютный день.</p></div><i>зайти →</i></button>
       </div><div id="enhancedGameOverlay" class="gameOverlay enhanced-game-overlay" role="dialog" aria-modal="true" hidden></div>`;
     const overlay = qs("#enhancedGameOverlay", section); let cleanup = () => {};
     function close() { cleanup(); cleanup = () => {}; overlay.hidden = true; overlay.innerHTML = ""; document.body.style.overflow = ""; }
@@ -681,7 +738,7 @@
       { id: "sing", label: "Караоке", note: "спеть в микрофон", asset: "microphone", stat: "joy" },
     ];
     const poseFiles = {
-      idle: "./games/sima/sima-idle-v19.webp",
+      idle: "./games/sima/sima-idle-v20.webp",
       petted: "./games/sima/sima-petted-v19.webp",
       eat: "./games/sima/sima-eat-v8.webp",
       play: "./games/sima/sima-play-v8.webp",
@@ -690,6 +747,7 @@
       box: "./games/sima/sima-box-v8.webp",
       sing: "./games/sima/sima-sing-v14.webp",
     };
+    warmImages(Object.values(poseFiles));
     const propFiles = { microphone: "./games/sima/microphone-v14.webp" };
     const propFile = (name) => propFiles[name] || `./games/sima/${name}-v8.webp`;
     const storageKey = "anya-sima-nook-v8";
@@ -731,7 +789,7 @@
         <div id="simaFirefliesV8" class="sima-fireflies-v8" aria-live="polite"></div>
         <div id="simaActivityV8" class="sima-activity-v8" hidden></div>
         <div id="simaCollectionV8" class="sima-collection-v8" role="dialog" aria-modal="true" aria-label="Коллекция Симы" hidden><div><button type="button" data-close-sima-collection aria-label="Закрыть">×</button><p>маленькие сокровища</p><h3>Коллекция Симы</h3><section id="simaCollectionGridV8"></section><small>Каждое воспоминание открывается после нового занятия с Симой.</small></div></div>
-        <div id="simaWelcomeV8" class="sima-welcome-v8" ${state.visited ? "hidden" : ""}><div><img src="./games/sima/sima-idle-v19.webp" alt="Сима"><p>большая уютная игра</p><h2>Симин уголок</h2><span>Здесь не нужно побеждать и торопиться. Корми Симу, играй, расчёсывай, исследуй коробки, пой с ней караоке и собирай воспоминания об идеальном тихом дне.</span><button type="button">зайти к Симе</button></div></div>
+        <div id="simaWelcomeV8" class="sima-welcome-v8" ${state.visited ? "hidden" : ""}><div><img src="./games/sima/sima-idle-v20.webp" alt="Сима"><p>большая уютная игра</p><h2>Симин уголок</h2><span>Здесь не нужно побеждать и торопиться. Корми Симу, играй, расчёсывай, исследуй коробки, пой с ней караоке и собирай воспоминания об идеальном тихом дне.</span><button type="button">зайти к Симе</button></div></div>
         <div id="simaCompleteV8" class="sima-complete-v8" hidden><div><span aria-hidden="true">✦</span><p>все воспоминания собраны</p><h2>Идеальный день Симы</h2><small>Сима сыта, вычесана, наигралась и совершенно довольна.</small><button type="button">остаться с Симой</button></div></div>
         <nav class="sima-action-dock-v8" aria-label="Занятия с Симой">${activities.map((activity) => `<button type="button" data-sima-action="${activity.id}"><img src="${propFile(activity.asset)}" alt=""><span>${activity.label}</span><small>${activity.note}</small><i aria-hidden="true"></i></button>`).join("")}</nav>
         <audio id="simaGamePurrV8" src="./audio/sima-purr-v5.mp3" preload="auto"></audio>

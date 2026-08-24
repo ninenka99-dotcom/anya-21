@@ -177,6 +177,19 @@ input:focus-visible {
   background: linear-gradient(180deg, rgba(4,5,10,.02), transparent 65%, rgba(4,5,10,.12));
 }
 
+.room-stage-v3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(7,8,19,.46), rgba(9,7,17,.58));
+  transition: opacity .42s ease;
+}
+
+.room-stage-v3.lights-off::before { opacity: 1; }
+
 .room-hud-v3 {
   position: absolute;
   z-index: 60;
@@ -222,20 +235,7 @@ input:focus-visible {
   transition: opacity .35s ease;
 }
 
-.lights-off .room-backdrop-v3 { filter: brightness(.35) saturate(.68) contrast(1.08); }
 .lights-off .lamp-glow-v3 { opacity: 0; }
-.lights-off .poster-object-v3,
-.lights-off .poster-object-v15,
-.lights-off .anya-object-v3,
-.lights-off .sleeping-anya-v3,
-.lights-off .laptop-anya-v3,
-.lights-off .anya-sima-play-v19,
-.lights-off .sima-v3,
-.lights-off .sima-bowl-v8,
-.lights-off .sima-feeding-v8,
-.lights-off .anya-headphones-v14,
-.lights-off .added-book-spines-v3,
-.lights-off .laptop-unit-v5 { filter: brightness(.55) saturate(.75); }
 
 .tv-screen-v3 {
   position: absolute;
@@ -1968,7 +1968,6 @@ input:focus-visible {
 
 .sima-scene-box-v8 { left: 4.5%; bottom: 14%; width: 14%; height: 25%; }
 .sima-scene-brush-v8 { left: 22%; bottom: 18%; width: 8%; height: 16%; transform: rotate(-14deg); }
-.sima-scene-brush-v8 img { transform: scaleY(-1); }
 .sima-scene-bowl-v8 { left: 31%; bottom: 13%; width: 7%; height: 12%; }
 .sima-scene-yarn-v8 { right: 29%; bottom: 14%; width: 7%; height: 13%; }
 .sima-scene-bed-v8 { right: 5%; bottom: 13%; width: 17%; height: 26%; }
@@ -2181,7 +2180,6 @@ input:focus-visible {
 .sima-action-prop-v8.prop-box { z-index: 27; left: 50%; bottom: 13%; width: 26%; height: 36%; transform: translateX(-50%); }
 .sima-action-prop-v8.prop-bed { z-index: 27; left: 50%; bottom: 14%; width: 31%; height: 38%; transform: translateX(-50%); }
 .sima-action-prop-v8.prop-brush { z-index: 60; left: 50%; top: 46%; width: 8%; height: 15%; transform: translate(-50%, -50%) rotate(-18deg); transition: left .08s linear, top .08s linear; }
-.sima-action-prop-v8.prop-brush img { transform: scaleY(-1); }
 
 .sima-brush-zone-v19 {
   position: absolute;
